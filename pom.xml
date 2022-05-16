@@ -13,8 +13,8 @@
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
 
         <aspectj.version>1.9.7</aspectj.version>
         <allure.version>2.14.0</allure.version>
@@ -103,9 +103,9 @@
                         <suiteXmlFile>src/test/resources/testng_ui.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng_api.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
+<!--                    <argLine>-->
+<!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
+<!--                    </argLine>-->
 <!--                    <systemProperties>-->
 <!--                        <property>-->
 <!--                            <name>allure.results.directory</name>-->
