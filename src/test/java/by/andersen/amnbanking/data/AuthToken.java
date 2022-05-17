@@ -2,18 +2,17 @@ package by.andersen.amnbanking.data;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.Header;
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.BaseRequest.reqSpec;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
 import static by.andersen.amnbanking.data.RequestAndResponseSpec.REQUEST_SPECIFICATION;
 import static io.restassured.RestAssured.given;
 
-public class BaseRequest {
-
-    static RequestSpecification reqSpec = new RequestSpecBuilder()
+public class AuthToken {
+    private static final RequestSpecification reqSpec = new RequestSpecBuilder()
             .addRequestSpecification(REQUEST_SPECIFICATION).build();
-
 
     public static Header getAuthToken(String login, String password) {
         return given()
@@ -26,15 +25,5 @@ public class BaseRequest {
                 .then()
                 .extract()
                 .headers().get("Authorization");
-    }
-
-    public static Response authorizeWithSessionCode(Header authKey) {
-        return given()
-                .spec(reqSpec)
-                .header(authKey)
-                .body("{\"smsCode\": \"1234\"\n}")
-                .post(API_HOST + API_SESSIONCODE)
-                .then()
-                .extract().response();
     }
 }
