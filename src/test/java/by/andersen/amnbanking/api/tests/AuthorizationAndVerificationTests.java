@@ -2,38 +2,40 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.utils.TestRails;
 import io.restassured.RestAssured;
-import io.restassured.http.Header;
-import io.restassured.response.ResponseBody;
-
+import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import static by.andersen.amnbanking.data.BaseRequest.authorizeWithSessionCode;
-import static by.andersen.amnbanking.data.BaseRequest.loginAndGetAuthKey;
-import static by.andersen.amnbanking.data.DataUrls.*;
-import static by.andersen.amnbanking.data.RequestAndResponseSpec.RESPONSE_SPECIFICATION;
-import static io.restassured.RestAssured.given;
+import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
+import static by.andersen.amnbanking.data.AuthWithToken.authWithSessionCode;
+import static by.andersen.amnbanking.data.RequestAndResponseSpec.*;
+import static org.testng.Assert.assertEquals;
 
 public class AuthorizationAndVerificationTests {
 
-    static Header authKey;
+    static String authKey;
 
     @BeforeTest
     void beforeTest() {
-        RestAssured.responseSpecification = RESPONSE_SPECIFICATION;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        authKey = loginAndGetAuthKey(USER_LOGIN, USER_PASS);
-
+        authKey = getAuthToken();
+        System.out.println(authKey);
     }
 
     @Test
     @TestRails (id = "5888309")
-    public void sendValidSessionCode() {
-        System.out.println(authKey);
-//        authorizeWithSessionCode(authKey);
+    void sendValidSessionCode() {
+        RestAssured.responseSpecification = RESP_SPEC;
+        authWithSessionCode(authKey, "1234");
+    }
 
-
-
+    @Test
+    @TestRails (id = "???")
+    void sendInvalidSessionCode() {
+       Response resp = authWithSessionCode(authKey, "3232");
+        assertEquals((resp.getStatusCode()), 403);
+//        assertEquals(resp.getBody().);
     }
 
 }
