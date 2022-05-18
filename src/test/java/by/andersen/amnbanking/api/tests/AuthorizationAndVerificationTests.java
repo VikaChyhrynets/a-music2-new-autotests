@@ -31,11 +31,20 @@ public class AuthorizationAndVerificationTests {
     }
 
     @Test
+    @TestRails (id = "5871538")
+    void sendBlankSessionCode() {
+        Response resp = authWithSessionCode(authKey, "");
+        assertEquals((resp.getStatusCode()), 400);
+        assertEquals(resp.body().asString(),
+                "{\"message\":\"Sms code contains invalid characters\"}");
+    }
+
+    @Test
     @TestRails (id = "???")
     void sendInvalidSessionCode() {
-       Response resp = authWithSessionCode(authKey, "3232");
+        Response resp = authWithSessionCode(authKey, "2311");
         assertEquals((resp.getStatusCode()), 403);
-//        assertEquals(resp.getBody().);
+//      assertEquals(resp.getBody().);
     }
 
 }
