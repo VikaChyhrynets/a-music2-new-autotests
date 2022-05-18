@@ -12,28 +12,19 @@ import static by.andersen.amnbanking.data.AuthWithToken.authWithSessionCode;
 import static by.andersen.amnbanking.data.RequestAndResponseSpec.*;
 import static org.testng.Assert.assertEquals;
 
-public class AuthorizationAndVerificationTests {
-
-    static String authKey;
-
-    @BeforeTest
-    void beforeTest() {
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        authKey = getAuthToken();
-        System.out.println(authKey);
-    }
+public class AuthorizationAndVerificationTests extends BaseTest {
 
     @Test
-    @TestRails (id = "5888309")
+    @TestRails (id = "C5888309")
     void sendValidSessionCode() {
         RestAssured.responseSpecification = RESP_SPEC;
-        authWithSessionCode(authKey, "1234");
+        authWithSessionCode("1234");
     }
 
     @Test
-    @TestRails (id = "5871538")
+    @TestRails (id = "C5871538")
     void sendBlankSessionCode() {
-        Response resp = authWithSessionCode(authKey, "");
+        Response resp = authWithSessionCode("");
         assertEquals((resp.getStatusCode()), 400);
         assertEquals(resp.body().asString(),
                 "{\"message\":\"Sms code contains invalid characters\"}");
@@ -42,7 +33,7 @@ public class AuthorizationAndVerificationTests {
     @Test
     @TestRails (id = "???")
     void sendInvalidSessionCode() {
-        Response resp = authWithSessionCode(authKey, "2311");
+        Response resp = authWithSessionCode("2311");
         assertEquals((resp.getStatusCode()), 403);
 //      assertEquals(resp.getBody().);
     }
