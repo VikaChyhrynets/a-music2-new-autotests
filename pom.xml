@@ -13,8 +13,8 @@
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
 
         <aspectj.version>1.9.7</aspectj.version>
         <allure.version>2.14.0</allure.version>
@@ -25,15 +25,13 @@
         <testng-version>7.4.0</testng-version>
         <hamcrest-version>2.2</hamcrest-version>
         <ashot-version>1.5.4</ashot-version>
+        <json-simple.version>1.1.1</json-simple.version>
         <allure-version>2.17.3</allure-version>
         <allure-maven-version>2.11.2</allure-maven-version>
         <log4j-version>2.14.1</log4j-version>
-        <extentreports-version>5.0.8</extentreports-version>
-        <maven-surefire-plugin-version>3.0.0-M6</maven-surefire-plugin-version>
-        <json.version>20210307</json.version>
-        <json-simple.version>1.1.1</json-simple.version>
         <postgreSQL.version>42.3.1</postgreSQL.version>
-        <lombok.version>1.18.22</lombok.version>
+        <extentreports-version>5.0.8</extentreports-version>
+        <maven-surefire-plugin-version>2.22.2</maven-surefire-plugin-version>
     </properties>
 
     <dependencies>
@@ -44,99 +42,94 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgreSQL.version}</version>
-        </dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${postgreSQL.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.googlecode.json-simple</groupId>
+                    <artifactId>json-simple</artifactId>
+                    <version>${json-simple.version}</version>
+                </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>${selenide.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-selenide</artifactId>
-            <version>${allure.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>${rest-assured-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>${json.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>${json-simple.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${rest-assured-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>${rest-assured-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest</artifactId>
-            <version>${hamcrest-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-rest-assured</artifactId>
-            <version>${allure-version}</version>
-        </dependency>
-    </dependencies>
-    <build>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin-version}</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng_ui.xml</suiteXmlFile>
-                        <suiteXmlFile>src/test/resources/testng_api.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
-<!--                    <systemProperties>-->
-<!--                        <property>-->
-<!--                            <name>allure.results.directory</name>-->
-<!--                            <value>${project.build.directory}/target/allure-results</value>-->
-<!--                        </property>-->
-<!--                    </systemProperties>-->
+              <dependency>
+                    <groupId>io.rest-assured</groupId>
+                  <artifactId>json-path</artifactId>
+                  <version>${rest-assured-version}</version>
+            </dependency>
+                <dependency>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-selenide</artifactId>
+                    <version>${allure.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.testng</groupId>
+                    <artifactId>testng</artifactId>
+                    <version>${testng-version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.rest-assured</groupId>
+                    <artifactId>rest-assured</artifactId>
+                    <version>${rest-assured-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.rest-assured</groupId>
+                    <artifactId>json-schema-validator</artifactId>
+                    <version>${rest-assured-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest</artifactId>
+                    <version>${hamcrest-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-rest-assured</artifactId>
+                    <version>${allure-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>RELEASE</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <testSourceDirectory>src/test/java</testSourceDirectory>
+                <resources>
+                    <resource>
+                        <directory>src/test/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin-version}</version>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>src/test/resources/testng_ui.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/resources/testng_api.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <!--                    <argLine>-->
+                    <!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
+                    <!--                    </argLine>-->
+                    <!--                    <systemProperties>-->
+                    <!--                        <property>-->
+                    <!--                            <name>allure.results.directory</name>-->
+                    <!--                            <value>${project.build.directory}/target/allure-results</value>-->
+                    <!--                        </property>-->
+                    <!--                    </systemProperties>-->
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -150,14 +143,6 @@
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>2.10.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>

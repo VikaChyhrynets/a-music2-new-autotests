@@ -1,29 +1,31 @@
 package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.adapters.GetAdapters;
-import by.andersen.amnbanking.utils.ParserJson;
+import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.utils.TestRails;
+import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static by.andersen.amnbanking.api.tests.AuthorizationAndVerificationTests.authKey;
-import static by.andersen.amnbanking.data.DataUrls.API_HOST;
-import static by.andersen.amnbanking.data.DataUrls.API_LOGOUT;
-import static by.andersen.amnbanking.data.FilesPath.logoutNoActiveToken;
+import static by.andersen.amnbanking.data.DataUrls.*;
 
 
-public class LogoutTests {
+public class LogoutTests extends BaseTest{
 
     @TestRails(id = "C5893156")
     @Test
     public void logoutActiveSessionTest() {
-
+        new PostAdapters().postAuthWithSessionCode("1234");
+       Response body = new GetAdapters().get(API_HOST + API_LOGOUT).as(Response.class);
+        Assert.assertEquals(body.getMessage(), "Logged out successfully");
     }
+
 
     @TestRails(id="?")
     @Test
     public void logoutWithNoActiveTokenTest() {
-        new GetAdapters().get(authKey, "1234",API_HOST + API_LOGOUT).asString();
-        Assert.assertEquals("No active session", new ParserJson().parser(logoutNoActiveToken, "message"));
+        new PostAdapters().postAuthWithSessionCode("1235");
+       Response body = new GetAdapters().get(API_HOST + API_LOGOUT).as(Response.class);
+        Assert.assertEquals(body.getMessage(), "No active session");
     }
 }

@@ -24,8 +24,9 @@ public class AuthToken {
                 .body("{\n" +
                         "\"login\": \"" + USER_LOGIN + "\", \n" +
                         "\"password\":  \"" + USER_PASS + "\"\n" +
-                        "}")
-                .post(API_HOST + API_LOGIN)
+                        "}"
+                )
+                .post("/api/v1/login")
                 .then()
                 .extract()
                 .header("Authorization");
