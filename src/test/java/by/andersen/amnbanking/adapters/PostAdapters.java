@@ -1,4 +1,4 @@
-package by.andersen.amnbanking.api.tests.adapters;
+package by.andersen.amnbanking.adapters;
 
 import io.restassured.response.ResponseBody;
 

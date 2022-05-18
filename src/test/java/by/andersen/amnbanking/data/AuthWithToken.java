@@ -17,5 +17,4 @@ public class AuthWithToken {
                 .then()
                 .extract().response();
     }
-
 }
