@@ -2,7 +2,7 @@ package by.andersen.amnbanking.api.tests.adapters;
 
 import io.restassured.response.ResponseBody;
 
-import static by.andersen.amnbanking.api.tests.adapters.BaseSpec.REQ_SPEC;
+import static by.andersen.amnbanking.data.RequestAndResponseSpec.REQ_SPEC;
 import static io.restassured.RestAssured.given;
 
 public class PostAdapters {
