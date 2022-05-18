@@ -2,21 +2,18 @@ package by.andersen.amnbanking.api.tests.adapters;
 
 import io.restassured.response.ResponseBody;
 
-import static by.andersen.amnbanking.api.tests.adapters.BaseAdapter.REQ_SPEC;
+import static by.andersen.amnbanking.api.tests.adapters.BaseSpec.REQ_SPEC;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
-public class RegistrationAdapter {
+public class PostAdapters {
 
-        public ResponseBody post(String body, String url, String response) {
+        public ResponseBody post(String body, String url) {
         return given()
                 .spec(REQ_SPEC)
                 .body(body)
                 .when()
                 .post(url)
                 .then()
-                .assertThat()
-                .body(equalTo(response))
                 .log().all()
                 .extract().response().body();
     }

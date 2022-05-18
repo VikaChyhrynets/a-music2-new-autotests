@@ -1,0 +1,3 @@
+{
+  "message": "ERROR: duplicate key value violates unique constraint \"users_login_key\"\n  Detail: Key (login)=(7qqUqJm00WDVd) already exists."
+}
