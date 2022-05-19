@@ -10,22 +10,22 @@ import org.testng.annotations.Test;
 import static by.andersen.amnbanking.data.DataUrls.*;
 
 
-public class LogoutTests extends BaseTest{
+public class LogoutTests extends BaseTest {
 
     @TestRails(id = "C5893156")
     @Test
     public void logoutActiveSessionTest() {
         new PostAdapters().postAuthWithSessionCode("1234");
-       Response body = new GetAdapters().get(API_HOST + API_LOGOUT).as(Response.class);
+        Response body = new GetAdapters().get(API_HOST + API_LOGOUT).as(Response.class);
         Assert.assertEquals(body.getMessage(), "Logged out successfully");
     }
 
 
-    @TestRails(id="?")
+    @TestRails(id = "?")
     @Test
     public void logoutWithNoActiveTokenTest() {
         new PostAdapters().postAuthWithSessionCode("1235");
-       Response body = new GetAdapters().get(API_HOST + API_LOGOUT).as(Response.class);
+        Response body = new GetAdapters().get(API_HOST + API_LOGOUT).as(Response.class);
         Assert.assertEquals(body.getMessage(), "No active session");
     }
 }

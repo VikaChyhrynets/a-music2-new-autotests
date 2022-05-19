@@ -27,7 +27,6 @@ public class PostAdapters extends BaseTest {
 
 
     public static Response postAuthWithSessionCode(String smsCode) {
-        String authKey = getAuthToken();
 
         return given()
                 .spec(REQ_SPEC)
