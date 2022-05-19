@@ -7,7 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import static by.andersen.amnbanking.data.DataUrls.API_URL;
 
 public class RequestSpec {
-    public static final RequestSpecification REQUEST_SPECIFICATION = new RequestSpecBuilder()
+    public static final RequestSpecification REQ_SPEC = new RequestSpecBuilder()
             .setBaseUri(API_URL)
             .setContentType(ContentType.JSON)
             .setAccept("*/*")

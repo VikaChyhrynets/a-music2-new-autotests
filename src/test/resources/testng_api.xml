@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="API tests" verbose="2" configfailurepolicy="continue">
-    <test name="login">
-        <classes>
-            <class name="by.andersen.amnbanking.api.tests.ExampleLoginTest"></class>
-        </classes>
-    </test>
+<suite name="tests" parallel="methods" thread-count="2">
+    <suite-files>
+        <suite-file path="login_tests.xml"/>
+    </suite-files>
 </suite>
