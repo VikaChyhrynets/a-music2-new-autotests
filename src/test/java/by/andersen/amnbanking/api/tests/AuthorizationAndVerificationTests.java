@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static by.andersen.amnbanking.data.AuthWithToken.authWithSessionCode;
-import static by.andersen.amnbanking.data.RequestAndResponseSpec.*;
+import static by.andersen.amnbanking.data.RequestAndResponseSpec.RESP_SPEC;
 import static org.testng.Assert.assertEquals;
 
 public class AuthorizationAndVerificationTests extends BaseTest {

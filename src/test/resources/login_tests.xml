@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Login">
+    <test verbose="2" preserve-order="true" name="LoginTests">
+        <classes>
+            <class name="by.andersen.amnbanking.api.tests.LoginTests">
+                <methods>
+                    <include name="loginPositive"/>
+                    <include name="loginWithNotRegisteredUser"/>
+                    <include name="loginWithBanUser"/>
+                    <include name="loginWithInvalidLoginLessThanSevenCharacters"/>
+                    <include name="loginWithInvalidLoginMoreThanTwentyCharacters"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterExclamatory"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterDog"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterLattice"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterDollar"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterPercent"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterLid"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterAmpersand"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterInterrogative"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterStar"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterQuote"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterNumber"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterSemicolon"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterColon"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterSingleQuote"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterBackslash"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterSlash"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterOpenParenthesis"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterCloseParenthesis"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterOpenSquareBracket"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterCloseSquareBracket"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterOpenBrace"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterCloseBrace"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterLess"/>
+                    <include name="loginWithInvalidLoginWithSpecialCharacterMore"/>
+                    <include name="loginWithInvalidLoginWithCyrillicCharacter"/>
+                    <include name="loginWithLoginOnlyNumbersWithoutTheFirstThreeNumbersOne"/>
+                    <include name="loginWithLoginOnlyLetters"/>
+                    <include name="loginWithLoginWithoutCapitalLatinLetterAndWithSmallLatinLetter"/>
+                    <include name="loginWithEmptyLogin"/>
+                    <include name="loginWithInvalidPasswordLessSevenCharacters"/>
+                    <include name="loginWithInvalidPasswordMoreThanTwentyCharacters"/>
+                    <include name="loginWithInvalidPasswordWithCyrillicCharacter"/>
+                    <include name="loginWithEmptyPassword"/>
+                    <include name="loginWithPasswordOnlyNumbers"/>
+                    <include name="loginWithPasswordOnlyLetters"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterExclamatory"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterDog"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterLattice"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterDollar"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterPercent"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterLid"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterAmpersand"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterInterrogative"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterStar"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterQuote"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterNumber"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterSemicolon"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterColon"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterSingleQuote"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterBackslash"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterSlash"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterOpenParenthesis"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterCloseParenthesis"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterOpenSquareBracket"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterCloseSquareBracket"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterOpenBrace"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterCloseBrace"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterLess"/>
+                    <include name="loginWithInvalidPasswordWithSpecialCharacterMore"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

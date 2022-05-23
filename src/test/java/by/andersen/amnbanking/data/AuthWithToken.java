@@ -1,12 +1,10 @@
 package by.andersen.amnbanking.data;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.Header;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
 import static by.andersen.amnbanking.data.RequestAndResponseSpec.REQ_SPEC;
 import static io.restassured.RestAssured.given;
 
