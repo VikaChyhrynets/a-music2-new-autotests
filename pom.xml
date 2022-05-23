@@ -22,9 +22,8 @@
 
         <rest-assured-version>5.0.0</rest-assured-version>
         <aspectj-version>1.9.6</aspectj-version>
-        <testng-version>7.4.0</testng-version>
         <hamcrest-version>2.2</hamcrest-version>
-        <ashot-version>1.5.4</ashot-version>
+        <testng-version>7.4.0</testng-version>
         <json-simple.version>1.1.1</json-simple.version>
         <allure-version>2.17.3</allure-version>
         <allure-maven-version>2.11.2</allure-maven-version>
@@ -34,7 +33,6 @@
         <maven-surefire-plugin-version>2.22.2</maven-surefire-plugin-version>
         <slf4j.version>1.7.21</slf4j.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -70,6 +68,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng-version}</version>
@@ -89,11 +93,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest</artifactId>
-            <version>${hamcrest-version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -127,15 +126,15 @@
                         <suiteXmlFile>src/test/resources/testng_ui.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng_api.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <!--                    <argLine>-->
-                    <!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
-                    <!--                    </argLine>-->
-                    <!--                    <systemProperties>-->
-                    <!--                        <property>-->
-                    <!--                            <name>allure.results.directory</name>-->
-                    <!--                            <value>${project.build.directory}/target/allure-results</value>-->
-                    <!--                        </property>-->
-                    <!--                    </systemProperties>-->
+<!--                    <argLine>-->
+<!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
+<!--                    </argLine>-->
+<!--                    <systemProperties>-->
+<!--                        <property>-->
+<!--                            <name>allure.results.directory</name>-->
+<!--                            <value>${project.build.directory}/target/allure-results</value>-->
+<!--                        </property>-->
+<!--                    </systemProperties>-->
                 </configuration>
                 <dependencies>
                     <dependency>

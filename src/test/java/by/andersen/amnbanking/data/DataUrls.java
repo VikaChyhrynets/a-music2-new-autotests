@@ -15,5 +15,5 @@ public class DataUrls {
     public static final String USER_BAN_PASS = PropertyHelper.getProperty("api.testBanPass");
     public static final String USER_WRONG_PASS = PropertyHelper.getProperty("api.testWrongPass");
     public static final String NOT_REGISTERED_USER_LOGIN = PropertyHelper.getProperty("api.testNotRegisteredLogin");
-
+    public static final String USER_SESSION_CODE_LOGIN = PropertyHelper.getProperty("api.testSessionCodeLogin");
 }
