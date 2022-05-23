@@ -31,15 +31,6 @@ public class LoginTests {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    @TestRails(id = "C5893147")
-    @Test
-    public void loginWithInvalidPasswordLessSevenCharacters() {
-        Response response = doLogin(USER_LOGIN,"Some1");
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
-    }
-
     @TestRails(id = "C5893164")
     @Test
     public void loginWithNotRegisteredUser() {
@@ -230,10 +221,46 @@ public class LoginTests {
         loginWithInvalidLoginWithSpecialCharacter("Я");
     }
 
+    @TestRails(id = "C5896429")
+    @Test
+    public void loginWithLoginOnlyNumbersWithoutTheFirstThreeNumbersOne() {
+        Response response = doLogin("115457821", USER_PASS);
+        Login login = response.as(Login.class);
+        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
+        Assert.assertEquals(response.getStatusCode(), 400);
+    }
+
+    @TestRails(id = "C5896425")
+    @Test
+    public void loginWithLoginOnlyLetters() {
+        Response response = doLogin("SomeLogin", USER_PASS);
+        Login login = response.as(Login.class);
+        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
+        Assert.assertEquals(response.getStatusCode(), 400);
+    }
+
+    @TestRails(id = "C5896434")
+    @Test
+    public void loginWithLoginWithoutCapitalLatinLetterAndWithSmallLatinLetter() {
+        Response response = doLogin(USER_LOGIN + "f", USER_PASS);
+        Login login = response.as(Login.class);
+        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
+        Assert.assertEquals(response.getStatusCode(), 400);
+    }
+
     @TestRails(id = "C5895966")
     @Test
     public void loginWithEmptyLogin() {
         Response response = doLogin("", USER_PASS);
+        Login login = response.as(Login.class);
+        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
+        Assert.assertEquals(response.getStatusCode(), 400);
+    }
+
+    @TestRails(id = "C5895968")
+    @Test
+    public void loginWithInvalidPasswordLessSevenCharacters() {
+        Response response = doLogin(USER_LOGIN,"Some1");
         Login login = response.as(Login.class);
         Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
         Assert.assertEquals(response.getStatusCode(), 400);
@@ -424,6 +451,4 @@ public class LoginTests {
     public void loginWithInvalidPasswordWithSpecialCharacterMore() {
         loginWithInvalidPasswordWithSpecialCharacter(">");
     }
-
-
 }

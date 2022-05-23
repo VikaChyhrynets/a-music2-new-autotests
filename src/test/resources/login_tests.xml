@@ -6,7 +6,6 @@
             <class name="by.andersen.amnbanking.api.tests.LoginTests">
                 <methods>
                     <include name="loginPositive"/>
-                    <include name="loginWithInvalidPasswordLessSevenCharacters"/>
                     <include name="loginWithNotRegisteredUser"/>
                     <include name="loginWithBanUser"/>
                     <include name="loginWithInvalidLoginLessThanSevenCharacters"/>
@@ -36,7 +35,11 @@
                     <include name="loginWithInvalidLoginWithSpecialCharacterLess"/>
                     <include name="loginWithInvalidLoginWithSpecialCharacterMore"/>
                     <include name="loginWithInvalidLoginWithCyrillicCharacter"/>
+                    <include name="loginWithLoginOnlyNumbersWithoutTheFirstThreeNumbersOne"/>
+                    <include name="loginWithLoginOnlyLetters"/>
+                    <include name="loginWithLoginWithoutCapitalLatinLetterAndWithSmallLatinLetter"/>
                     <include name="loginWithEmptyLogin"/>
+                    <include name="loginWithInvalidPasswordLessSevenCharacters"/>
                     <include name="loginWithInvalidPasswordMoreThanTwentyCharacters"/>
                     <include name="loginWithInvalidPasswordWithCyrillicCharacter"/>
                     <include name="loginWithEmptyPassword"/>
