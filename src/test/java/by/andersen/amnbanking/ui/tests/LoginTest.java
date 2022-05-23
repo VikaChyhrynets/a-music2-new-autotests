@@ -31,8 +31,8 @@ public class LoginTest extends BaseTest {
 
     @TestRails(id = "C5869665")
     @Test(description = "negative test")
-    public void authWithInvalidLoginLessThan8SymbolsTest() {
-        loginPage.inputLoginField("Gsvoper")
+    public void authWithInvalidLoginLessThan7SymbolsTest() {
+        loginPage.inputLoginField("Gsvop4")
                 .clickLoginButton();
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.LESS_8_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
