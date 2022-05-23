@@ -5,6 +5,7 @@ import static by.andersen.amnbanking.data.RequestAndResponseSpec.REQ_SPEC;
 import static io.restassured.RestAssured.given;
 
 public class AuthToken {
+
     public static String getAuthToken(String login, String password) {
         return given()
                 .spec(REQ_SPEC)
@@ -24,9 +25,8 @@ public class AuthToken {
                 .body("{\n" +
                         "\"login\": \"" + USER_LOGIN + "\", \n" +
                         "\"password\":  \"" + USER_PASS + "\"\n" +
-                        "}"
-                )
-                .post("/api/v1/login")
+                        "}")
+                .post(API_HOST + API_LOGIN)
                 .then()
                 .extract()
                 .header("Authorization");
