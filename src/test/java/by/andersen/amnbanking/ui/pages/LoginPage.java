@@ -13,9 +13,8 @@ public class LoginPage extends BasePage {
     public SelenideElement telInput = $("#phone");
     public SelenideElement passwordInput = $(By.id(":r3:"));
     public SelenideElement loginAlert = $x("//div[contains(@class, 'formInputLogin')]//*[contains(@class, 'formError')]");
-    public SelenideElement loginBtn = $x("//*[contains(@class, 'formButtonLogin')]//button[contains(@type, 'submit')]");
     public SelenideElement passwordAlert = $x("//*[contains(@class, 'formInputPassword')]//div[contains(@class, 'formError')]");
-
+    public SelenideElement loginBtn = $x("//*[contains(@class, 'formButtonLogin')]//button[contains(@type, 'submit')]");
 
     public LoginPage open() {
         Selenide.open(START_URL);
