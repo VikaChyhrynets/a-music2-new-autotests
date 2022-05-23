@@ -74,9 +74,70 @@ public class LoginTest extends BaseTest {
 
     @TestRails(id = "C5869674")
     @Test(description = "negative test")
-    public void authForbiddenSymbolPasswordAndValidLoginTest() {
+    public void authAsteriskSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
-                .inputPasswordField("*&^$^%$+")
+                .inputPasswordField("*12354785")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authExclamationSymbolPasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField("!12354785")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authВashSymbolPasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField("-12354785")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authAtSymbolPasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField("@2354785")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authPlusSymbolPasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField("+2354785")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authMinusSymbolPasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField("-2354785")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authWhitespacePasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField(" 2354785")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authSlashPasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField("/2354785")
                 .clickLoginButton();
         Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
