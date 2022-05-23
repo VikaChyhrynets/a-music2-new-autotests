@@ -13,8 +13,8 @@
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
 
         <aspectj.version>1.9.7</aspectj.version>
         <allure.version>2.14.0</allure.version>
@@ -29,7 +29,7 @@
         <allure-maven-version>2.11.2</allure-maven-version>
         <log4j-version>2.14.1</log4j-version>
         <extentreports-version>5.0.8</extentreports-version>
-        <maven-surefire-plugin-version>3.0.0-M6</maven-surefire-plugin-version>
+        <maven-surefire-plugin-version>2.22.2</maven-surefire-plugin-version>
     </properties>
 
     <dependencies>
@@ -82,6 +82,12 @@
             <artifactId>allure-rest-assured</artifactId>
             <version>${allure-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -103,9 +109,9 @@
                         <suiteXmlFile>src/test/resources/testng_ui.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng_api.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
+<!--                    <argLine>-->
+<!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
+<!--                    </argLine>-->
 <!--                    <systemProperties>-->
 <!--                        <property>-->
 <!--                            <name>allure.results.directory</name>-->
