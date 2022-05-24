@@ -8,7 +8,6 @@ import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.data.RequestAndResponseSpec.REQ_SPEC;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.responseSpecification;
 
 public class PostAdapters extends BaseTest {
 

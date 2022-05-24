@@ -2,6 +2,7 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
+import by.andersen.amnbanking.data.AlertAPI;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.TestRails;
 import jsonBody.Response;
@@ -22,7 +23,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("7qqUqJm00LANA", "tPvpXJGRqAtbWN8I"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(), "User with login: 7qqUqJm00LANA added");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS.getValue());
     }
 
     @TestRails(id = "C5895599")
@@ -42,8 +43,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("22233333333333333333", "111111111122222222AA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(),AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895605")
@@ -52,8 +52,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("1113333333333333333a", "111111111122222222AA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895606")
@@ -62,8 +61,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("111впрТЫ", "111111111122222222AA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895612")
@@ -72,8 +70,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("111111", "111111111122222222AA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895614")
@@ -82,8 +79,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("111111111111111111111", "111111111122222222AA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895629")
@@ -92,8 +88,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         (" 111*?/)! ;", "111111111122222222AA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895638")
@@ -102,8 +97,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("", "111111111122222222AA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895776")
@@ -112,8 +106,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("11122222222222233333", "11122222222222233333"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895786")
@@ -122,8 +115,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("11122222222222233333", "1111111111222222ваТЫ"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895791")
@@ -132,8 +124,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("11122222222222233333", "111111"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895794")
@@ -142,8 +133,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("11122222222222233333", "111111111111111111111"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895797")
@@ -152,8 +142,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("11122222222222233333", ""),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895802")
@@ -162,8 +151,7 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("11122222222222233333", "11111111111111111111"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 
     @TestRails(id = "C5895810")
@@ -172,7 +160,6 @@ public class RegistrationTests {
         Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         ("11122222222222233333", "aaaaaaaaAA"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(),
-                "Invalid characters in UserName or Password");
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED.getValue());
     }
 }
