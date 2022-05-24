@@ -191,6 +191,14 @@ public class LoginTest extends BaseTest {
 
     @TestRails(id = "")
     @Test(description = "negative test")
+    public void authApostropheSymbolLoginTest() {
+        loginPage.inputLoginField("5Dvkfefnbm'k8ftt")
+                .clickPasswordField();
+        Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
     public void authEquallySymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm=k8ftt")
                 .clickPasswordField();
@@ -520,5 +528,26 @@ public class LoginTest extends BaseTest {
                 .inputPasswordField("23Q^4c785d")
                 .clickLoginButton();
         Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void authWithApostrophePasswordAndValidLoginTest() {
+        loginPage.inputLoginField("Ksc8kvmx")
+                .inputPasswordField("I'l4584c785d")
+                .clickLoginButton();
+        Assert.assertEquals(loginPage.getAlertMessagePassword(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void showPasswordIconTest() {
+        Assert.assertTrue(loginPage.clickShowPasswordCheckbox());
+    }
+
+    @TestRails(id = "")
+    @Test(description = "negative test")
+    public void hidePasswordIconTest() {
+        Assert.assertTrue(loginPage.clickHidePasswordCheckbox());
     }
 }

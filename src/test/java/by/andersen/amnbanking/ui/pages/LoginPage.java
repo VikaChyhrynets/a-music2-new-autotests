@@ -15,6 +15,8 @@ public class LoginPage extends BasePage {
     public SelenideElement loginAlert = $x("//div[contains(@class, 'formInputLogin')]//*[contains(@class, 'formError')]");
     public SelenideElement passwordAlert = $x("//*[contains(@class, 'formInputPassword')]//div[contains(@class, 'formError')]");
     public SelenideElement loginBtn = $x("//*[contains(@class, 'formButtonLogin')]//button[contains(@type, 'submit')]");
+    public SelenideElement checkBoxShowPassword = $x("//div[contains(@class, 'showPassword')]/*");
+
 
     public LoginPage open() {
         Selenide.open(START_URL);
@@ -66,5 +68,16 @@ public class LoginPage extends BasePage {
         this.loginBtn.click();
 
         return this;
+    }
+
+    public boolean clickShowPasswordCheckbox() {
+        this.checkBoxShowPassword.click();
+        return this.checkBoxShowPassword.isEnabled();
+    }
+
+    public boolean clickHidePasswordCheckbox() {
+        this.checkBoxShowPassword.click();
+        this.checkBoxShowPassword.click();
+        return this.checkBoxShowPassword.isDisplayed();
     }
 }
