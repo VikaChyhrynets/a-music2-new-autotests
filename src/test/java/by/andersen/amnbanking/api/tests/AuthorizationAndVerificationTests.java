@@ -10,21 +10,21 @@ import static org.testng.Assert.assertEquals;
 
 public class AuthorizationAndVerificationTests extends BaseTest {
 
-    @Test()
+    @Test(description = "Valid session code")
     @TestRails (id = "C5888309")
     void sendValidSessionCode() {
        Response resp = new PostAdapters().authWithSessionCode("1234", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
        assertEquals(resp.getMessage(), "Session code is correct");
     }
 
-    @Test(priority = 1)
+    @Test(description = "Three digit session code")
     @TestRails (id = "С5895560")
     void sendSessionCodeWithThreeDigits() {
         Response resp = new PostAdapters().authWithSessionCode("231", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
         assertEquals(resp.getMessage(),"Sms code contains invalid characters");
     }
 
-    @Test()
+    @Test(description = "Five digits session code")
     @TestRails (id = "С5895561")
     void sendSessionCodeWithFiveDigits() {
         Response resp = new PostAdapters().authWithSessionCode("23231", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
@@ -32,7 +32,7 @@ public class AuthorizationAndVerificationTests extends BaseTest {
                 "Sms code contains invalid characters");
     }
 
-    @Test()
+    @Test(description = "Blank session code")
     @TestRails (id = "C5895562")
     void sendBlankSessionCode() {
         Response resp = new PostAdapters().authWithSessionCode("", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
@@ -40,7 +40,7 @@ public class AuthorizationAndVerificationTests extends BaseTest {
                 "Sms code contains invalid characters");
     }
 
-    @Test()
+    @Test(description = "Code with only letters")
     @TestRails (id = "С5895563")
     void sendSessionCodeWithLetters() {
        Response resp = new PostAdapters().authWithSessionCode("brab", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
@@ -48,7 +48,7 @@ public class AuthorizationAndVerificationTests extends BaseTest {
                 "Sms code contains invalid characters");
     }
 
-    @Test()
+    @Test(description = "Code with one letter")
     @TestRails (id = "С5895563")
     void sendSessionCodeWithLetter() {
         Response resp = new PostAdapters().authWithSessionCode("123a", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
@@ -56,7 +56,7 @@ public class AuthorizationAndVerificationTests extends BaseTest {
                 "Sms code contains invalid characters");
     }
 
-    @Test()
+    @Test(description = "Code with only symbols")
     @TestRails (id = "С5895564")
     void sendSessionCodeWithSymbols() {
         Response resp = new PostAdapters().authWithSessionCode("+++*", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
@@ -64,7 +64,7 @@ public class AuthorizationAndVerificationTests extends BaseTest {
                 "Sms code contains invalid characters");
     }
 
-    @Test()
+    @Test(description = "Code with one symbol")
     @TestRails (id = "С5895564")
     void sendSessionCodeWithSymbol() {
         Response resp = new PostAdapters().authWithSessionCode("123*", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
