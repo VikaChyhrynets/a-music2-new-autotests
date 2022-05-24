@@ -16,16 +16,16 @@ public class ExampleLoginTest extends BaseTest {
 
     LoginPage loginPage = new LoginPage();
 
-    @BeforeMethod
-    public void setUp() {
-        loginPage.open();
-    }
+//    @BeforeMethod
+//    public void setUp() {
+//        loginPage.open();
+//    }
 
-    @TestRails(id = "123")
-    @Test
-    public void weCanSuccessLoginWithValidCredentials() {
-        loginPage.doLogin(user);
-
-        webdriver().shouldHave(url(MainPage.URL));
-    }
+//    @TestRails(id = "123")
+//    @Test
+//    public void weCanSuccessLoginWithValidCredentials() {
+//        loginPage.doLogin(user);
+//
+//        webdriver().shouldHave(url(MainPage.URL));
+//    }
 }
