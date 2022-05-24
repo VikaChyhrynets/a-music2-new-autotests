@@ -70,14 +70,16 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public boolean clickShowPasswordCheckbox() {
+    public String clickShowPasswordCheckbox(String password, String type) {
+        this.passwordInput.sendKeys(password);
         this.checkBoxShowPassword.click();
-        return this.checkBoxShowPassword.isEnabled();
+        return this.passwordInput.getAttribute(type);
     }
 
-    public boolean clickHidePasswordCheckbox() {
+    public String clickHidePasswordCheckbox(String password, String type) {
+        this.passwordInput.sendKeys(password);
         this.checkBoxShowPassword.click();
         this.checkBoxShowPassword.click();
-        return this.checkBoxShowPassword.isDisplayed();
+        return this.passwordInput.getAttribute(type);
     }
 }

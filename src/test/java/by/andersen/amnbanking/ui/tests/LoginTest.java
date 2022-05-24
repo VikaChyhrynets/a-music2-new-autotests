@@ -542,12 +542,12 @@ public class LoginTest extends BaseTest {
     @TestRails(id = "")
     @Test(description = "negative test")
     public void showPasswordIconTest() {
-        Assert.assertTrue(loginPage.clickShowPasswordCheckbox());
+        Assert.assertEquals(loginPage.clickShowPasswordCheckbox("Drn1f7sC", "type"), "text");
     }
 
     @TestRails(id = "")
     @Test(description = "negative test")
     public void hidePasswordIconTest() {
-        Assert.assertTrue(loginPage.clickHidePasswordCheckbox());
+        Assert.assertEquals(loginPage.clickHidePasswordCheckbox("Drn1f7sC", "type"),"password");
     }
 }
