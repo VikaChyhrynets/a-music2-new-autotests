@@ -13,8 +13,8 @@
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
 
         <aspectj.version>1.9.7</aspectj.version>
         <allure.version>2.14.0</allure.version>
@@ -22,9 +22,8 @@
 
         <rest-assured-version>5.0.0</rest-assured-version>
         <aspectj-version>1.9.6</aspectj-version>
-        <hamcrest-version>2.2</hamcrest-version>
         <testng-version>7.4.0</testng-version>
-        <json-simple.version>1.1.1</json-simple.version>
+        <hamcrest-version>2.2</hamcrest-version>
         <allure-version>2.17.3</allure-version>
         <allure-maven-version>2.11.2</allure-maven-version>
         <log4j-version>2.14.1</log4j-version>
