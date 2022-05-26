@@ -3,7 +3,7 @@
 <suite name="UI tests" verbose="2" configfailurepolicy="continue">
     <test name="login">
         <classes>
-            <class name="by.andersen.amnbanking.ui.tests.ExampleLoginTest"></class>
+            <class name="by.andersen.amnbanking.ui.tests.LoginTest"></class>
         </classes>
     </test>
 </suite>

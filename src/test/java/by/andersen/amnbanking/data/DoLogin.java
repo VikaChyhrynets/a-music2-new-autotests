@@ -30,6 +30,4 @@ public class DoLogin {
         Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
         Assert.assertEquals(response.getStatusCode(), 400);
     }
-
-
 }
