@@ -19,4 +19,9 @@ public class DataUrls {
     public static final String LOGIN_WITH_PASSPORT_REG = PropertyHelper.getProperty("api.loginPass");
     public static final String PASSWORD_WITH_PASSPORT_REG = PropertyHelper.getProperty("api.passwPass");
     public static final String PASSPORT_REG = PropertyHelper.getProperty("api.passport");
+    public static final String SMS_CODE = PropertyHelper.getProperty("api.getSmsCode");
+    public static final String FILTER_TYPES = PropertyHelper.getProperty("api.getSmsFilterTypes");
+    public static final String CHANGE_PASSWORD = PropertyHelper.getProperty("api.changePassword");
+    public static final String NEW_PASSWORD = PropertyHelper.getProperty("api.newPassword");
+    public static final String CHECK_SMS = PropertyHelper.getProperty("api.checkSms");
 }
