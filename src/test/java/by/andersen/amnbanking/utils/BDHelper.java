@@ -4,8 +4,8 @@ package by.andersen.amnbanking.utils;
 public class BDHelper {
     String query;
 
-    public String setRequestForDeleteUser() {
-        query = "DELETE FROM users WHERE login = '7qqUqJm00LANA'";
+    public String setRequestForDeleteUser(String login) {
+        query = "DELETE FROM users WHERE login = '"+ login +"'";
         return query;
     }
 

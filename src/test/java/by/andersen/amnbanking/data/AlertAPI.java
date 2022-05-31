@@ -6,7 +6,8 @@ public enum AlertAPI {
     NOT_REGISTERED_USER("This user is not registered yet"),
     BAN_USER("Ban time is not over yet..."),
     REGISTRATION_SUCCESS_USER("User with login: 7qqUqJm00LANA added"),
-    REGISTRATION_FAILED_USER("Invalid characters in UserName or Password");
+    REGISTRATION_FAILED_USER("Invalid characters in UserName or Password"),
+    REGISTRATION_FAILED_USER_PASSPORT("Invalid characters in passport");
 
     String value;
 

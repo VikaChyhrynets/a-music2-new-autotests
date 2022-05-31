@@ -16,8 +16,8 @@ public class DBConnector {
 
 
     @Test
-    public void deleteUser() throws SQLException {
-        query = new BDHelper().setRequestForDeleteUser();
+    public void deleteUser(String login) throws SQLException {
+        query = new BDHelper().setRequestForDeleteUser(login);
         statement = worker.getConnection().createStatement();
         statement.executeUpdate(query);
         statement.close();
