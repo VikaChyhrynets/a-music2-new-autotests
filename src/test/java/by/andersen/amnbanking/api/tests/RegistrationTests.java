@@ -26,6 +26,15 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
     }
 
+    @Test(description = "positive test")
+    public void registrationWithPassportTest() throws SQLException{
+        new DBConnector().deleteUser();
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                ("Elena779", "8Rvjsio7c", "KB7891235"),
+                API_HOST + API_REGISTRATION).as(Response.class);
+        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+    }
+
     @TestRails(id = "C5895599")
     @Test(description = "negative test")
     public void registrationWithDuplicateLoginTest() {

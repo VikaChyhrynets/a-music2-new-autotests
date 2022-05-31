@@ -29,7 +29,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900035")
     @Test(description = "negative test")
     public void authWithTwentyOneSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbjgldrkmk8ftt")
@@ -37,7 +37,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900176")
     @Test(description = "negative test")
     public void authTildaSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnb~mk8ftt")
@@ -45,7 +45,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900198")
     @Test(description = "negative test")
     public void authAtSymbolLoginTest() {
         loginPage.inputLoginField("@5Dvkfefnbmk8ftt")
@@ -53,7 +53,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900200")
     @Test(description = "negative test")
     public void authMinusSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkf-efnbmk8ftt")
@@ -61,7 +61,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900201")
     @Test(description = "negative test")
     public void authSlashSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbmk8ftt/")
@@ -69,7 +69,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900204")
     @Test(description = "negative test")
     public void authPlusSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbmk8+ftt")
@@ -77,7 +77,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900206")
     @Test(description = "negative test")
     public void authCircumflexSymbolLoginTest() {
         loginPage.inputLoginField("5Dv^kfefnbmk8ftt")
@@ -85,7 +85,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900210")
     @Test(description = "negative test")
     public void authQuotationSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnb«mkftt")
@@ -93,7 +93,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900241")
     @Test(description = "negative test")
     public void authAsteriskSymbolLoginTest() {
         loginPage.inputLoginField("5*Dvkfefnbmk8ftt")
@@ -101,7 +101,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900242")
     @Test(description = "negative test")
     public void authDotSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm.k8ftt")
@@ -109,7 +109,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900244")
     @Test(description = "negative test")
     public void authTagSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm>k8ftt")
@@ -117,7 +117,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900246")
     @Test(description = "negative test")
     public void authSQLSymbolLoginTest() {
         loginPage.inputLoginField("SELECT*FROM users")
@@ -125,7 +125,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900247")
     @Test(description = "negative test")
     public void authQuestionSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm?k8ftt")
@@ -133,7 +133,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900249")
     @Test(description = "negative test")
     public void authAmpersandSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm&k8ftt")
@@ -141,7 +141,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900250")
     @Test(description = "negative test")
     public void authHashtagSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm#k8ftt")
@@ -149,15 +149,15 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900283")
     @Test(description = "negative test")
     public void authNumberSymbolLoginTest() {
-        loginPage.inputLoginField("5Dvkfefnbm.k8ftt")
+        loginPage.inputLoginField("5Dvkfefnbm]k8ftt")
                 .clickPasswordField();
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900285")
     @Test(description = "negative test")
     public void authWhitespaceLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm k8ftt")
@@ -165,7 +165,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900295")
     @Test(description = "negative test")
     public void authDoubleUpperCommaLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm❞k8ftt")
@@ -173,7 +173,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900468")
     @Test(description = "negative test")
     public void authDollarSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm$k8ftt")
@@ -181,7 +181,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900469")
     @Test(description = "negative test")
     public void authUnderliningSymbolLoginTest() {
         loginPage.inputLoginField("_5Dvkfefnbmk8ftt")
@@ -189,7 +189,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900470")
     @Test(description = "negative test")
     public void authApostropheSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm'k8ftt")
@@ -197,7 +197,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900471")
     @Test(description = "negative test")
     public void authEquallySymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm=k8ftt")
@@ -205,7 +205,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900473")
     @Test(description = "negative test")
     public void authColonSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefn:k8ftt")
@@ -213,7 +213,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900751")
     @Test(description = "negative test")
     public void authSemicolonSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefn;k8ftt")
@@ -221,7 +221,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900752")
     @Test(description = "negative test")
     public void authExclamationMarkLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm!k8ftt")
@@ -229,7 +229,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(loginPage.getAlertMessageLogin(), Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "")
+    @TestRails(id = "C5900753")
     @Test(description = "negative test")
     public void authWithArrowLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm←k8ftt")
