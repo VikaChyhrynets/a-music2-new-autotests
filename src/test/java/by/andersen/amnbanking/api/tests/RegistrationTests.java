@@ -25,7 +25,7 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901579")
     @Test(description = "positive test")
     public void registrationValidDateWithPassportTest() throws SQLException{
         new DBConnector().deleteUser("Elena779");
@@ -35,7 +35,7 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(),"User with login: Elena779 added");
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901827")
     @Test(description = "positive test")
     public void registrationValidDateWithOnlyDigitsInPassportTest() throws SQLException{
         new DBConnector().deleteUser("Monika287");
@@ -44,7 +44,7 @@ public class RegistrationTests {
                 API_HOST + API_REGISTRATION).as(Response.class);
         Assert.assertEquals(response.getMessage(),"User with login: Monika287 added");
     }
-    @TestRails(id="")
+    @TestRails(id="C5901829")
     @Test(description = "positive test")
     public void registrationValidDateWithTwoLettersInPassportTest() throws SQLException{
         new DBConnector().deleteUser("Monika287");
@@ -54,7 +54,7 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(),"User with login: Monika287 added");
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901830")
     @Test(description = "positive test")
     public void registrationValidDateWithThirtyValidSymbolsInPassportTest() throws SQLException{
         new DBConnector().deleteUser("Monika287");
@@ -64,7 +64,16 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(),"User with login: Monika287 added");
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901876")
+    @Test(description = "negative test")
+    public void registrationValidDateWithForbiddenSymbolInPassportTest() throws SQLException{
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("Monika287", "2Loc4567E", "11236489235FR456871232."),
+                API_HOST + API_REGISTRATION).as(Response.class);
+        Assert.assertEquals(response.getMessage(),"Invalid characters in passport");
+    }
+
+    @TestRails(id="C5901831")
     @Test(description = "negative")
     public void  registrationWithSmallRussianLettersInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
@@ -73,17 +82,16 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901832")
     @Test(description = "negative")
     public void  registrationWithDuplicatePassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG, PASSPORT_REG),
+                        ("Eminem78","8Scnjfvs56", "11236489235FR456871230L78D9632"),
                 API_HOST + API_REGISTRATION).as(Response.class);
-        Assert.assertEquals(response.getMessage(), "ERROR: duplicate key value violates unique constraint \"users_login_key\"\n" +
-                "  Detail: Key (login)=(Celine715) already exists.");
+        Assert.assertEquals(response.getMessage(), "User with passport = 11236489235FR456871230L78D9632 already registered");
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901848")
     @Test(description = "negative")
     public void  registrationWithBigRussianLettersInPassportTest() throws SQLException {
         new DBConnector().deleteUser("Eminem78");
@@ -93,7 +101,7 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901849")
     @Test(description = "negative")
     public void  registrationWithSpaceInPassportTest() throws SQLException {
         new DBConnector().deleteUser("Eminem78");
@@ -103,7 +111,7 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901851")
     @Test(description = "negative")
     public void  registrationWithSmallLettersInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
@@ -112,7 +120,7 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901853")
     @Test(description = "negative")
     public void  registrationWithOneLetterInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
@@ -121,7 +129,7 @@ public class RegistrationTests {
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
 
-    @TestRails(id="")
+    @TestRails(id="C5901860")
     @Test(description = "negative")
     public void  registrationWithThirtyOneSymbolsInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
