@@ -73,9 +73,33 @@ public class AuthorizationAndVerificationTests extends BaseTest {
     }
 
     @Test(description = "Code with one space")
-    @TestRails (id = "С5895564")
+    @TestRails (id = "С5900178")
     void sendSessionCodeWithSpace() {
         Response resp = new PostAdapters().authWithSessionCode("123 ", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
+        assertEquals(resp.getMessage(),
+                "Sms code contains invalid characters");
+    }
+
+    @Test(description = "Code with spaces")
+    @TestRails (id = "С5900284")
+    void sendSessionCodeWithSpaces() {
+        Response resp = new PostAdapters().authWithSessionCode("    ", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
+        assertEquals(resp.getMessage(),
+                "Sms code contains invalid characters");
+    }
+
+    @Test(description = "Valid code with space")
+    @TestRails (id = "С5900296")
+    void sendValidSessionCodeWithSpace() {
+        Response resp = new PostAdapters().authWithSessionCode("12 34", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
+        assertEquals(resp.getMessage(),
+                "Sms code contains invalid characters");
+    }
+
+    @Test(description = "Valid code with space in the end")
+    @TestRails (id = "С5900325")
+    void sendValidSessionCodeEndingWithSpace() {
+        Response resp = new PostAdapters().authWithSessionCode("1234 ", USER_SESSION_CODE_LOGIN, USER_PASS).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
