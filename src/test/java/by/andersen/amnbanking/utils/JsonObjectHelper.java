@@ -20,4 +20,10 @@ public class JsonObjectHelper {
 
         return jsonObject.toJSONString();
     }
+
+    public static String setIDForPassRecovery(String passport){
+        jsonObject.put("passport", passport);
+
+        return jsonObject.toString();
+    }
 }

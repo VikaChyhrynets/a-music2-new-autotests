@@ -41,7 +41,7 @@ public class PostAdapters extends BaseTest {
                 .extract().response();
     }
 
-    public static Response authWithSessionCode(String smsCode, String login, String password) {
+    public Response authWithSessionCode(String smsCode, String login, String password) {
         String authKey = getAuthToken(login, password);
 
         return given()
@@ -67,17 +67,4 @@ public class PostAdapters extends BaseTest {
                 .all()
                 .extract().detailedCookie("Login");
     }
-
-    public static Response checkPassport(String passport) {
-
-        return given()
-                .spec(REQ_SPEC)
-                .body("{\"passport\": \"" + passport + "\"\n}")
-                .post(API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT)
-                .then()
-                .log()
-                .all()
-                .extract().response();
-    }
-
 }
