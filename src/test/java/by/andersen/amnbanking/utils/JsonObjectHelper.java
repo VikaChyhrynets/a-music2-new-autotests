@@ -13,10 +13,34 @@ public class JsonObjectHelper {
         return jsonObject.toJSONString();
     }
 
+    public static String setNewPassword(String password){
+        jsonObject.put("newPassword", password);
+
+        return jsonObject.toJSONString();
+    }
+
+    public static String setFilterType(String type){
+        jsonObject.put("smsFilterType", type);
+
+        return jsonObject.toJSONString();
+    }
+
     public static String setPassportLoginPasswordForRegistration(String login, String password, String passport){
         jsonObject.put("login", login);
         jsonObject.put("password", password);
         jsonObject.put("passport", passport);
+
+        return jsonObject.toJSONString();
+    }
+
+    public static String setPassportForRegistration(String passport){
+        jsonObject.put("passport", passport);
+
+        return jsonObject.toJSONString();
+    }
+
+    public static String setSmsCode(String sms){
+        jsonObject.put("smsCode", sms);
 
         return jsonObject.toJSONString();
     }
