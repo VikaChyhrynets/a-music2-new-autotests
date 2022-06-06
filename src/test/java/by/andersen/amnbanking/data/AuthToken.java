@@ -1,5 +1,7 @@
 package by.andersen.amnbanking.data;
 
+import io.restassured.http.Cookie;
+
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.data.RequestAndResponseSpec.REQ_SPEC;
 import static io.restassured.RestAssured.given;
@@ -30,5 +32,17 @@ public class AuthToken {
                 .then()
                 .extract()
                 .header("Authorization");
+    }
+
+    public static Cookie checkPassportAndGetCookie(String passport) {
+
+        return given()
+                .spec(REQ_SPEC)
+                .body("{\"passport\": \"" + passport + "\"\n}")
+                .post(API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT)
+                .then()
+                .log()
+                .all()
+                .extract().detailedCookie("login");
     }
 }

@@ -26,4 +26,16 @@ public class JsonObjectHelper {
 
         return jsonObject.toString();
     }
+
+    public static String setSmsCode(String smsCode){
+        jsonObject.put("smsCode", smsCode);
+
+        return jsonObject.toString();
+    }
+
+    public static String setPassword(String password){
+        jsonObject.put("smsCode", password);
+
+        return jsonObject.toString();
+    }
 }
