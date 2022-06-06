@@ -37,7 +37,7 @@ public class LoginTests {
         Response response = doLogin(NOT_REGISTERED_USER_LOGIN, USER_WRONG_PASS);
         Login login = response.as(Login.class);
         Assert.assertEquals(login.getMessage(), NOT_REGISTERED_USER.getValue());
-        Assert.assertEquals(response.getStatusCode(), 401);
+        Assert.assertEquals(response.getStatusCode(), 404);
     }
 
     @TestRails(id = "C5894544")
@@ -50,7 +50,7 @@ public class LoginTests {
         response = doLogin(USER_BAN_LOGIN, USER_BAN_PASS);
         Login login = response.as(Login.class);
         Assert.assertEquals(login.getMessage(), BAN_USER.getValue());
-        Assert.assertEquals(response.getStatusCode(), 403);
+        Assert.assertEquals(response.getStatusCode(), 400);
     }
 
     @TestRails(id = "C5895962")

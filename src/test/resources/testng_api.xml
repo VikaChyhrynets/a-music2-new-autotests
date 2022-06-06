@@ -5,6 +5,8 @@
         <classes>
             <class name="by.andersen.amnbanking.api.tests.AuthorizationAndVerificationTests"></class>
             <class name="by.andersen.amnbanking.api.tests.RegistrationTests"></class>
+            <class name="by.andersen.amnbanking.api.tests.PasswordRecoveryTests"></class>
+            <class name="by.andersen.amnbanking.api.tests.ChangePasswordAfterFirstLoginTests"></class>
         </classes>
     </test>
     <suite-files>

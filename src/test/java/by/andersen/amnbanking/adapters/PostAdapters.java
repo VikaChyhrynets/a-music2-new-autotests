@@ -13,7 +13,6 @@ import static io.restassured.RestAssured.given;
 
 public class PostAdapters extends BaseTest {
 
-    static String authKey = getAuthToken("Maleficent1", "Number1");
     static Cookie authStaticLogin = getAuthLogin(PASSPORT_REG);
 
     public ResponseBody post(String body, String url) {
@@ -27,12 +26,11 @@ public class PostAdapters extends BaseTest {
                 .extract().response().body();
     }
 
-
-    public static Response postAuthWithSessionCode(String body, String url) {
+    public Response postAuthWithSessionCode(String authToken,String body, String url) {
 
         return given()
                 .spec(REQ_SPEC)
-                .header("Authorization", "Bearer " + authKey)
+                .header("Authorization", "Bearer " + authToken)
                 .body(body)
                 .post(url)
                 .then()
@@ -40,7 +38,7 @@ public class PostAdapters extends BaseTest {
                 .extract().response();
     }
 
-    public static Response authWithSessionCode(String smsCode, String login, String password) {
+    public  Response authWithSessionCode(String smsCode, String login, String password) {
         String authKey = getAuthToken(login, password);
 
         return given()
@@ -55,8 +53,7 @@ public class PostAdapters extends BaseTest {
                 .extract().response();
     }
 
-
-    public static Response postWithCookieLogin(String passport, String body, String url) {
+    public Response postWithCookieLogin(String passport, String body, String url) {
         Cookie authLogin = getAuthLogin(passport);
 
         return given()
@@ -69,7 +66,7 @@ public class PostAdapters extends BaseTest {
                 .extract().response();
     }
 
-    public static Response postWithStaticCookieLogin(String body, String url) {
+    public  Response postWithStaticCookieLogin(String body, String url) {
 
         return given()
                 .spec(REQ_SPEC)

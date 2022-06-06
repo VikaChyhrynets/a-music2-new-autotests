@@ -18,6 +18,7 @@ public class AuthToken {
                         "}")
                 .post(API_HOST + API_LOGIN)
                 .then()
+                .log().all()
                 .extract()
                 .header("Authorization");
     }
