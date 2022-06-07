@@ -17,7 +17,6 @@ import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 
 public class ChangePasswordAfterFirstLoginTests {
 
-    static String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
 
     @BeforeTest
     public void createUser() {
@@ -29,9 +28,7 @@ public class ChangePasswordAfterFirstLoginTests {
 
     @Test
     public void changePasswordAfterFirstLoginValidDateTest() {
-        new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem79", "111Gv5dvvf511", "PVS153215DSV"),
-                API_HOST + API_REGISTRATION);
+        String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
         new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
         Response response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("Number1"),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).as(Response.class);
