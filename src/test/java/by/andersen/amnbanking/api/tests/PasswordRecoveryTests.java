@@ -14,10 +14,6 @@ import static org.testng.Assert.assertEquals;
 
 public class PasswordRecoveryTests {
 
-    @BeforeClass
-    public void setUp(){
-    }
-
     @Test
     @TestRails(id = "C5908792")
     public void sendValidPassport(){
