@@ -48,12 +48,12 @@ public class JsonObjectHelper {
     public static String setIDForPassRecovery(String passport){
         jsonObject.put("passport", passport);
 
-        return jsonObject.toString();
+        return jsonObject.toJSONString();
     }
 
     public static String setPassword(String password){
-        jsonObject.put("smsCode", password);
+        jsonObject.put("newPassword", password);
 
-        return jsonObject.toString();
+        return jsonObject.toJSONString();
     }
 }

@@ -151,7 +151,7 @@ public class PasswordRecoveryTests {
     @TestRails(id = "C5911652")
     public void sendValidPassportConfirmedWithSms(){
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHECK_SMS, loginAsCookie).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         assertEquals(resp.getMessage(), "Change password code is correct");
     }
 
@@ -159,7 +159,7 @@ public class PasswordRecoveryTests {
     @TestRails(id = "C5911654")
     public void sendSmsWithLessThenFourDigits(){
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode("123"), API_HOST + CHECK_SMS, loginAsCookie).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("123"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         assertEquals(resp.getMessage(), "Sms code contains invalid characters");
     }
 
@@ -167,7 +167,7 @@ public class PasswordRecoveryTests {
     @TestRails(id = "C5911746")
     public void sendSmsWithMoreThenFourDigits(){
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode("12345"), API_HOST + CHECK_SMS, loginAsCookie).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("12345"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         assertEquals(resp.getMessage(), "Sms code contains invalid characters");
     }
 
@@ -176,7 +176,7 @@ public class PasswordRecoveryTests {
     public void sendSmsWithCookieReplacement(){
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
         Cookie replacedCookie = new Cookie.Builder(loginAsCookie.getName(), USER_SESSION_CODE_LOGIN).build();
-        Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHECK_SMS, replacedCookie).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, replacedCookie).as(Response.class);
         assertEquals(resp.getMessage(), "User has not been verified yet");
     }
 
@@ -185,8 +185,8 @@ public class PasswordRecoveryTests {
     public void changingPasswordWithCookieReplacement(){
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
         Cookie replacedCookie = new Cookie.Builder(loginAsCookie.getName(), USER_SESSION_CODE_LOGIN).build();
-        Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHECK_SMS, loginAsCookie).as(Response.class);
-        Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG), API_HOST + NEW_PASSWORD,replacedCookie).as(Response.class);
+        Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
+        Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,replacedCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
         assertEquals(resp.getMessage(), "User has not been verified yet");
     }
