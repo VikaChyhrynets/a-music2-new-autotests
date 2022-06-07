@@ -26,6 +26,18 @@ public class PostAdapters extends BaseTest {
                 .extract().response().body();
     }
 
+    public ResponseBody post(String body, String url, Cookie cookie) {
+        return given()
+                .spec(REQ_SPEC)
+                .cookie(cookie)
+                .body(body)
+                .when()
+                .post(url)
+                .then()
+                .log().all()
+                .extract().response().body();
+    }
+
     public Response postAuthWithSessionCode(String authToken,String body, String url) {
 
         return given()
@@ -38,7 +50,7 @@ public class PostAdapters extends BaseTest {
                 .extract().response();
     }
 
-    public  Response authWithSessionCode(String smsCode, String login, String password) {
+    public Response authWithSessionCode(String smsCode, String login, String password) {
         String authKey = getAuthToken(login, password);
 
         return given()

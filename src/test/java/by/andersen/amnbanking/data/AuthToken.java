@@ -18,7 +18,6 @@ public class AuthToken {
                         "}")
                 .post(API_HOST + API_LOGIN)
                 .then()
-                .log().all()
                 .extract()
                 .header("Authorization");
     }
@@ -44,5 +43,17 @@ public class AuthToken {
                 .then()
                 .extract()
                 .detailedCookie("Login");
+    }
+
+    public static Cookie checkPassportAndGetCookie(String passport) {
+
+        return given()
+                .spec(REQ_SPEC)
+                .body("{\"passport\": \"" + passport + "\"\n}")
+                .post(API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT)
+                .then()
+                .log()
+                .all()
+                .extract().detailedCookie("login");
     }
 }
