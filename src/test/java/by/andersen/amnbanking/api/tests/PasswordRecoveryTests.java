@@ -2,12 +2,13 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
+import by.andersen.amnbanking.data.AlertAPI;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.TestRails;
 import jsonBody.Response;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import io.restassured.http.Cookie;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ import static by.andersen.amnbanking.api.tests.LogoutTests.authKey;
 
 public class PasswordRecoveryTests {
 
-    @BeforeMethod
+    @BeforeTest
     public void createUser() {
         new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
                         ("Eminem79", "111Gv5dvvf511", "PVS153215DSV"),
@@ -28,7 +29,7 @@ public class PasswordRecoveryTests {
     }
 
 
-    @AfterMethod
+    @AfterTest
     public void deleteUser() throws SQLException {
         new DBConnector().deleteUser("Eminem79");
     }
@@ -84,9 +85,12 @@ public class PasswordRecoveryTests {
     public void changePasswordValidDateTest() {
         new PostAdapters().postWithStaticCookieLogin(setSmsCode("1234"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS);
-        Response response = new PostAdapters().postWithStaticCookieLogin(setNewPassword("8Lnj5c1235s"),
+        Response response = new PostAdapters().postWithStaticCookieLogin(setNewPassword("Number1"),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD).as(Response.class);
+        Response response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin("Celine715", "Number1"),
+                API_HOST + API_LOGIN).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Password changed successfully! Please login again");
+        Assert.assertEquals(response1.getMessage(), AlertAPI.LOGIN_SUCCESS.getValue());
     }
 
     @TestRails(id = "C5911960")

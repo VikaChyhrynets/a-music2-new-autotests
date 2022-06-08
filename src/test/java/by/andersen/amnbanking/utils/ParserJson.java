@@ -1,18 +1,22 @@
 package by.andersen.amnbanking.utils;
 
-import jsonBody.Response;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
 public class ParserJson {
+    static String message;
 
-    public static String parser(String key, Response response) throws ParseException{
-        String responseJson = response.getMessage();
-        JSONObject json = (JSONObject) new JSONParser().parse(responseJson);
-        JSONObject message = ((JSONObject) json.get("message"));
+    public static String parser(String body, String key) {
+        try {
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(body);
+            message = (String) jsonObject.get(key);
+            System.out.println(message);
 
-        return message.get(key).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } return message;
     }
 }
