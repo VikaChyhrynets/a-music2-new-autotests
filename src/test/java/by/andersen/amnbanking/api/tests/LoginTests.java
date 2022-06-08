@@ -50,7 +50,7 @@ public class LoginTests {
         response = doLogin(USER_BAN_LOGIN, USER_BAN_PASS);
         Login login = response.as(Login.class);
         Assert.assertEquals(login.getMessage(), BAN_USER.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        Assert.assertEquals(response.getStatusCode(), 423);
     }
 
     @TestRails(id = "C5895962")

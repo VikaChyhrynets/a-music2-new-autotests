@@ -79,7 +79,8 @@ public class PasswordRecoveryTests {
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
     }
 
-    @Test
+    @TestRails(id="C5924835")
+    @Test(description = "дописать проверку входа с новым паролем")
     public void changePasswordValidDateTest() {
         new PostAdapters().postWithStaticCookieLogin(setSmsCode("1234"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS);

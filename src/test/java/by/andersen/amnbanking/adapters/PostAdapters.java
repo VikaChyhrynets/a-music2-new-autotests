@@ -15,7 +15,7 @@ public class PostAdapters extends BaseTest {
 
     static Cookie authStaticLogin = getAuthLogin(PASSPORT_REG);
 
-    public ResponseBody post(String body, String url) {
+    public Response post(String body, String url) {
         return given()
                 .spec(REQ_SPEC)
                 .body(body)
@@ -23,7 +23,7 @@ public class PostAdapters extends BaseTest {
                 .post(url)
                 .then()
                 .log().all()
-                .extract().response().body();
+                .extract().response();
     }
 
     public ResponseBody post(String body, String url, Cookie cookie) {

@@ -5,19 +5,23 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
 public class ParserJson {
-    static String message;
 
-    public String parser(Response response,  String key) {
-        try {
-            String jsonBody = response.getMessage();
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonBody);
-            message = (String) jsonObject.get(key);
-            System.out.println(message);
+    public static String parser(String key, Response response) throws ParseException{
+        String responseJson = response.getMessage();
+        JSONObject json = (JSONObject) new JSONParser().parse(responseJson);
+        JSONObject message = ((JSONObject) json.get("message"));
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } return message;
+        return message.get(key).toString();
+    }
+
+    public String getMessage(Response response) throws ParseException{
+        return parser("message", response);
+    }
+
+    public String parserJackson(Response response) {
+            String responseJson = response.getMessage();
+        return responseJson;
     }
 }
