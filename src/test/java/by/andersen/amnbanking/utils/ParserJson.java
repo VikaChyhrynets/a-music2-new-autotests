@@ -15,13 +15,4 @@ public class ParserJson {
 
         return message.get(key).toString();
     }
-
-    public String getMessage(Response response) throws ParseException{
-        return parser("message", response);
-    }
-
-    public String parserJackson(Response response) {
-            String responseJson = response.getMessage();
-        return responseJson;
-    }
 }
