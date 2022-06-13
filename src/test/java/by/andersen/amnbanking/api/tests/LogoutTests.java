@@ -3,6 +3,7 @@ package by.andersen.amnbanking.api.tests;
 import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.utils.TestRails;
+import io.qameta.allure.Step;
 import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -17,7 +18,8 @@ public class LogoutTests extends BaseTest {
     static String authKey = getAuthToken("Maleficent1", "Number1");
 
     @TestRails(id = "C5893156")
-    @Test
+    @Step("Logout from active session, positive test")
+    @Test(description = "positive test, logout from active session")
     public void logoutActiveSessionTest() {
         new PostAdapters().postAuthWithSessionCode(authKey, setSmsCode("1234"),API_HOST + API_SESSIONCODE);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authKey).as(Response.class);
@@ -26,7 +28,8 @@ public class LogoutTests extends BaseTest {
 
 
     @TestRails(id = "?")
-    @Test
+    @Step("Logout with wrong sms code, negative test")
+    @Test(description = "negative test, logout from active session with wrong sms code")
     public void logoutWithNoActiveTokenTest() {
         new PostAdapters().postAuthWithSessionCode(authKey, setSmsCode("1235"),API_HOST + API_SESSIONCODE);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authKey).as(Response.class);
