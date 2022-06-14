@@ -3,7 +3,7 @@
 <suite name="API tests" parallel="tests" thread-count="1">
     <test name="API tests">
         <classes>
-            <class name="by.andersen.amnbanking.api.tests.AuthorizationAndVerificationTests"></class>
+            <class name="by.andersen.amnbanking.api.tests.ConfirmationCodeTests"></class>
             <class name="by.andersen.amnbanking.api.tests.RegistrationTests"></class>
             <class name="by.andersen.amnbanking.api.tests.PasswordRecoveryTests"></class>
             <class name="by.andersen.amnbanking.api.tests.ChangePasswordAfterFirstLoginTests"></class>

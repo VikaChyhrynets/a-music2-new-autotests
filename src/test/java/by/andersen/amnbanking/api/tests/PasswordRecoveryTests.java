@@ -108,7 +108,7 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "negative test, wrong filter type")
     public void sendConfirmationCodeAgainWithInvalidDataFilterPassportTest() throws SQLException {
         createUser();
-        Response response = new PostAdapters().postAuthWithSessionCode(authKey, setFilterType("SMS_FOR_CHANGE_PASSPORT"),
+        Response response = new PostAdapters().post(authKey, setFilterType("SMS_FOR_CHANGE_PASSPORT"),
                  API_HOST + SMS_CODE).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Invalid smsFilterType provided SMS_FOR_CHANGE_PASSPORT");
         deleteUser();

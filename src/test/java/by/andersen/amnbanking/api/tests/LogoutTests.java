@@ -21,7 +21,7 @@ public class LogoutTests extends BaseTest {
     @Step("Logout from active session, positive test")
     @Test(description = "positive test, logout from active session")
     public void logoutActiveSessionTest() {
-        new PostAdapters().postAuthWithSessionCode(authKey, setSmsCode("1234"),API_HOST + API_SESSIONCODE);
+        new PostAdapters().post(setSmsCode("1234"),API_HOST + API_SESSIONCODE, authKey);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authKey).as(Response.class);
         Assert.assertEquals(body.getMessage(), "Logged out successfully");
     }
@@ -31,7 +31,7 @@ public class LogoutTests extends BaseTest {
     @Step("Logout with wrong sms code, negative test")
     @Test(description = "negative test, logout from active session with wrong sms code")
     public void logoutWithNoActiveTokenTest() {
-        new PostAdapters().postAuthWithSessionCode(authKey, setSmsCode("1235"),API_HOST + API_SESSIONCODE);
+        new PostAdapters().post(setSmsCode("1235"),API_HOST + API_SESSIONCODE, authKey);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authKey).as(Response.class);
         Assert.assertEquals(body.getMessage(), "No active session");
     }

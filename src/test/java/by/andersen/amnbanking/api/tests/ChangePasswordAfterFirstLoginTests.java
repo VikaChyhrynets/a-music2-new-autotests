@@ -25,8 +25,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginValidDateTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        String response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("Number1"),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        String response = new PostAdapters().post(authTokenChangePassword, setNewPassword("Number1"),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).asString();
         String response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin("Eminem79", "Number1"),
                 API_HOST + API_LOGIN).asString();
@@ -41,8 +41,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginLessThan7CharsTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        Response response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("Num1"),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        Response response = new PostAdapters().post(authTokenChangePassword, setNewPassword("Num1"),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         deleteUser();
@@ -54,8 +54,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginMoreThan20CharsTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        Response response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("NumLcnd78554C23569712D1"),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        Response response = new PostAdapters().post(authTokenChangePassword, setNewPassword("NumLcnd78554C23569712D1"),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         deleteUser();
@@ -67,8 +67,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginOnlyLettersTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        Response response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("NumLcndvS"),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        Response response = new PostAdapters().post(authTokenChangePassword, setNewPassword("NumLcndvS"),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         deleteUser();
@@ -80,8 +80,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginOnlyNumbersTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        String response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("569102561"),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        String response = new PostAdapters().post(authTokenChangePassword, setNewPassword("569102561"),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).asString();
         Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         deleteUser();
@@ -93,8 +93,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginWithSpecialCharactersTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        String response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("5691Lvd."),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        String response = new PostAdapters().post(authTokenChangePassword, setNewPassword("5691Lvd."),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).asString();
         Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         deleteUser();
@@ -106,8 +106,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginWithEmptyNewPasswordLineTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        String response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword(""),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        String response = new PostAdapters().post(authTokenChangePassword, setNewPassword(""),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).asString();
         Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         deleteUser();
@@ -119,8 +119,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginWithSpaceNewPasswordLineTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        String response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setNewPassword("Number1 "),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        String response = new PostAdapters().post(authTokenChangePassword, setNewPassword("Number1 "),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY).asString();
         Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         deleteUser();
@@ -132,8 +132,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     public void changePasswordAfterFirstLoginReLoginTest() throws SQLException {
         createUser();
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
-        Response response = new PostAdapters().postAuthWithSessionCode(authTokenChangePassword, setSmsCode("1234"),
+        new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"), API_HOST + API_SESSIONCODE);
+        Response response = new PostAdapters().post(authTokenChangePassword, setSmsCode("1234"),
                 API_HOST + API_SESSIONCODE).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Required to change password on first login");
         deleteUser();
