@@ -12,6 +12,7 @@ import io.restassured.http.Cookie;
 import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.AuthToken.checkPassportAndGetCookie;
+import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static org.testng.Assert.assertEquals;
@@ -23,8 +24,9 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "negative test, only letters in code confirmation")
     public void enteringLettersInCodeConfirmationTest() throws SQLException {
         createUser();
-        Response response = new PostAdapters().postWithCookieLogin(PASSPORT_REG, setSmsCode("tugb"),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
+        Cookie login = getAuthLogin(PASSPORT_REG);
+        Response response = new PostAdapters().post(setSmsCode("tugb"),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms code contains invalid characters");
         deleteUser();
     }
@@ -34,8 +36,9 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "negative test, special character /")
     public void enteringSpecialCharacterInCodeConfirmationTest() throws SQLException {
         createUser();
-        Response response = new PostAdapters().postWithCookieLogin(PASSPORT_REG, setSmsCode("12/4"),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
+        Cookie login = getAuthLogin(PASSPORT_REG);
+        Response response = new PostAdapters().post(setSmsCode("12/4"),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms code contains invalid characters");
         deleteUser();
     }
@@ -45,8 +48,9 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "negative test, empty field for code confirmation")
     public void enteringWithEmptyFieldInCodeConfirmationTest() throws SQLException {
         createUser();
-        Response response = new PostAdapters().postWithCookieLogin(PASSPORT_REG, setSmsCode(""),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
+        Cookie login = getAuthLogin(PASSPORT_REG);
+        Response response = new PostAdapters().post( setSmsCode(""),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms code contains invalid characters");
         deleteUser();
     }
@@ -56,8 +60,9 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "negative test, wrong code confirmation")
     public void enteringWrongCodeInCodeConfirmation1TimeTest() throws SQLException {
         createUser();
-        Response response = new PostAdapters().postWithCookieLogin("PVS153215DSV", setSmsCode("1235"),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
+        Cookie login = getAuthLogin("PVS153215DSV");
+        Response response = new PostAdapters().post(setSmsCode("1235"),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Invalid sms code");
         Assert.assertEquals(response.getFailsCount(), 1);
         deleteUser();
@@ -68,14 +73,15 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "negative test,send wrong code confirmation by passport 2 times")
     public void enteringWrongCodeInCodeConfirmation2TimesTest() throws SQLException {
         createUser();
-        new PostAdapters().postWithStaticCookieLogin(setSmsCode("1235"),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
-        Response response = new PostAdapters().postWithStaticCookieLogin(setSmsCode("1235"),
-                    API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
+        Cookie login = getAuthLogin(PASSPORT_REG);
+        new PostAdapters().post(setSmsCode("1235"),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS,login).as(Response.class);
+        Response response = new PostAdapters().post(setSmsCode("1235"),
+                    API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Invalid sms code");
         Assert.assertEquals(response.getFailsCount(), 2);
-        new PostAdapters().postWithStaticCookieLogin(setSmsCode("1234"),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS).as(Response.class);
+        new PostAdapters().post(setSmsCode("1234"),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         deleteUser();
     }
 
@@ -84,10 +90,11 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "positive test, change password by passport with valid data")
     public void changePasswordValidDateTest() throws SQLException {
         createUser();
-        new PostAdapters().postWithStaticCookieLogin(setSmsCode("1234"),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS);
-        Response response = new PostAdapters().postWithStaticCookieLogin(setNewPassword("Number1"),
-                API_HOST + CHANGE_PASSWORD + NEW_PASSWORD).as(Response.class);
+        Cookie login = getAuthLogin(PASSPORT_REG);
+        new PostAdapters().post(setSmsCode("1234"),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login);
+        Response response = new PostAdapters().post(setNewPassword("Number1"),
+                API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, login).as(Response.class);
         Response response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin("Celine715", "Number1"),
                 API_HOST + API_LOGIN).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Password changed successfully! Please login again");
@@ -111,8 +118,9 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "positive test, send correct filter type for change password by passport")
     public void sendConfirmationCodeAgainWithInvalidDataFilterPasswordTest() throws SQLException {
         createUser();
-        Response response = new PostAdapters().postWithStaticCookieLogin(setFilterType("SMS_FOR_CHANGE_PASSWORD"),
-                API_HOST + SMS_CODE).as(Response.class);
+        Cookie login = getAuthLogin(PASSPORT_REG);
+        Response response = new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSWORD"),
+                API_HOST + SMS_CODE, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms sent successfully");
         deleteUser();
     }
