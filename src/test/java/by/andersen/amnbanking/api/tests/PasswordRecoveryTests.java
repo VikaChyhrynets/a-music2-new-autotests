@@ -5,19 +5,20 @@ import by.andersen.amnbanking.data.AlertAPI;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import io.restassured.http.Cookie;
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.data.AuthToken.checkPassportAndGetCookie;
 import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static org.testng.Assert.assertEquals;
 import static by.andersen.amnbanking.api.tests.LogoutTests.authKey;
 
+@Story("UC 1.3 - Password recovery")
 public class PasswordRecoveryTests extends BaseTest{
     @TestRails(id = "C5911963")
     @Step("Send only letters in code confirmation for recovery password by passport, negative test")
@@ -126,28 +127,28 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5908792")
-    @Test
+    @Test(description = "Trying to send valid passport")
     public void sendValidPassport(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
         assertEquals(resp.getMessage(), "Passport is valid. Sms sent successfully");
     }
 
     @TestRails(id = "C5909076")
-    @Test
+    @Test(description = "Trying to send valid, but unregistered passport")
     public void sendUnregisteredPassport(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "1111"), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
         assertEquals(resp.getMessage(), "This ID number is not registered. Please check the entered data or contact the bank");
     }
 
     @TestRails(id = "C5908983")
-    @Test
+    @Test(description = "Trying to send empty passport")
     public void sendEmptyPassport(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(""), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
         assertEquals(resp.getMessage(), "Invalid characters");
     }
 
     @TestRails(id = "C5909034")
-    @Test
+    @Test(description = "Trying to send passport longer then 30 symbols")
     public void sendPassportWithMoreThenThirtySymbols(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "324567898765434567865432456"),
                 API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
@@ -155,56 +156,56 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5909068")
-    @Test
+    @Test(description = "Trying to send passport with special symbols, like \"*\"")
     public void sendPassportWithSymbols(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "*"), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
         assertEquals(resp.getMessage(), "Invalid characters");
     }
 
     @TestRails(id = "C5909070")
-    @Test
+    @Test(description = "Trying to send passport with only lower case letters")
     public void sendPassportWithLowerCase(){
         Response resp = new PostAdapters().post(setIDForPassRecovery("kv24535756"), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
         assertEquals(resp.getMessage(), "Invalid characters");
     }
 
     @TestRails(id = "C5911652")
-    @Test
+    @Test(description = "Trying to send valid SMS")
     public void sendValidPassportConfirmedWithSms(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         assertEquals(resp.getMessage(), "Change password code is correct");
     }
 
     @TestRails(id = "C5911654")
-    @Test
+    @Test(description = "Trying to send SMS shorter then 4 symbols")
     public void sendSmsWithLessThenFourDigits(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response resp = new PostAdapters().post(setSmsCode("123"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         assertEquals(resp.getMessage(), "Sms code contains invalid characters");
     }
 
     @TestRails(id = "C5911746")
-    @Test
+    @Test(description = "Trying to send SMS longer then 4 symbols")
     public void sendSmsWithMoreThenFourDigits(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response resp = new PostAdapters().post(setSmsCode("12345"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         assertEquals(resp.getMessage(), "Sms code contains invalid characters");
     }
 
     @TestRails(id = "C5923248")
-    @Test
+    @Test(description = "Trying to send SMS for another user through replacing cookie")
     public void sendSmsWithCookieReplacement(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Cookie replacedCookie = new Cookie.Builder(loginAsCookie.getName(), USER_SESSION_CODE_LOGIN).build();
         Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, replacedCookie).as(Response.class);
         assertEquals(resp.getMessage(), "User has not been verified yet");
     }
 
     @TestRails(id = "C5923249")
-    @Test
+    @Test(description = "Trying to set password for another user through replacing cookie")
     public void changingPasswordWithCookieReplacement(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Cookie replacedCookie = new Cookie.Builder(loginAsCookie.getName(), USER_SESSION_CODE_LOGIN).build();
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,replacedCookie).as(Response.class);
@@ -213,9 +214,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924835")
-    @Test
+    @Test(description = "Trying to set valid password")
     public void sendValidPassword(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -223,9 +224,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924837")
-    @Test
+    @Test(description = "Trying to set password shorter then 7 symbols")
     public void sendPasswordWithLessThen7(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("8Rvjsi"), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -233,9 +234,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924838")
-    @Test
+    @Test(description = "Trying to set password longer then 20 symbols")
     public void sendPasswordWithMoreThen20(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("8RvjsisKKKfhdskjf23546hkdsjf"), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -243,9 +244,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924842")
-    @Test
+    @Test(description = "Trying to set password without numbers")
     public void sendPasswordWithOnlyLetters(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("KJGJuygggfFTYF"), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -253,9 +254,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924843")
-    @Test
+    @Test(description = "Trying to set password with only numbers")
     public void sendPasswordWithOnlyNumbers(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("82485694395"), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -263,9 +264,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924844")
-    @Test
+    @Test(description = "Trying to set password with special symbols, like \"*\"")
     public void sendPasswordWithSymbols(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG + "*"), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -273,9 +274,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924846")
-    @Test
+    @Test(description = "Sending empty password during recovery")
     public void sendEmptyPassword(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG + "*"), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -283,9 +284,9 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924849")
-    @Test
+    @Test(description = "Sending passport with space")
     public void sendPasswordWithSpace(){
-        Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
+        Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
         Response checkSms = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG + " "), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,loginAsCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
@@ -293,8 +294,8 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924850")
-    @Test
-    public void sendPasswordWithPassportCheck(){
+    @Test(description = "Changing password without passport checking")
+    public void changePasswordWithoutPassportCheck(){
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD).as(Response.class);
         assertEquals(resp.getMessage(), "User has not been verified yet");
     }

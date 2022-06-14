@@ -6,6 +6,7 @@ import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.ParserJson;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,6 +17,7 @@ import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 
+@Story("UC 1.5 - Changing password on first login")
 public class ChangePasswordAfterFirstLoginTests extends BaseTest{
     @TestRails(id = "C5923855")
     @Step("Change password after first login, valid date")

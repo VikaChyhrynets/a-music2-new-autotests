@@ -2,12 +2,14 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.utils.TestRails;
+import io.qameta.allure.Story;
 import jsonBody.Response;
 import org.testng.annotations.Test;
 import static by.andersen.amnbanking.data.DataUrls.USER_PASS;
 import static by.andersen.amnbanking.data.DataUrls.USER_SESSION_CODE_LOGIN;
 import static org.testng.Assert.assertEquals;
 
+@Story("UC 1.10 - Confirmation code")
 public class AuthorizationAndVerificationTests extends BaseTest {
 
     @Test(description = "Valid session code")

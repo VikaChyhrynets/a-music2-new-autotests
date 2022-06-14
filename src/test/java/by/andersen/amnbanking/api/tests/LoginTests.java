@@ -2,6 +2,7 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.api.tests.objects.Login;
 import by.andersen.amnbanking.utils.TestRails;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -20,6 +21,7 @@ import static by.andersen.amnbanking.data.DoLogin.doLogin;
 import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidLoginWithSpecialCharacter;
 import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidPasswordWithSpecialCharacter;
 
+@Story("UC 1.2 - Web application login")
 public class LoginTests {
 
     @TestRails(id = "C5888309")

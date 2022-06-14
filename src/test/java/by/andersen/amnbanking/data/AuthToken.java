@@ -22,19 +22,6 @@ public class AuthToken {
                 .header("Authorization");
     }
 
-    public static String getAuthToken() {
-        return given()
-                .spec(REQ_SPEC)
-                .body("{\n" +
-                        "\"login\": \"" + USER_LOGIN + "\", \n" +
-                        "\"password\":  \"" + USER_PASS + "\"\n" +
-                        "}")
-                .post(API_HOST + API_LOGIN)
-                .then()
-                .extract()
-                .header("Authorization");
-    }
-
     public static Cookie getAuthLogin(String passport) {
         return given()
                 .spec(REQ_SPEC)
@@ -43,17 +30,5 @@ public class AuthToken {
                 .then()
                 .extract()
                 .detailedCookie("Login");
-    }
-
-    public static Cookie checkPassportAndGetCookie(String passport) {
-
-        return given()
-                .spec(REQ_SPEC)
-                .body("{\"passport\": \"" + passport + "\"\n}")
-                .post(API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT)
-                .then()
-                .log()
-                .all()
-                .extract().detailedCookie("login");
     }
 }
