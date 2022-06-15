@@ -50,7 +50,7 @@ public class PasswordRecoveryTests extends BaseTest{
     public void enteringWithEmptyFieldInCodeConfirmationTest() throws SQLException {
         createUser();
         Cookie login = getAuthLogin(PASSPORT_REG);
-        Response response = new PostAdapters().post( setSmsCode(""),
+        Response response = new PostAdapters().post(setSmsCode(""),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms code contains invalid characters");
         deleteUser();
@@ -108,8 +108,8 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "negative test, wrong filter type")
     public void sendConfirmationCodeAgainWithInvalidDataFilterPassportTest() throws SQLException {
         createUser();
-        Response response = new PostAdapters().post(authKey, setFilterType("SMS_FOR_CHANGE_PASSPORT"),
-                 API_HOST + SMS_CODE).as(Response.class);
+        Response response = new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSPORT"),
+                 API_HOST + SMS_CODE, authKey).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Invalid smsFilterType provided SMS_FOR_CHANGE_PASSPORT");
         deleteUser();
     }
