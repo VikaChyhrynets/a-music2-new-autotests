@@ -59,21 +59,20 @@ public class PasswordRecoveryTests extends BaseTest{
     @TestRails(id = "C5911791")
     @Step("Send wrong code confirmation for recovery password by passport 1 time, negative test")
     @Test(description = "negative test, wrong code confirmation")
-    public void enteringWrongCodeInCodeConfirmation1TimeTest() throws SQLException {
-        createUser();
-        Cookie login = getAuthLogin("PVS153215DSV");
+    public void enteringWrongCodeInCodeConfirmation1TimeTest() {
+        Cookie login = getAuthLogin(PASSPORT_REG);
         Response response = new PostAdapters().post(setSmsCode("1235"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Invalid sms code");
         Assert.assertEquals(response.getFailsCount(), 1);
-        deleteUser();
+        new PostAdapters().post(setSmsCode("1234"),
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
     }
 
     @TestRails(id = "C5911796")
     @Step("Send wrong code confirmation for recovery password by passport 2 time, negative test")
     @Test(description = "negative test,send wrong code confirmation by passport 2 times")
-    public void enteringWrongCodeInCodeConfirmation2TimesTest() throws SQLException {
-        createUser();
+    public void enteringWrongCodeInCodeConfirmation2TimesTest() {
         Cookie login = getAuthLogin(PASSPORT_REG);
         new PostAdapters().post(setSmsCode("1235"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS,login).as(Response.class);
@@ -83,7 +82,6 @@ public class PasswordRecoveryTests extends BaseTest{
         Assert.assertEquals(response.getFailsCount(), 2);
         new PostAdapters().post(setSmsCode("1234"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
-        deleteUser();
     }
 
     @TestRails(id="C5924835")

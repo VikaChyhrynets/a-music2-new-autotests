@@ -1,5 +1,6 @@
 package by.andersen.amnbanking.data;
 
+import io.qameta.allure.Step;
 import io.restassured.http.Cookie;
 
 import static by.andersen.amnbanking.data.DataUrls.*;
@@ -9,6 +10,7 @@ import static io.restassured.RestAssured.given;
 
 public class AuthToken {
 
+    @Step("Authorize user and saving token in Bearer")
     public static String getAuthToken(String login, String password) {
         return given()
                 .spec(REQ_SPEC)
@@ -22,6 +24,7 @@ public class AuthToken {
                 .header("Authorization");
     }
 
+    @Step("Authorize user and saving token in Cookie")
     public static Cookie getAuthLogin(String passport) {
         return given()
                 .spec(REQ_SPEC)
