@@ -10,6 +10,7 @@ import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import io.restassured.http.Cookie;
+
 import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
@@ -23,37 +24,31 @@ public class PasswordRecoveryTests extends BaseTest{
     @TestRails(id = "C5911963")
     @Step("Send only letters in code confirmation for recovery password by passport, negative test")
     @Test(description = "negative test, only letters in code confirmation")
-    public void enteringLettersInCodeConfirmationTest() throws SQLException {
-        createUser();
+    public void enteringLettersInCodeConfirmationTest() {
         Cookie login = getAuthLogin(PASSPORT_REG);
         Response response = new PostAdapters().post(setSmsCode("tugb"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms code contains invalid characters");
-        deleteUser();
     }
 
     @TestRails(id = "C5911967")
     @Step("Send special character in code confirmation / for recovery password by passport, negative test")
     @Test(description = "negative test, special character /")
-    public void enteringSpecialCharacterInCodeConfirmationTest() throws SQLException {
-        createUser();
+    public void enteringSpecialCharacterInCodeConfirmationTest() {
         Cookie login = getAuthLogin(PASSPORT_REG);
         Response response = new PostAdapters().post(setSmsCode("12/4"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms code contains invalid characters");
-        deleteUser();
     }
 
     @TestRails(id = "C5911881")
     @Step("Send an empty field code confirmation for recovery password by passport, negative test")
     @Test(description = "negative test, empty field for code confirmation")
-    public void enteringWithEmptyFieldInCodeConfirmationTest() throws SQLException {
-        createUser();
+    public void enteringWithEmptyFieldInCodeConfirmationTest(){
         Cookie login = getAuthLogin(PASSPORT_REG);
         Response response = new PostAdapters().post(setSmsCode(""),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms code contains invalid characters");
-        deleteUser();
     }
 
     @TestRails(id = "C5911791")
@@ -87,8 +82,7 @@ public class PasswordRecoveryTests extends BaseTest{
     @TestRails(id="C5924835")
     @Step("Send the correct code confirmation for recovery password by passport and change password, positive test")
     @Test(description = "positive test, change password by passport with valid data")
-    public void changePasswordValidDateTest() throws SQLException {
-        createUser();
+    public void changePasswordValidDateTest() {
         Cookie login = getAuthLogin(PASSPORT_REG);
         new PostAdapters().post(setSmsCode("1234"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login);
@@ -98,30 +92,25 @@ public class PasswordRecoveryTests extends BaseTest{
                 API_HOST + API_LOGIN).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Password changed successfully! Please login again");
         Assert.assertEquals(response1.getMessage(), AlertAPI.LOGIN_SUCCESS.getValue());
-        deleteUser();
     }
 
     @TestRails(id = "C5911960")
     @Step("Send wrong filter type for change password as type for change passport, negative test")
     @Test(description = "negative test, wrong filter type")
-    public void sendConfirmationCodeAgainWithInvalidDataFilterPassportTest() throws SQLException {
-        createUser();
+    public void sendConfirmationCodeAgainWithInvalidDataFilterPassportTest() {
         Response response = new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSPORT"),
                  API_HOST + SMS_CODE, authKey).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Invalid smsFilterType provided SMS_FOR_CHANGE_PASSPORT");
-        deleteUser();
     }
 
     @TestRails(id = "C5911959")
     @Step("Send correct filter type for change password as type for change password, positive test")
     @Test(description = "positive test, send correct filter type for change password by passport")
-    public void sendConfirmationCodeAgainWithInvalidDataFilterPasswordTest() throws SQLException {
-        createUser();
+    public void sendConfirmationCodeAgainWithInvalidDataFilterPasswordTest() {
         Cookie login = getAuthLogin(PASSPORT_REG);
         Response response = new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSWORD"),
                 API_HOST + SMS_CODE, login).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Sms sent successfully");
-        deleteUser();
     }
 
     @TestRails(id = "C5908792")
@@ -209,6 +198,18 @@ public class PasswordRecoveryTests extends BaseTest{
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD,replacedCookie).as(Response.class);
         assertEquals(checkSms.getMessage(),"Change password code is correct");
         assertEquals(resp.getMessage(), "User has not been verified yet");
+    }
+
+    @TestRails(id = "C5924638")
+    @Step("Password recovery without changing the password at first login, positive test")
+    @Test(description = "Password recovery without changing the password at first login, positive test")
+    public void passwordRecoveryWithoutChangingPasswordFirstLoginTest() throws SQLException {
+        createUser();
+        Response response = new PostAdapters().post(setPassportForRegistration("PVS153215DSV"),
+                API_HOST+CHANGE_PASSWORD+CHECK_PASSPORT).as(Response.class);
+        assertEquals(response.getMessage(), "The one-time password cannot be changed via password recovery." +
+                " Please contact the bank in case of problems with the one-time password");
+        deleteUser();
     }
 
     @TestRails(id = "C5924835")
