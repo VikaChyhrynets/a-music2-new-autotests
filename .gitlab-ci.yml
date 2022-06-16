@@ -3,20 +3,20 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
-#  - report
+  - report
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - echo "Compiling the code..."
-    - mvn clean compile
+    - 'mvn clean compile'
     - echo "Compile complete."
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Running unit tests..."
-    - mvn test
+    - 'mvn test'
 
 #lint-test-job:   # This job also runs in the test stage.
 #  stage: test    # It can run at the same time as unit-test-job (in parallel).
@@ -25,7 +25,7 @@ unit-test-job:   # This job runs in the test stage.
 #    - sleep 10
 #    - echo "No lint issues found."
 
-#report-job:
-#    stage: report
-#    script:
-#    - allure serve target/allure-results
+sonar-report-job:
+    stage: report
+    script:
+    - 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=A-Music2-new-autotests'
