@@ -9,14 +9,14 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - echo "Compiling the code..."
-    - 'mvn clean compile'
+    - $MAVEN_HOME/bin/mvn clean compile
     - echo "Compile complete."
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Running unit tests..."
-    - 'mvn test'
+    - $MAVEN_HOME/bin/mvn test
 
 #lint-test-job:   # This job also runs in the test stage.
 #  stage: test    # It can run at the same time as unit-test-job (in parallel).
@@ -28,4 +28,4 @@ unit-test-job:   # This job runs in the test stage.
 sonar-report-job:
     stage: report
     script:
-    - 'mvn sonar:sonar -Dsonar.login=5a0dba121362d5123e8ef274732962749063b280 -Dsonar.projectKey=A-Music2-new-autotests'
+    - $MAVEN_HOME/bin/mvn sonar:sonar -Dsonar.login=5a0dba121362d5123e8ef274732962749063b280 -Dsonar.projectKey=A-Music2-new-autotests
