@@ -1,78 +1,21 @@
 # For more information, see: https://docs.gitlab.com/ee/ci/yaml/README.html#stages
-image: maven:latest
-
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
+image: openjdk:11-jdk-slim
 
 stages:  
   - build
   - test
-  - package
-  - notify
 
-job build:
+build:
   stage: build
   only:
     - master
-    - merge_requests
-    - /^release\/.*$/
-  except:
-    - tags
   script:
     - 'mvn compile'
-  cache:
-    paths:
-      - ./target
-      - ./.m2
 
-job test:
+test:
   stage: test
   only:
-    - dev
+    - master
     - merge_requests
-    - /^release\/.*$/
-  except:
-    - tags
   script:
     - 'mvn test'
-  cache:
-    paths:
-      - ./target
-      - ./.m2
-
-job package:
-  stage: package
-  only:
-    - dev
-    - /^release\/.*$/
-  except:
-    - tags
-  script:
-    - 'mvn package -Dmaven.test.skip=true'
-  artifacts:
-    paths:
-      - target/*.jar
-  cache:
-    policy: pull
-    paths:
-      - ./target
-      - ./.m2
-
-job notify_error:
-  stage: notify
-  only:
-    - master
-    - /^release\/.*$/
-  script:
-    - sh ci-notify.sh 
-  when: on_failure
-
-notify_error_release:
-  stage: notify
-  only:
-    - /^release-.*$/
-  except:
-    - branches
-  script:
-    - sh ci-notify.sh 
-  when: on_failure
