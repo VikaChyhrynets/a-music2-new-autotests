@@ -28,4 +28,4 @@ unit-test-job:   # This job runs in the test stage.
 sonar-report-job:
     stage: report
     script:
-    - 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=A-Music2-new-autotests'
+    - 'mvn sonar:sonar -Dsonar.login=5a0dba121362d5123e8ef274732962749063b280 -Dsonar.projectKey=A-Music2-new-autotests'
