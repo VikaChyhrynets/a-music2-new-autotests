@@ -12,17 +12,13 @@
     <properties>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.source>8</maven.compiler.source>
-
-        <aspectj.version>1.9.7</aspectj.version>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
         <allure.version>2.14.0</allure.version>
         <selenide.version>5.24.0</selenide.version>
-
         <rest-assured-version>5.0.0</rest-assured-version>
         <json-simple.version>1.1.1</json-simple.version>
-        <aspectj-version>1.9.6</aspectj-version>
+        <aspectj-version>1.9.7</aspectj-version>
         <testng-version>7.4.0</testng-version>
         <hamcrest-version>2.2</hamcrest-version>
         <allure-version>2.17.3</allure-version>
@@ -30,7 +26,7 @@
         <log4j-version>2.14.1</log4j-version>
         <postgreSQL.version>42.3.1</postgreSQL.version>
         <extentreports-version>5.0.8</extentreports-version>
-        <maven-surefire-plugin-version>2.22.2</maven-surefire-plugin-version>
+        <maven-surefire-plugin-version>3.0.0-M5</maven-surefire-plugin-version>
         <slf4j.version>1.7.21</slf4j.version>
     </properties>
     <profiles>
@@ -42,11 +38,11 @@
             <properties>
                 <!-- Optional URL to server. Default value is http://localhost:9000 -->
                 <sonar.host.url>
-                  https://sonarqube8.andersenlab.com
+                    https://sonarqube8.andersenlab.com
                 </sonar.host.url>
             </properties>
         </profile>
-     </profiles>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>org.sonarsource.scanner.maven</groupId>
@@ -145,21 +141,21 @@
                         <suiteXmlFile>src/test/resources/testng_ui.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng_api.xml</suiteXmlFile>
                     </suiteXmlFiles>
-<!--                    <argLine>-->
-<!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
-<!--                    </argLine>-->
-<!--                    <systemProperties>-->
-<!--                        <property>-->
-<!--                            <name>allure.results.directory</name>-->
-<!--                            <value>${project.build.directory}/target/allure-results</value>-->
-<!--                        </property>-->
-<!--                    </systemProperties>-->
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj-version}/aspectjweaver-${aspectj-version}.jar"
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/target/allure-results</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
+                        <version>${aspectj-version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
