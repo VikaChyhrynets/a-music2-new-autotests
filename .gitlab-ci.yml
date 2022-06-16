@@ -7,9 +7,9 @@ stages:
 build:
   stage: build
   script:
-  - mvn compile
+  - 'mvn compile'
 
 test:
   stage: test
   script:
-  - mvn test
+  - 'mvn test'
