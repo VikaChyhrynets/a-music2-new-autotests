@@ -10,7 +10,7 @@ stages:
   - package
   - notify
 
-build:
+job build:
   stage: build
   only:
     - master
@@ -25,7 +25,7 @@ build:
       - ./target
       - ./.m2
 
-test:
+job test:
   stage: test
   only:
     - dev
@@ -40,7 +40,7 @@ test:
       - ./target
       - ./.m2
 
-package:
+job package:
   stage: package
   only:
     - dev
@@ -58,7 +58,7 @@ package:
       - ./target
       - ./.m2
 
-notify_error:
+job notify_error:
   stage: notify
   only:
     - master
