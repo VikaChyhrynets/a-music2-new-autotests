@@ -114,6 +114,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5908792")
+    @Step("Sending valid passport")
     @Test(description = "Trying to send valid passport")
     public void sendValidPassport(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
@@ -121,6 +122,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5909076")
+    @Step("Sending valid, but unregistered passport")
     @Test(description = "Trying to send valid, but unregistered passport")
     public void sendUnregisteredPassport(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "1111"), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
@@ -128,6 +130,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5908983")
+    @Step("Sending empty passport")
     @Test(description = "Trying to send empty passport")
     public void sendEmptyPassport(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(""), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
@@ -135,6 +138,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5909034")
+    @Step("Sending passport longer then 30 symbols")
     @Test(description = "Trying to send passport longer then 30 symbols")
     public void sendPassportWithMoreThenThirtySymbols(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "324567898765434567865432456"),
@@ -143,6 +147,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5909068")
+    @Step("Sending passport with special symbols, like \"*\"")
     @Test(description = "Trying to send passport with special symbols, like \"*\"")
     public void sendPassportWithSymbols(){
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "*"), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
@@ -150,6 +155,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5909070")
+    @Step("Sending passport with only lower case letters")
     @Test(description = "Trying to send passport with only lower case letters")
     public void sendPassportWithLowerCase(){
         Response resp = new PostAdapters().post(setIDForPassRecovery("kv24535756"), API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT).as(Response.class);
@@ -157,6 +163,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5911652")
+    @Step("Sending valid SMS")
     @Test(description = "Trying to send valid SMS")
     public void sendValidPassportConfirmedWithSms(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -165,6 +172,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5911654")
+    @Step("Sending SMS shorter then 4 symbols")
     @Test(description = "Trying to send SMS shorter then 4 symbols")
     public void sendSmsWithLessThenFourDigits(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -173,6 +181,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5911746")
+    @Step("Sending SMS longer then 4 symbols")
     @Test(description = "Trying to send SMS longer then 4 symbols")
     public void sendSmsWithMoreThenFourDigits(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -181,6 +190,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5923248")
+    @Step("Sending verification SMS for another user through replacing cookie")
     @Test(description = "Trying to send SMS for another user through replacing cookie")
     public void sendSmsWithCookieReplacement(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -190,6 +200,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5923249")
+    @Step("Setting password for another user through replacing cookie")
     @Test(description = "Trying to set password for another user through replacing cookie")
     public void changingPasswordWithCookieReplacement(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -213,6 +224,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924835")
+    @Step("Setting a valid password")
     @Test(description = "Trying to set valid password")
     public void sendValidPassword(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -223,6 +235,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924837")
+    @Step("Setting a password shorter then 7 symbols")
     @Test(description = "Trying to set password shorter then 7 symbols")
     public void sendPasswordWithLessThen7(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -233,6 +246,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924838")
+    @Step("Setting a password longer then 20 symbols")
     @Test(description = "Trying to set password longer then 20 symbols")
     public void sendPasswordWithMoreThen20(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -243,6 +257,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924842")
+    @Step("Setting a password without numbers")
     @Test(description = "Trying to set password without numbers")
     public void sendPasswordWithOnlyLetters(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -253,6 +268,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924843")
+    @Step("Setting a password with only numbers")
     @Test(description = "Trying to set password with only numbers")
     public void sendPasswordWithOnlyNumbers(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -263,6 +279,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924844")
+    @Step("Setting a password with special symbols, like \"*\"")
     @Test(description = "Trying to set password with special symbols, like \"*\"")
     public void sendPasswordWithSymbols(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -273,6 +290,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924846")
+    @Step("Setting an empty password during recovery")
     @Test(description = "Sending empty password during recovery")
     public void sendEmptyPassword(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -283,6 +301,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924849")
+    @Step("Sending passport with space")
     @Test(description = "Sending passport with space")
     public void sendPasswordWithSpace(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
@@ -293,6 +312,7 @@ public class PasswordRecoveryTests extends BaseTest{
     }
 
     @TestRails(id = "C5924850")
+    @Step("Changing password without passport checking")
     @Test(description = "Changing password without passport checking")
     public void changePasswordWithoutPassportCheck(){
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG), API_HOST + CHANGE_PASSWORD + NEW_PASSWORD).as(Response.class);

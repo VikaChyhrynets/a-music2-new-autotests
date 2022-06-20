@@ -2,6 +2,7 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.utils.TestRails;
+import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import jsonBody.Response;
 import org.testng.annotations.Test;
@@ -16,6 +17,7 @@ import static org.testng.Assert.assertEquals;
 public class ConfirmationCodeTests extends BaseTest {
 
     @Test(description = "Valid session code")
+    @Step("Sending valid code")
     @TestRails (id = "C5888309")
     void sendValidSessionCode() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -24,6 +26,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Three digit session code")
+    @Step("Sending three digits code")
     @TestRails (id = "С5895560")
     void sendSessionCodeWithThreeDigits() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -32,6 +35,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Five digits session code")
+    @Step("Sending five digits code")
     @TestRails (id = "С5895561")
     void sendSessionCodeWithFiveDigits() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -41,6 +45,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Blank session code")
+    @Step("Sending blank code")
     @TestRails (id = "C5895562")
     void sendBlankSessionCode() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -50,6 +55,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Code with only letters")
+    @Step("Sending code with only letters")
     @TestRails (id = "С5895563")
     void sendSessionCodeWithLetters() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -59,6 +65,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Code with one letter")
+    @Step("Sending code with one letter")
     @TestRails (id = "С5895563")
     void sendSessionCodeWithLetter() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -68,6 +75,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Code with only symbols")
+    @Step("Sending code with only special symbols")
     @TestRails (id = "С5895564")
     void sendSessionCodeWithSymbols() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -77,6 +85,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Code with one symbol")
+    @Step("Sending code with one special symbol")
     @TestRails (id = "С5895564")
     void sendSessionCodeWithSymbol() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -86,6 +95,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Code with one space")
+    @Step("Sending code with one space")
     @TestRails (id = "С5900178")
     void sendSessionCodeWithSpace() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -95,6 +105,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Code with spaces")
+    @Step("Sending code with all spaces")
     @TestRails (id = "С5900284")
     void sendSessionCodeWithSpaces() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -104,6 +115,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Valid code with space")
+    @Step("Sending valid code with space")
     @TestRails (id = "С5900296")
     void sendValidSessionCodeWithSpace() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
@@ -113,6 +125,7 @@ public class ConfirmationCodeTests extends BaseTest {
     }
 
     @Test(description = "Valid code with space in the end")
+    @Step("Sending valid code with space in the end")
     @TestRails (id = "С5900325")
     void sendValidSessionCodeEndingWithSpace() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
