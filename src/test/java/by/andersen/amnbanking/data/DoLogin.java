@@ -7,7 +7,9 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 
 import static by.andersen.amnbanking.data.AlertAPI.INVALID_USERNAME_OR_PASSWORD;
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
+import static by.andersen.amnbanking.data.DataUrls.USER_LOGIN;
 import static by.andersen.amnbanking.data.DataUrls.USER_PASS;
 
 public class DoLogin {

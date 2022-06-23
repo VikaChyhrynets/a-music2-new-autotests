@@ -3,7 +3,10 @@ package by.andersen.amnbanking.data;
 import io.qameta.allure.Step;
 import io.restassured.http.Cookie;
 
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
+import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
+import static by.andersen.amnbanking.data.DataUrls.CHECK_PASSPORT;
 import static by.andersen.amnbanking.data.RequestAndResponseSpec.REQ_SPEC;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setPassportForRegistration;
 import static io.restassured.RestAssured.given;

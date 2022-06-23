@@ -3,6 +3,7 @@ package by.andersen.amnbanking.ui.pages;
 import by.andersen.amnbanking.data.User;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -32,50 +33,59 @@ public class LoginPage extends BasePage {
         return new MainPage();
     }
 
+    @Step("Entering a user login into Login input field")
     public LoginPage inputLoginField(String login) {
         this.logInInput.sendKeys(login);
 
         return this;
     }
 
+    @Step("Clicking on Login input field")
     public LoginPage clickLoginField() {
         this.logInInput.click();
 
         return this;
     }
 
+    @Step("Entering a user password into Password input field")
     public LoginPage inputPasswordField(String password) {
         this.passwordInput.sendKeys(password);
 
         return this;
     }
 
+    @Step("Clicking on \"Password\" input field")
     public LoginPage clickPasswordField() {
         this.passwordInput.click();
 
         return this;
     }
 
+    @Step("Checking alert message for \"Login\" input field")
     public String getAlertMessageLogin() {
         return this.loginAlert.getText();
     }
 
+    @Step("Checking alert message for \"Password\" input field")
     public String getAlertMessagePassword() {
         return this.passwordAlert.getText();
     }
 
+    @Step("Clicking on button \"Login\"")
     public LoginPage clickLoginButton() {
         this.loginBtn.click();
 
         return this;
     }
 
+    @Step("Clicking on button \"Show Password\"")
     public String clickShowPasswordCheckbox(String password, String type) {
         this.passwordInput.sendKeys(password);
         this.checkBoxShowPassword.click();
         return this.passwordInput.getAttribute(type);
     }
 
+    @Step("Clicking on button \"Hide Password\"")
     public String clickHidePasswordCheckbox(String password, String type) {
         this.passwordInput.sendKeys(password);
         this.checkBoxShowPassword.click();

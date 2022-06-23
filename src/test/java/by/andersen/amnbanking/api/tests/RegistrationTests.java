@@ -12,7 +12,8 @@ import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
 
 public class RegistrationTests {
 

@@ -14,8 +14,22 @@ import io.restassured.http.Cookie;
 import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
-import static by.andersen.amnbanking.data.DataUrls.*;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
+import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
+import static by.andersen.amnbanking.data.DataUrls.CHECK_PASSPORT;
+import static by.andersen.amnbanking.data.DataUrls.CHECK_SMS;
+import static by.andersen.amnbanking.data.DataUrls.NEW_PASSWORD;
+import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
+import static by.andersen.amnbanking.data.DataUrls.USER_SESSION_CODE_LOGIN;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setIDForPassRecovery;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setPassportForRegistration;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setPassword;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static org.testng.Assert.assertEquals;
 import static by.andersen.amnbanking.api.tests.LogoutTests.authKey;
 

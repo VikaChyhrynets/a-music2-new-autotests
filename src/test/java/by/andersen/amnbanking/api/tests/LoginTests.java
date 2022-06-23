@@ -45,9 +45,9 @@ public class LoginTests {
     @TestRails(id = "C5894544")
     @Test
     public void loginWithBanUser() {
-        Response response = null;
+        Response response;
         for(int i = 0; i < 3; i++) {
-            response = doLogin(USER_BAN_LOGIN, USER_WRONG_PASS);
+            doLogin(USER_BAN_LOGIN, USER_WRONG_PASS);
         }
         response = doLogin(USER_BAN_LOGIN, USER_BAN_PASS);
         Login login = response.as(Login.class);

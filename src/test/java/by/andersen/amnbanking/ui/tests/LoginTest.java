@@ -2,6 +2,7 @@ package by.andersen.amnbanking.ui.tests;
 
 import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,6 +15,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5869665")
+    @Step("Enter invalid login shorter than 7 symbols")
     @Test(description = "negative test")
     public void authWithInvalidLoginLessThan7SymbolsTest() {
         loginPage.inputLoginField("Gsvop4")
@@ -22,6 +24,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5869679")
+    @Step("Enter invalid symbols into login field")
     @Test(description = "negative test")
     public void authWithForbiddenSymbolLoginTest() {
         loginPage.inputLoginField("Fklid7*@")
@@ -30,6 +33,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900035")
+    @Step("Enter invalid login longer than 20 symbols")
     @Test(description = "negative test")
     public void authWithTwentyOneSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbjgldrkmk8ftt")
@@ -38,6 +42,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900176")
+    @Step("Enter invalid login with ~ symbol")
     @Test(description = "negative test")
     public void authTildaSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnb~mk8ftt")
@@ -46,6 +51,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900198")
+    @Step("Enter invalid login with @ symbol")
     @Test(description = "negative test")
     public void authAtSymbolLoginTest() {
         loginPage.inputLoginField("@5Dvkfefnbmk8ftt")
@@ -54,6 +60,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900200")
+    @Step("Enter invalid login with - symbol")
     @Test(description = "negative test")
     public void authMinusSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkf-efnbmk8ftt")
@@ -62,6 +69,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900201")
+    @Step("Enter invalid login with / symbol")
     @Test(description = "negative test")
     public void authSlashSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbmk8ftt/")
@@ -70,6 +78,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900204")
+    @Step("Enter invalid login with + symbol")
     @Test(description = "negative test")
     public void authPlusSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbmk8+ftt")
@@ -78,6 +87,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900206")
+    @Step("Enter invalid login with ^ symbol")
     @Test(description = "negative test")
     public void authCircumflexSymbolLoginTest() {
         loginPage.inputLoginField("5Dv^kfefnbmk8ftt")
@@ -86,6 +96,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900210")
+    @Step("Enter invalid login with « symbol")
     @Test(description = "negative test")
     public void authQuotationSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnb«mkftt")
@@ -94,6 +105,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900241")
+    @Step("Enter invalid login with * symbol")
     @Test(description = "negative test")
     public void authAsteriskSymbolLoginTest() {
         loginPage.inputLoginField("5*Dvkfefnbmk8ftt")
@@ -102,6 +114,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900242")
+    @Step("Enter invalid login with . symbol")
     @Test(description = "negative test")
     public void authDotSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm.k8ftt")
@@ -110,6 +123,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900244")
+    @Step("Enter invalid login with > symbol")
     @Test(description = "negative test")
     public void authTagSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm>k8ftt")
@@ -118,6 +132,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900246")
+    @Step("Enter SQL query to login field")
     @Test(description = "negative test")
     public void authSQLSymbolLoginTest() {
         loginPage.inputLoginField("SELECT*FROM users")
@@ -126,6 +141,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900247")
+    @Step("Enter invalid login with ? symbol")
     @Test(description = "negative test")
     public void authQuestionSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm?k8ftt")
@@ -134,6 +150,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900249")
+    @Step("Enter invalid login with & symbol")
     @Test(description = "negative test")
     public void authAmpersandSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm&k8ftt")
@@ -142,6 +159,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900250")
+    @Step("Enter invalid login with # symbol")
     @Test(description = "negative test")
     public void authHashtagSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm#k8ftt")
@@ -150,6 +168,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900283")
+    @Step("Enter invalid login with ] symbol")
     @Test(description = "negative test")
     public void authNumberSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm]k8ftt")
@@ -158,6 +177,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900285")
+    @Step("Enter invalid login with space")
     @Test(description = "negative test")
     public void authWhitespaceLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm k8ftt")
@@ -166,6 +186,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900295")
+    @Step("Enter invalid login with ❞ symbol")
     @Test(description = "negative test")
     public void authDoubleUpperCommaLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm❞k8ftt")
@@ -174,6 +195,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900468")
+    @Step("Enter invalid login with $ symbol")
     @Test(description = "negative test")
     public void authDollarSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm$k8ftt")
@@ -182,6 +204,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900469")
+    @Step("Enter invalid login with _ symbol")
     @Test(description = "negative test")
     public void authUnderliningSymbolLoginTest() {
         loginPage.inputLoginField("_5Dvkfefnbmk8ftt")
@@ -190,6 +213,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900470")
+    @Step("Enter invalid login with ' symbol")
     @Test(description = "negative test")
     public void authApostropheSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm'k8ftt")
@@ -198,6 +222,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900471")
+    @Step("Enter invalid login with = symbol")
     @Test(description = "negative test")
     public void authEquallySymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm=k8ftt")
@@ -206,6 +231,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900473")
+    @Step("Enter invalid login with : symbol")
     @Test(description = "negative test")
     public void authColonSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefn:k8ftt")
@@ -214,6 +240,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900751")
+    @Step("Enter invalid login with ; symbol")
     @Test(description = "negative test")
     public void authSemicolonSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefn;k8ftt")
@@ -222,6 +249,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900752")
+    @Step("Enter invalid login with ! symbol")
     @Test(description = "negative test")
     public void authExclamationMarkLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm!k8ftt")
@@ -230,6 +258,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5900753")
+    @Step("Enter invalid login with ← symbol")
     @Test(description = "negative test")
     public void authWithArrowLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm←k8ftt")
@@ -238,6 +267,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter login with cyrillic letters")
     @Test(description = "negative test")
     public void authRussianSymbolLoginTest() {
         loginPage.inputLoginField("А5Dvkfefbmk8ftt")
@@ -246,6 +276,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter password longer than 20 symbols")
     @Test(description = "negative test")
     public void authWithTwentyOneSymbolPasswordTest() {
         loginPage.inputPasswordField("584841Cd2154ddvnvddvb")
@@ -254,6 +285,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter invalid password with » symbol")
     @Test(description = "negative test")
     public void authWithQuotationSymbolPasswordTest() {
         loginPage.inputPasswordField("584841Cd»nvddvb")
@@ -262,6 +294,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter invalid password with ❝ symbol")
     @Test(description = "negative test")
     public void authWithDoubleUpperCommaSymbolPasswordTest() {
         loginPage.inputPasswordField("584841Cd❝nvddvb")
@@ -270,6 +303,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5869669")
+    @Step("Enter valid password with blank login field")
     @Test(description = "negative test")
     public void authEmptyLoginAndValidPasswordTest() {
         loginPage.inputLoginField("")
@@ -279,6 +313,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5869673")
+    @Step("Enter valid login with blank password field")
     @Test(description = "negative test")
     public void authEmptyPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -288,6 +323,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5869681")
+    @Step("Enter all capital letters login and valid password")
     @Test(description = "negative test")
     public void authValidPasswordAndOnlyCapitalLetterInLoginTest() {
         loginPage.inputLoginField("RTNZKCVF")
@@ -297,6 +333,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "C5869674")
+    @Step("Enter valid login and invalid password with * symbol")
     @Test(description = "negative test")
     public void authAsteriskSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -306,6 +343,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ! symbol")
     @Test(description = "negative test")
     public void authExclamationSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -315,8 +353,9 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with - symbol")
     @Test(description = "negative test")
-    public void authВashSymbolPasswordAndValidLoginTest() {
+    public void authBashSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("-1Vc2354785")
                 .clickLoginButton();
@@ -324,6 +363,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with @ symbol")
     @Test(description = "negative test")
     public void authAtSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -333,6 +373,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with + symbol")
     @Test(description = "negative test")
     public void authPlusSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -342,6 +383,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and password with cyrillic letters")
     @Test(description = "negative test")
     public void authRussianSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Кsc8kvmx")
@@ -351,6 +393,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with - symbol")
     @Test(description = "negative test")
     public void authMinusSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -360,6 +403,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with space")
     @Test(description = "negative test")
     public void authWhitespacePasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -369,6 +413,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with / symbol")
     @Test(description = "negative test")
     public void authSlashPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -378,8 +423,9 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with , symbol")
     @Test(description = "negative test")
-    public void authСommaPasswordAndValidLoginTest() {
+    public void authCommaPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("2354,78Dc5")
                 .clickLoginButton();
@@ -387,6 +433,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with < symbol")
     @Test(description = "negative test")
     public void authTagsPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -396,6 +443,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ∑ symbol")
     @Test(description = "negative test")
     public void authMathematicsSymbolPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -405,6 +453,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter SQL query in password input field")
     @Test(description = "negative test")
     public void authSQLInjectionPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -414,6 +463,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ? symbol")
     @Test(description = "negative test")
     public void authQuestionPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -423,6 +473,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with & symbol")
     @Test(description = "negative test")
     public void authAmpersandPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -432,6 +483,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with . symbol")
     @Test(description = "negative test")
     public void authDotPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -441,8 +493,9 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with : symbol")
     @Test(description = "negative test")
-    public void authWithСolonPasswordAndValidLoginTest() {
+    public void authWithColonPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q4:c785")
                 .clickLoginButton();
@@ -450,6 +503,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ; symbol")
     @Test(description = "negative test")
     public void authSemicolonPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -459,6 +513,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with % symbol")
     @Test(description = "negative test")
     public void authPercentPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -468,6 +523,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with $ symbol")
     @Test(description = "negative test")
     public void authDollarPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -477,6 +533,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with # symbol")
     @Test(description = "negative test")
     public void authHashtagPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -486,6 +543,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with № symbol")
     @Test(description = "negative test")
     public void authNumberPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -495,6 +553,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ~ symbol")
     @Test(description = "negative test")
     public void authTildePasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -504,6 +563,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ➝ symbol")
     @Test(description = "negative test")
     public void authWithArrowPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -513,6 +573,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ¼ symbol")
     @Test(description = "negative test")
     public void authWithFractionPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -522,6 +583,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ^ symbol")
     @Test(description = "negative test")
     public void authWithCircumflexPasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -531,6 +593,7 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Enter valid login and invalid password with ' symbol")
     @Test(description = "negative test")
     public void authWithApostrophePasswordAndValidLoginTest() {
         loginPage.inputLoginField("Ksc8kvmx")
@@ -540,12 +603,14 @@ public class LoginTest extends BaseTest {
     }
 
     @TestRails(id = "")
+    @Step("Show password button check")
     @Test(description = "negative test")
     public void showPasswordIconTest() {
         Assert.assertEquals(loginPage.clickShowPasswordCheckbox("Drn1f7sC", "type"), "text");
     }
 
     @TestRails(id = "")
+    @Step("Hide password button check")
     @Test(description = "negative test")
     public void hidePasswordIconTest() {
         Assert.assertEquals(loginPage.clickHidePasswordCheckbox("Drn1f7sC", "type"),"password");

@@ -9,7 +9,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_LOGOUT;
+import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 
 
