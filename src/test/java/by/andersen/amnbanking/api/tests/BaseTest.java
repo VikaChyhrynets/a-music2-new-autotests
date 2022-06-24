@@ -17,7 +17,7 @@ public class BaseTest {
     public void createUser() {
         new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
                         ("Eminem79", "111Gv5dvvf511", "PVS153215DSV"),
-                API_HOST + API_REGISTRATION);
+                API_HOST + API_REGISTRATION, 200);
     }
 
     @Step("Deletes the created user after the test")
