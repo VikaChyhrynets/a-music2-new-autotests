@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 public class PostAdapters extends BaseTest {
 
     @Step("Basic POST request with changeable JSON body")
-    public Response post(String body, String url) {
+    public Response post(String body, String url, Integer statusCode) {
 
         return given()
                 .spec(REQ_SPEC)
@@ -20,11 +20,12 @@ public class PostAdapters extends BaseTest {
                 .post(url)
                 .then()
                 .log().all()
+                .statusCode(statusCode)
                 .extract().response();
     }
 
     @Step("Basic POST request with changeable JSON body and authorization via Cookie")
-    public Response post(String body, String url, Cookie cookie) {
+    public Response post(String body, String url, Cookie cookie, Integer statusCode) {
 
         return given()
                 .spec(REQ_SPEC)
@@ -34,11 +35,12 @@ public class PostAdapters extends BaseTest {
                 .post(url)
                 .then()
                 .log().all()
+                .statusCode(statusCode)
                 .extract().response();
     }
 
     @Step("POST request with changeable JSON body and authorization via Bearer token")
-    public Response post(String body, String url, String authToken) {
+    public Response post(String body, String url, String authToken, Integer statusCode) {
 
         return given()
                 .spec(REQ_SPEC)
@@ -47,6 +49,7 @@ public class PostAdapters extends BaseTest {
                 .post(url)
                 .then()
                 .log().all()
+                .statusCode(statusCode)
                 .extract().response();
     }
 }
