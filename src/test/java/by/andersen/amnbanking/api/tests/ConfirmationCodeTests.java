@@ -21,7 +21,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "C5888309")
     void sendValidSessionCode() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-       Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+       Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authToken, 200).as(Response.class);
        assertEquals(resp.getMessage(), "Session code is correct");
     }
 
@@ -30,7 +30,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5895560")
     void sendSessionCodeWithThreeDigits() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("231"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("231"), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),"Sms code contains invalid characters");
     }
 
@@ -39,7 +39,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5895561")
     void sendSessionCodeWithFiveDigits() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("12345"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("12345"), API_HOST + API_SESSIONCODE, authToken,400 ).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -49,7 +49,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "C5895562")
     void sendBlankSessionCode() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode(""), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode(""), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -59,7 +59,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5895563")
     void sendSessionCodeWithLetters() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("brab"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("brab"), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -69,7 +69,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5895563")
     void sendSessionCodeWithLetter() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("123a"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("123a"), API_HOST + API_SESSIONCODE, authToken,400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -79,7 +79,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5895564")
     void sendSessionCodeWithSymbols() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("+++*"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("+++*"), API_HOST + API_SESSIONCODE, authToken,400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -89,7 +89,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5895564")
     void sendSessionCodeWithSymbol() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("123&"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("123&"), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -99,7 +99,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5900178")
     void sendSessionCodeWithSpace() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("123 "), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("123 "), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -109,7 +109,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5900284")
     void sendSessionCodeWithSpaces() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("    "), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("    "), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -119,7 +119,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5900296")
     void sendValidSessionCodeWithSpace() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("12 34"), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("12 34"), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
@@ -129,7 +129,7 @@ public class ConfirmationCodeTests extends BaseTest {
     @TestRails (id = "С5900325")
     void sendValidSessionCodeEndingWithSpace() {
         String authToken = getAuthToken(USER_SESSION_CODE_LOGIN, USER_PASS);
-        Response resp = new PostAdapters().post(setSmsCode("1234 "), API_HOST + API_SESSIONCODE, authToken).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("1234 "), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
     }
