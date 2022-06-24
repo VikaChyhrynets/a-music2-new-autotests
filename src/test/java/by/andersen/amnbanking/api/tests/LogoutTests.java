@@ -34,7 +34,7 @@ public class LogoutTests extends BaseTest {
     @Test(description = "negative test, logout from active session with wrong sms code")
     public void logoutWithNoActiveTokenTest() {
         new PostAdapters().post(setSmsCode("1235"),API_HOST + API_SESSIONCODE, authKey, 400);
-        Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authKey, 400).as(Response.class);
+        Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authKey, 412).as(Response.class);
         Assert.assertEquals(body.getMessage(), "No active session");
     }
 }
