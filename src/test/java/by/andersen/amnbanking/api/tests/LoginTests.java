@@ -52,7 +52,6 @@ public class LoginTests extends BaseTest {
         assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_BAN_PASS),
                 API_HOST + API_LOGIN, 423).asString(), "message"), BAN_USER.getValue());
         deleteUser();
-//        new DBConnector().deleteUser(USER_BAN_LOGIN);
     }
 
     @TestRails(id = "C5895962")
