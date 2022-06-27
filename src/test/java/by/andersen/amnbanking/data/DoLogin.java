@@ -1,34 +1,27 @@
 package by.andersen.amnbanking.data;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.api.tests.objects.Login;
-import by.andersen.amnbanking.utils.JsonObjectHelper;
-import io.restassured.response.Response;
-import org.testng.Assert;
 
 import static by.andersen.amnbanking.data.AlertAPI.INVALID_USERNAME_OR_PASSWORD;
-import static by.andersen.amnbanking.data.DataUrls.API_HOST;
-import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.USER_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.USER_PASS;
+import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setJsonObjectForRegistrationAndLogin;
+import static by.andersen.amnbanking.utils.ParserJson.parser;
+import static org.testng.Assert.assertEquals;
 
 public class DoLogin {
-    public static Response doLogin(String login, String password) {
-
-        return new PostAdapters().post(
-        JsonObjectHelper.setJsonObjectForRegistrationAndLogin(login, password), API_HOST + API_LOGIN);
-    }
     public static void loginWithInvalidLoginWithSpecialCharacter(String specialCharacter) {
-        Response response = doLogin(USER_LOGIN + specialCharacter, USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(getMessageFromResponse(USER_LOGIN + specialCharacter, USER_PASS),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     public static void loginWithInvalidPasswordWithSpecialCharacter(String specialCharacter) {
-        Response response = doLogin(USER_LOGIN, USER_PASS + specialCharacter);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(getMessageFromResponse(USER_LOGIN, USER_PASS + specialCharacter),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
+    }
+
+    private static String getMessageFromResponse(String login, String password) {
+        return parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(login, password),
+                        API_HOST + API_LOGIN, 400).asString(), "message");
     }
 }

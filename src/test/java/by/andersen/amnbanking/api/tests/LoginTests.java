@@ -1,25 +1,17 @@
 package by.andersen.amnbanking.api.tests;
 
-import by.andersen.amnbanking.api.tests.objects.Login;
+import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Story;
-import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
-import static by.andersen.amnbanking.data.AlertAPI.INVALID_USERNAME_OR_PASSWORD;
-import static by.andersen.amnbanking.data.AlertAPI.LOGIN_SUCCESS;
-import static by.andersen.amnbanking.data.AlertAPI.NOT_REGISTERED_USER;
-import static by.andersen.amnbanking.data.DataUrls.NOT_REGISTERED_USER_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.USER_BAN_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.USER_BAN_PASS;
-import static by.andersen.amnbanking.data.DataUrls.USER_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.USER_PASS;
-import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
-import static by.andersen.amnbanking.data.DoLogin.doLogin;
+import static by.andersen.amnbanking.data.AlertAPI.*;
+import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidLoginWithSpecialCharacter;
 import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidPasswordWithSpecialCharacter;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setJsonObjectForRegistrationAndLogin;
+import static by.andersen.amnbanking.utils.ParserJson.parser;
+import static org.testng.Assert.assertEquals;
 
 @Story("UC 1.2 - Web application login")
 public class LoginTests {
@@ -27,50 +19,44 @@ public class LoginTests {
     @TestRails(id = "C5888309")
     @Test
     public void loginPositive() {
-        Response response = doLogin(USER_LOGIN, USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), LOGIN_SUCCESS.getValue());
-        Assert.assertEquals(response.getStatusCode(), 200);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, USER_PASS),
+                        API_HOST + API_LOGIN, 200).asString(), "message"), LOGIN_SUCCESS.getValue());
     }
 
     @TestRails(id = "C5893164")
     @Test
     public void loginWithNotRegisteredUser() {
-        Response response = doLogin(NOT_REGISTERED_USER_LOGIN, USER_WRONG_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), NOT_REGISTERED_USER.getValue());
-        Assert.assertEquals(response.getStatusCode(), 404);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(NOT_REGISTERED_USER_LOGIN, USER_WRONG_PASS),
+                        API_HOST + API_LOGIN, 404).asString(), "message"), NOT_REGISTERED_USER.getValue());
     }
 
     @TestRails(id = "C5894544")
     @Test
     public void loginWithBanUser() {
-        Response response;
-        for(int i = 0; i < 3; i++) {
-            doLogin(USER_BAN_LOGIN, USER_WRONG_PASS);
+        for (int i = 0; i < 3; i++) {
+            new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_BAN_LOGIN, USER_WRONG_PASS),
+                    API_HOST + API_LOGIN, 423);
         }
-        response = doLogin(USER_BAN_LOGIN, USER_BAN_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), BAN_USER.getValue());
-        Assert.assertEquals(response.getStatusCode(), 423);
+        assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_BAN_LOGIN, USER_BAN_PASS),
+                API_HOST + API_LOGIN, 423).asString(), "message"), BAN_USER.getValue());
     }
 
     @TestRails(id = "C5895962")
     @Test
     public void loginWithInvalidLoginLessThanSevenCharacters() {
-        Response response = doLogin("111", USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin("111", USER_PASS),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895963")
     @Test
     public void loginWithInvalidLoginMoreThanTwentyCharacters() {
-        Response response = doLogin("111222333444777888999", USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin("111222333444777888999", USER_PASS),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895964 !")
@@ -226,88 +212,73 @@ public class LoginTests {
     @TestRails(id = "C5896429")
     @Test
     public void loginWithLoginOnlyNumbersWithoutTheFirstThreeNumbersOne() {
-        Response response = doLogin("115457821", USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin("115457821", USER_PASS),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5896425")
     @Test
     public void loginWithLoginOnlyLetters() {
-        Response response = doLogin("SomeLogin", USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin("SomeLogin", USER_PASS),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5896434")
     @Test
     public void loginWithLoginWithoutCapitalLatinLetterAndWithSmallLatinLetter() {
-        Response response = doLogin(USER_LOGIN + "f", USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN + "f", USER_PASS),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895966")
     @Test
     public void loginWithEmptyLogin() {
-        Response response = doLogin("", USER_PASS);
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin("", USER_PASS),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895968")
     @Test
     public void loginWithInvalidPasswordLessSevenCharacters() {
-        Response response = doLogin(USER_LOGIN,"Some1");
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "Some1"),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895969")
     @Test
     public void loginWithInvalidPasswordMoreThanTwentyCharacters() {
-        Response response = doLogin(USER_LOGIN,"SomePassWORd1SomePass");
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
-    }
-
-    @TestRails(id = "C5895970")
-    @Test
-    public void loginWithInvalidPasswordWithCyrillicCharacter() {
-        loginWithInvalidPasswordWithSpecialCharacter("Я");
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "SomePassWORd1SomePass"),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895972")
     @Test
     public void loginWithEmptyPassword() {
-        Response response = doLogin(USER_LOGIN, "");
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, ""),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895973")
     @Test
     public void loginWithPasswordOnlyNumbers() {
-        Response response = doLogin(USER_LOGIN, "111234569");
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "111234569"),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895974")
     @Test
     public void loginWithPasswordOnlyLetters() {
-        Response response = doLogin(USER_LOGIN, "SomePassWORd");
-        Login login = response.as(Login.class);
-        Assert.assertEquals(login.getMessage(), INVALID_USERNAME_OR_PASSWORD.getValue());
-        Assert.assertEquals(response.getStatusCode(), 400);
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "SomePassWORd"),
+                        API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @TestRails(id = "C5895967 !")
@@ -452,5 +423,11 @@ public class LoginTests {
     @Test
     public void loginWithInvalidPasswordWithSpecialCharacterMore() {
         loginWithInvalidPasswordWithSpecialCharacter(">");
+    }
+
+    @TestRails(id = "C5895970")
+    @Test
+    public void loginWithInvalidPasswordWithCyrillicCharacter() {
+        loginWithInvalidPasswordWithSpecialCharacter("Я");
     }
 }
