@@ -8,15 +8,14 @@ import io.qameta.allure.Step;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.data.DataUrls.API_HOST;
-import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
+import static by.andersen.amnbanking.data.DataUrls.*;
 
 public class BaseTest {
 
     @Step("Registration new user in Data Base")
     public void createUser() {
         new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem79", "111Gv5dvvf511", "PVS153215DSV"),
+                        ("Eminem79", "111Gv5dvvf511", "PVS153215DSV", "+40796842639"),
                 API_HOST + API_REGISTRATION, 200);
     }
 
