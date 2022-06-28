@@ -27,7 +27,7 @@ public class RegistrationTests {
     @Test(description = "Registration user with passport, valid date, positive test")
     public void registrationWithValidDateTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "tPvpXJGRqAtbWN8I", "125649846"),
+                        ("Eminem78", "tPvpXJGRqAtbWN8I", "125649846", "+75555555555"),
                 API_HOST + API_REGISTRATION, 200).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
         deleteUserFromDB();
@@ -38,7 +38,7 @@ public class RegistrationTests {
     @Test(description = "Registration, valid data, BIG letters and numbers in passport field, positive test")
     public void registrationValidDateWithPassportTest() throws SQLException{
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                ("Eminem78", "8Rvjsio457c", "NX4536489235"),
+                ("Eminem78", "8Rvjsio457c", "NX4536489235", "+75555555555"),
                 API_HOST + API_REGISTRATION, 200).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
         deleteUserFromDB();
@@ -49,7 +49,7 @@ public class RegistrationTests {
     @Test(description = "Registration, valid data, only digits in passport field, positive test")
     public void registrationValidDateWithOnlyDigitsInPassportTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "2Loc4567E", "112364486235"),
+                        ("Eminem78", "2Loc4567E", "112364486235", "+75555555555"),
                 API_HOST + API_REGISTRATION, 200).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
         deleteUserFromDB();
@@ -60,7 +60,7 @@ public class RegistrationTests {
     @Test(description = "Registration, valid data, only two BIG letters in passport field, positive test")
     public void registrationValidDateWithTwoLettersInPassportTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "2Loc4567E", "LK"),
+                        ("Eminem78", "2Loc4567E", "LK", "+75555555555"),
                 API_HOST + API_REGISTRATION, 200).as(Response.class);
         Assert.assertEquals(response.getMessage(),AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
         deleteUserFromDB();
@@ -71,7 +71,7 @@ public class RegistrationTests {
     @Test(description = "Registration, valid data, 30 symbols in passport field, positive test")
     public void registrationValidDateWithThirtyValidSymbolsInPassportTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "2Loc4567E", "11236489235FR456871230L78D9632"),
+                        ("Eminem78", "2Loc4567E", "11236489235FR456871230L78D9632", "+75555555555"),
                 API_HOST + API_REGISTRATION, 200).as(Response.class);
         Assert.assertEquals(response.getMessage(),AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
         deleteUserFromDB();
@@ -82,7 +82,7 @@ public class RegistrationTests {
     @Test(description = "Registration, forbidden symbol . in passport field, negative test")
     public void registrationValidDateWithForbiddenSymbolInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "2Loc4567E", "11236489235FR456871232."),
+                        ("Eminem78", "2Loc4567E", "11236489235FR456871232.", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(),AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
@@ -92,7 +92,7 @@ public class RegistrationTests {
     @Test(description = "Registration, small russian letters in passport field, negative")
     public void  registrationWithSmallRussianLettersInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                ("Eminem78", "8Scnjfvs56", "мн88954232156"),
+                ("Eminem78", "8Scnjfvs56", "мн88954232156", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
@@ -102,7 +102,7 @@ public class RegistrationTests {
     @Test(description = "Registration, forbidden symbol . in passport field, negative test")
     public void  registrationWithDuplicatePassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78","8Scnjfvs56", "4BGMQ8A3J214"),
+                        ("Eminem78","8Scnjfvs56", "4BGMQ8A3J214", "+75555555555"),
                 API_HOST + API_REGISTRATION, 422).as(Response.class);
         Assert.assertEquals(response.getMessage(), "User with passport = 4BGMQ8A3J214 already registered");
     }
@@ -112,7 +112,7 @@ public class RegistrationTests {
     @Test(description = "Registration, big russian letters in passport field, negative test")
     public void  registrationWithBigRussianLettersInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Scnjfvs56", "КВ88954232156"),
+                        ("Eminem78", "8Scnjfvs56", "КВ88954232156", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
@@ -122,7 +122,7 @@ public class RegistrationTests {
     @Test(description = "Registration, space in passport field, negative test")
     public void  registrationWithSpaceInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Scnjfvs56", "MN88954232156 "),
+                        ("Eminem78", "8Scnjfvs56", "MN88954232156 ", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
@@ -132,7 +132,7 @@ public class RegistrationTests {
     @Test(description = "Registration, small letters in passport field, negative test")
     public void  registrationWithSmallLettersInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Scnjfvs56", "mn88954232156"),
+                        ("Eminem78", "8Scnjfvs56", "mn88954232156", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
@@ -142,7 +142,7 @@ public class RegistrationTests {
     @Test(description = "Registration, only 1 big letter in passport field, negative test")
     public void  registrationWithOneLetterInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Scnjfvs56", "P"),
+                        ("Eminem78", "8Scnjfvs56", "P", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
@@ -152,7 +152,7 @@ public class RegistrationTests {
     @Test(description = "Registration, 31 symbols in passport field, negative test")
     public void  registrationWithThirtyOneSymbolsInPassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Scnjfvs56", "PL45873698710254D78519F12547862"),
+                        ("Eminem78", "8Scnjfvs56", "PL45873698710254D78519F12547862", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
     }
@@ -162,7 +162,7 @@ public class RegistrationTests {
     @Test(description = "Registration, duplicate login field, negative test")
     public void registrationWithDuplicateLoginTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("11122222222222233333", "111111111122222222AA", "LP565482130"),
+                        ("11122222222222233333", "111111111122222222AA", "LP565482130", "+75555555555"),
                 API_HOST + API_REGISTRATION, 422).as(Response.class);
         Assert.assertEquals(response.getMessage(),
                 "User with login = 11122222222222233333 already registered");
@@ -232,8 +232,8 @@ public class RegistrationTests {
     @Step("Registration new user with empty login field, negative test")
     @Test(description = "Registration, empty login field, negative test")
     public void firstRegWithEmptyLoginTest() {
-        Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        ("", "111111111122222222AA"),
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("", "111111111122222222AA", "PH45421", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
     }
@@ -242,8 +242,8 @@ public class RegistrationTests {
     @Step("Registration new user with only numbers in password field, negative test")
     @Test(description = "Registration, only numbers in password field, negative test")
     public void firstRegWithInvalidPasswordSpecialCharsTest() {
-        Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        ("11122222222222233333", "11122222222222233333"),
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("11122222222222233333", "11122222222222233333","PH45421", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
     }
@@ -252,8 +252,8 @@ public class RegistrationTests {
     @Step("Registration new user with cyrillic chars in password field, negative test")
     @Test(description = "Registration, cyrillic chars in password field, negative test")
     public void firstRegWithInvalidPasswordCyrillicCharsTest() {
-        Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        ("11122222222222233333", "1111111111222222ваТЫ"),
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("11122222222222233333", "1111111111222222ваТЫ", "PH45421", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
     }
@@ -262,8 +262,8 @@ public class RegistrationTests {
     @Step("Registration new user with less than 7 characters in password field, negative test")
     @Test(description = "Registration, less than 7 characters in password field, negative test")
     public void firstRegWithInvalidPasswordLess7CharsTest() {
-        Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        ("11122222222222233333", "111111"),
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("11122222222222233333", "111111", "PH45421", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
     }
@@ -272,8 +272,8 @@ public class RegistrationTests {
     @Step("Registration new user with more than 20 characters in password field, negative test")
     @Test(description = "Registration, more than 20 characters in password field, negative test")
     public void firstRegWithInvalidPasswordMore20CharsTest() {
-        Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        ("11122222222222233333", "111111111111111111111"),
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("11122222222222233333", "111111111111111111111", "PH45421", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
     }
@@ -282,8 +282,8 @@ public class RegistrationTests {
     @Step("Registration new user with empty password field, negative test")
     @Test(description = "Registration, empty password field, negative test")
     public void firstRegWithEmptyPasswordTest() {
-        Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        ("11122222222222233333", ""),
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("11122222222222233333", "", "PH45421", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
     }
@@ -292,8 +292,8 @@ public class RegistrationTests {
     @Step("Registration new user with only letters in password field, negative test")
     @Test(description = "Registration, only letters in password field, negative test")
     public void firstRegWithInvalidPasswordOnlyLettersTest() {
-        Response response = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        ("11122222222222233333", "aaaaaaaaAA"),
+        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                        ("11122222222222233333", "aaaaaaaaAA", "PH45421", "+75555555555"),
                 API_HOST + API_REGISTRATION, 400).as(Response.class);
         Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
     }

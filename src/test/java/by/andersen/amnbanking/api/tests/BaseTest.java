@@ -16,7 +16,7 @@ public class BaseTest {
     @Step("Registration new user in Data Base")
     public void createUser() {
         new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem79", "111Gv5dvvf511", "PVS153215DSV"),
+                        ("Eminem79", "111Gv5dvvf511", "PVS153215DSV", "+75555555555"),
                 API_HOST + API_REGISTRATION, 200);
     }
 
