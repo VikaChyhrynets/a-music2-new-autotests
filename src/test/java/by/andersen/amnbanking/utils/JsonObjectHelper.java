@@ -25,11 +25,11 @@ public class JsonObjectHelper {
         return jsonObject.toJSONString();
     }
 
-    public static String setPassportLoginPasswordForRegistration(String login, String password, String passport, String phone){
+    public static String setPassportLoginPasswordForRegistration(String login, String password, String passport, String phoneNumber){
         jsonObject.put("login", login);
         jsonObject.put("password", password);
         jsonObject.put("passport", passport);
-        jsonObject.put("phone", phone);
+        jsonObject.put("phone", phoneNumber);
 
         return jsonObject.toJSONString();
     }
