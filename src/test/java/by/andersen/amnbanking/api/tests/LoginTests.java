@@ -25,7 +25,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User Log In with valid data, positive test")
     public void loginPositive() {
         String response = new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 200).asString();
         assertEquals(parser(response, "message"), LOGIN_SUCCESS.getValue());
         assertNotEquals(parser(response, "phone"), null);
@@ -36,7 +36,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "Not Registered User Log In, negative test")
     public void loginWithNotRegisteredUser() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(NOT_REGISTERED_USER_LOGIN, USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin(NOT_REGISTERED_USER_LOGIN, PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 404).asString(), "message"), NOT_REGISTERED_USER.getValue());
     }
 
@@ -59,7 +59,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Login Less Than 7 Characters, negative test")
     public void loginWithInvalidLoginLessThanSevenCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("111", USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin("111", PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -68,7 +68,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Login More Than 20 Characters, negative test")
     public void loginWithInvalidLoginMoreThanTwentyCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("111222333444777888999", USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin("111222333444777888999", PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -252,7 +252,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Login Only Numbers Without The First Three Numbers One, negative test")
     public void loginWithLoginOnlyNumbersWithoutTheFirstThreeNumbersOne() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("115457821", USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin("115457821", PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -261,7 +261,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Login Only Letters, negative test")
     public void loginWithLoginOnlyLetters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("SomeLogin", USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin("SomeLogin", PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -270,7 +270,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Login Without Capital Latin Letter And With Small Latin Letter, negative test")
     public void loginWithLoginWithoutCapitalLatinLetterAndWithSmallLatinLetter() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN + "f", USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin("userfortest111", PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -279,7 +279,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Login Is Empty, negative test")
     public void loginWithEmptyLogin() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("", USER_PASS),
+                .post(setJsonObjectForRegistrationAndLogin("", PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -288,7 +288,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Password Less Than 7 Characters, negative test")
     public void loginWithInvalidPasswordLessSevenCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "Some1"),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "Some1"),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -297,7 +297,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Password More Than 20 Characters, negative test")
     public void loginWithInvalidPasswordMoreThanTwentyCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "SomePassWORd1SomePass"),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "SomePassWORd1SomePass"),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -306,7 +306,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Password Is Empty, negative test")
     public void loginWithEmptyPassword() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, ""),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, ""),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -315,7 +315,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Password Only Numbers, negative test")
     public void loginWithPasswordOnlyNumbers() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "111234569"),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "111234569"),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -324,7 +324,7 @@ public class LoginTests extends BaseTest {
     @Test(description = "User's Password Only Letters, negative test")
     public void loginWithPasswordOnlyLetters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_LOGIN, "SomePassWORd"),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "SomePassWORd"),
                         API_HOST + API_LOGIN, 400).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 

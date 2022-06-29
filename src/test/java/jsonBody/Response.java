@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class Response {
     String message;
     int failsCount;
+    String phone;
 }
