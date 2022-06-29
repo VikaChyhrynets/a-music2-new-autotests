@@ -8,7 +8,8 @@ public enum AlertAPI {
     REGISTRATION_SUCCESS_USER("User with login: Eminem78 added"),
     REGISTRATION_FAILED_USER("Invalid characters in UserName or Password"),
     REGISTRATION_FAILED_USER_PASSPORT("Invalid characters in passport"),
-    REGISTRATION_FAILED_USER_PASSWORD("Invalid characters in password");
+    REGISTRATION_FAILED_USER_PASSWORD("Invalid characters in password"),
+    REGISTRATION_FAILED_USER_PHONE("Invalid characters in phone number");
 
     String value;
 
