@@ -19,6 +19,7 @@ import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
 import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
 import static by.andersen.amnbanking.data.DataUrls.CHECK_PASSPORT;
 import static by.andersen.amnbanking.data.DataUrls.CHECK_SMS;
+import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.NEW_PASSWORD;
 import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
@@ -100,9 +101,9 @@ public class PasswordRecoveryTests extends BaseTest{
         Cookie login = getAuthLogin(PASSPORT_REG);
         new PostAdapters().post(setSmsCode("1234"),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, 200);
-        Response response = new PostAdapters().post(setNewPassword("Number1"),
+        Response response = new PostAdapters().post(setNewPassword(PASSWORD_WITH_PASSPORT_REG),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, login, 200).as(Response.class);
-        Response response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin("Celine715", "Number1"),
+        Response response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
                 API_HOST + API_LOGIN, 200).as(Response.class);
         Assert.assertEquals(response.getMessage(), "Password changed successfully! Please login again");
         Assert.assertEquals(response1.getMessage(), AlertAPI.LOGIN_SUCCESS.getValue());
@@ -181,7 +182,7 @@ public class PasswordRecoveryTests extends BaseTest{
     @Test(description = "Trying to send valid SMS")
     public void sendValidPassportConfirmedWithSms(){
         Cookie loginAsCookie = getAuthLogin(PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, 400).as(Response.class);
+        Response resp = new PostAdapters().post(setSmsCode("1234"), API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, 200).as(Response.class);
         assertEquals(resp.getMessage(), "Change password code is correct");
     }
 
