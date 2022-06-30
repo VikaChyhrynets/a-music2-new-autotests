@@ -1,13 +1,19 @@
-stages:  
+image: maven:3.8.5-openjdk-18-slim
+
+stages:
 - build
 - test
 
 build:
   stage: build
+  tags:
+    - doker
   script:
-  - 'mvn clean compile'
+  - mvn clean compile
 
 test:
   stage: test
+  tags:
+    - doker
   script:
-  - 'mvn clean test'
+  - mvn clean test
