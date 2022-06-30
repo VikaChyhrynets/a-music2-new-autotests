@@ -4,10 +4,14 @@ stages:
 
 build:
   stage: build
+  tags:
+    - doker
   script:
-  - 'mvn clean compile'
+  - mvn clean compile
 
 test:
   stage: test
+  tags:
+    - doker
   script:
-  - 'mvn clean test'
+  - mvn clean test
