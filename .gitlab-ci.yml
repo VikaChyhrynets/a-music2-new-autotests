@@ -1,13 +1,14 @@
-stages:  
+stages:
 - build
 - test
 
 build:
   stage: build
   script:
-  - 'echo Build'
+  - 'mvn clean compile'
 
 test:
   stage: test
   script:
   - 'mvn test'
+
