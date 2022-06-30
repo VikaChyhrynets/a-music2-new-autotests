@@ -5,9 +5,9 @@ stages:
 build:
   stage: build
   script:
-  - 'mvn clean compile'
+  - 'echo Build'
 
 test:
   stage: test
   script:
-  - 'mvn clean test'
+  - 'mvn test'
