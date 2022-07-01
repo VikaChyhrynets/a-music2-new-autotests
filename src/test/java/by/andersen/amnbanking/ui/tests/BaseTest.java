@@ -1,5 +1,6 @@
 package by.andersen.amnbanking.ui.tests;
 
+import by.andersen.amnbanking.ui.pages.ConfirmationCodeModalPage;
 import by.andersen.amnbanking.ui.pages.LoginPage;
 import by.andersen.amnbanking.ui.pages.MainPage;
 import com.codeborne.selenide.Configuration;
@@ -13,6 +14,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public abstract class BaseTest {
 
     LoginPage loginPage = new LoginPage();
+    ConfirmationCodeModalPage confirmationCodeModalPage = new ConfirmationCodeModalPage();
     MainPage mainPage = new MainPage();
 
 
