@@ -1,5 +1,6 @@
 package by.andersen.amnbanking.api.tests;
 
+import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.AlertAPI;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 
 import static by.andersen.amnbanking.api.tests.LogoutTests.authKey;
 import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
+import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static org.testng.Assert.assertEquals;
@@ -322,7 +324,7 @@ public class PasswordRecoveryTests extends BaseTest {
     @TestRails(id = "C593793")
     @Step("Sending password recovery code again when ban hasn't expired, negative test")
     @Test(description = "Sending password recovery code again when ban hasn't expired, negative test")
-    public void sendPasswordRecoveryCodeAgainWhenBanHasNotExpired() {
+    public void sendPasswordRecoveryCodeAgainWhenBanHasNotExpired() throws SQLException {
         Cookie login = getAuthLogin(PASSPORT_REG);
         for (int i = 0; i < 3; i++) {
             new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, 400);
@@ -331,7 +333,7 @@ public class PasswordRecoveryTests extends BaseTest {
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, 423).as(Response.class);
         assertEquals(response.getMessage(), "Ban time is not over yet...");
         assertEquals(new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSWORD"),
-                API_HOST + SMS_CODE, 423).as(Response.class).getMessage(),
+                API_HOST + SMS_CODE, login, 423).as(Response.class).getMessage(),
                 "Ban time is not over yet...");
     }
 }
