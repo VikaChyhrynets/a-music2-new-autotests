@@ -325,7 +325,16 @@ public class PasswordRecoveryTests extends BaseTest {
     @Step("Sending password recovery code again when ban hasn't expired, negative test")
     @Test(description = "Sending password recovery code again when ban hasn't expired, negative test")
     public void sendPasswordRecoveryCodeAgainWhenBanHasNotExpired() throws SQLException {
-        Cookie login = getAuthLogin(PASSPORT_REG);
+        createUser();
+        String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
+        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
+        new PostAdapters().post(setNewPassword("Number1"),
+                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 200);
+        new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", "Number1"),
+                API_HOST + API_LOGIN, 200);
+        new PostAdapters().post(setSmsCode("1234"),API_HOST + API_SESSIONCODE, authTokenChangePassword, 200);
+        new GetAdapters().get(API_HOST + API_LOGOUT, authTokenChangePassword, 200);
+        Cookie login = getAuthLogin("PVS153215DSV");
         for (int i = 0; i < 3; i++) {
             new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, 400);
         }
@@ -333,7 +342,8 @@ public class PasswordRecoveryTests extends BaseTest {
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, 423).as(Response.class);
         assertEquals(response.getMessage(), "Ban time is not over yet...");
         assertEquals(new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSWORD"),
-                API_HOST + SMS_CODE, login, 423).as(Response.class).getMessage(),
+                API_HOST + SMS_CODE, login,423).as(Response.class).getMessage(),
                 "Ban time is not over yet...");
+        deleteUser();
     }
 }

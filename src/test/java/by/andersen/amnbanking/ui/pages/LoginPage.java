@@ -17,11 +17,10 @@ public class LoginPage extends BasePage {
     public SelenideElement passwordAlert = $x("//*[contains(@class, 'formInputPassword')]//div[contains(@class, 'formError')]");
     public SelenideElement loginBtn = $x("//*[contains(@class, 'formButtonLogin')]//button[contains(@type, 'submit')]");
     public SelenideElement checkBoxShowPassword = $x("//div[contains(@class, 'showPassword')]/*");
+    private static final By LOGIN_ERROR_MESSAGE = By.xpath("//div[contains(@class,'Login_formError')]");
 
-
-    public LoginPage open() {
+    public void open() {
         Selenide.open(START_URL);
-        return this;
     }
 
     public MainPage doLogin(User user) {
@@ -91,5 +90,9 @@ public class LoginPage extends BasePage {
         this.checkBoxShowPassword.click();
         this.checkBoxShowPassword.click();
         return this.passwordInput.getAttribute(type);
+    }
+
+    public String getTextFromLoginErrorMessage(){
+        return $(LOGIN_ERROR_MESSAGE).getText();
     }
 }
