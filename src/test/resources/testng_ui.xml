@@ -4,6 +4,7 @@
     <test name="login">
         <classes>
             <class name="by.andersen.amnbanking.ui.tests.LoginTest"></class>
+            <class name="by.andersen.amnbanking.ui.tests.ConfirmationCodeModalTest"></class>
         </classes>
     </test>
 </suite>

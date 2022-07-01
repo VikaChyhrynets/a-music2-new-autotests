@@ -72,10 +72,10 @@ public class LoginPage extends BasePage {
     }
 
     @Step("Clicking on button \"Login\"")
-    public LoginPage clickLoginButton() {
+    public ConfirmationCodeModalPage clickLoginButton() {
         this.loginBtn.click();
 
-        return this;
+        return new ConfirmationCodeModalPage();
     }
 
     @Step("Clicking on button \"Show Password\"")
