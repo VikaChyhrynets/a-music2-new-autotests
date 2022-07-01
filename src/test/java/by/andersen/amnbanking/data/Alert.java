@@ -5,7 +5,9 @@ public enum Alert {
     LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS("Field should contain at least 7 symbols"),
     LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS("Must be 20 characters or less"),
     FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS("Field should contain letters, 1 capital letter, 1 number"),
-    FIELD_CONTAIN_LETTERS_NUMBER("Field should contain letters, 1 number");
+    FIELD_CONTAIN_LETTERS_NUMBER("Field should contain letters, 1 number"),
+    FIELD_SHOULD_CONTAIN_FOUR_NUMBERS("Field should contain 4 numbers"),
+    CONFIRMATION_CODE_MUST_BE_FILLED("The confirmation code field must be filled");
     String value;
 
     Alert(String value) {

@@ -92,4 +92,14 @@ public class LoginPage extends BasePage {
         this.checkBoxShowPassword.click();
         return this.passwordInput.getAttribute(type);
     }
+
+    @Step("Enter login and password and press \"Login\"")
+    public ConfirmationCodeModalPage loginUserWithCreds(String login, String password) {
+        this.logInInput.sendKeys(login);
+        this.passwordInput.sendKeys(password);
+        this.loginBtn.click();
+
+        return new ConfirmationCodeModalPage();
+    }
+
 }
