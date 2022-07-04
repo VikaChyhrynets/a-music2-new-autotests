@@ -4,15 +4,9 @@ import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class LoginTest extends BaseTest {
-
-    @BeforeMethod
-    public void setUp() {
-        loginPage.open();
-    }
+public class LoginTest extends BaseUITest {
 
     @TestRails(id = "C5869665")
     @Step("Enter invalid login shorter than 7 symbols")

@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static org.hamcrest.Matchers.is;
 
-public class ExampleLoginTest extends BaseTest {
+public class ExampleLoginTest extends BaseAPITest {
     @TestRails(id = "123")
     @Test(description = "Login works")
     public void getInputWorksCorrectly() {
