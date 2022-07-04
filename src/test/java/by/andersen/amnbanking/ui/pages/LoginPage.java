@@ -94,4 +94,15 @@ public class LoginPage extends BasePage {
     public String getTextFromLoginErrorMessage() {
         return $(LOGIN_ERROR_MESSAGE).getText();
     }
+
+    @Step("Enter login and password and press \"Login\"")
+    public ConfirmationCodeModalPage loginUserWithCreds(String login, String password) {
+        $(LOG_IN_INPUT).sendKeys(login);
+        $(PASSWORD_INPUT).sendKeys(password);
+        $(LOGIN_BUTTON).click();
+
+        return new ConfirmationCodeModalPage();
+    }
+
 }
+
