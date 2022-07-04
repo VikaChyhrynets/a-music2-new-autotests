@@ -57,7 +57,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         try {
             createUser();
             loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
                     .clickConfirmButton()
@@ -66,7 +66,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
             confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode()
                     .refreshPage();
             loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             Assert.assertEquals(confirmationCodeModalPage.confirmationCodeWindowIsOpen(), true);
         } finally {
@@ -82,7 +82,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
             createUser();
             for (int i = 0; i < 2; i++) {
             loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
                     .clickConfirmButton();
@@ -90,7 +90,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
             confirmationCodeModalPage.refreshPage();
             }
             loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
                     .clickConfirmButton();
@@ -109,7 +109,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
             createUser();
             for (int i = 0; i < 3; i++) {
             loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
                     .clickConfirmButton();
@@ -117,7 +117,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
             confirmationCodeModalPage.refreshPage();
             }
             loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
                     .clickConfirmButton();
