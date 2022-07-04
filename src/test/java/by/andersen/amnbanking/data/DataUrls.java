@@ -23,4 +23,5 @@ public class DataUrls {
     public static final String CHECK_PASSPORT = PropertyHelper.getProperty("api.checkPassport");
     public static final String NEW_PASSWORD = PropertyHelper.getProperty("api.newPassword");
     public static final String CHECK_SMS = PropertyHelper.getProperty("api.checkSms");
+    public static final String WRONG_SMS_CODE = PropertyHelper.getProperty("api.wrongSMSCode");
 }

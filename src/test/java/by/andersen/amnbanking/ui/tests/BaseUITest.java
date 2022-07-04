@@ -19,11 +19,19 @@ import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+
+import static by.andersen.amnbanking.utils.PropertyHelper.getProperty;
+import static com.codeborne.selenide.Selenide.open;
+
 public abstract class BaseUITest {
 
-    LoginPage loginPage = new LoginPage();
-    ConfirmationCodeModalPage confirmationCodeModalPage = new ConfirmationCodeModalPage();
-    MainPage mainPage = new MainPage();
+    protected LoginPage loginPage = new LoginPage();
+    protected ConfirmationCodeModalPage confirmationCodeModalPage = new ConfirmationCodeModalPage();
 
     @BeforeMethod
     public void setUp() {
@@ -33,9 +41,11 @@ public abstract class BaseUITest {
     @BeforeClass
     public static void setUpAll() {
         Configuration.browserSize = "1280x800";
-        SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    @AfterSuite
-    public void closeDriver() {getWebDriver().quit();}
+    @BeforeSuite
+    public void navigateToLoginPage() {
+        Configuration.startMaximized = true;
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 }

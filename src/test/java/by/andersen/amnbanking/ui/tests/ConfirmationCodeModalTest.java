@@ -6,11 +6,11 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.sql.SQLException;
 
 import static by.andersen.amnbanking.api.tests.BaseAPITest.createUser;
 import static by.andersen.amnbanking.api.tests.BaseAPITest.deleteUser;
+import static org.testng.Assert.assertTrue;
 
 public class ConfirmationCodeModalTest extends BaseUITest {
 
@@ -21,7 +21,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         loginPage.inputLoginField("Maleficent1")
                 .inputPasswordField("Number1")
                 .clickLoginButton();
-        Assert.assertEquals(confirmationCodeModalPage.confirmationCodeWindowIsOpen(), true);
+        assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
     }
 
     @TestRails(id = "C5931949")
@@ -127,4 +127,3 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         }
     }
 }
-

@@ -4,25 +4,18 @@ import com.codeborne.selenide.Condition;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.refresh;
 import static java.time.Duration.ofSeconds;
+import static com.codeborne.selenide.Selenide.$;
 
 public class ConfirmationCodeModalPage extends BasePage {
     private static final By confirmationCodeModal = (By.id(":r5:"));
     private static final By smsCodeField = (By.id(":r7:"));
     private static final By confirmButton = (By.xpath("//*[text()= 'Confirm']"));
-    private static final By modalCongratulations = (By.id("modal-modal-description"));
     private static final By errorMessageWrongSmsCode = (By.xpath("//*[contains(@class,'formInputSMSMessage')]"));
     private static final By errorModalSmsCode = (By.id("modal-modal-title"));
     private static final By clickProceedButtonModalError = (By.xpath("//button[contains(text(), 'Proceed')]"));
-
-
-    @Step("Checking that modal for entering sms code is open")
-    public boolean confirmationCodeWindowIsOpen() {
-        $(confirmationCodeModal).shouldBe(Condition.visible, ofSeconds(5));
-
-        return true;
-    }
+    private static final By loginSuccess = By.id("ModalSuccessfully");
 
     @Step("Field for entering an sms code confirmation")
     public ConfirmationCodeModalPage enterSmsCodeInFieldForCode(String smsCode) {
@@ -36,12 +29,6 @@ public class ConfirmationCodeModalPage extends BasePage {
         $(confirmButton).click();
 
         return this;
-    }
-
-    @Step("Checking that login in the system was successfully" )
-    public String successLoginInTheSystemAfterEnterSmsCode() {
-
-        return $(modalCongratulations).shouldBe(Condition.visible, ofSeconds(7)).getText();
     }
 
     @Step("Get the error messages for sms code confirmation ")
@@ -66,5 +53,30 @@ public class ConfirmationCodeModalPage extends BasePage {
     public LoginPage refreshPage() {
         refresh();
         return new LoginPage();
+    }
+
+    @Step("Is Confirmation Code Window Open?")
+    public boolean confirmationCodeWindowIsOpen() {
+
+        return $(confirmationCodeModal).shouldBe(Condition.visible, ofSeconds(10)).isDisplayed();
+
+    }
+
+    @Step("Entering a confirmation SMS into SMS-code input field")
+    public ConfirmationCodeModalPage inputConfirmSMSField(String smsCodeVerification) {
+        $(smsCodeField).sendKeys(smsCodeVerification);
+
+        return this;
+    }
+
+    @Step("Click on confirm SMS-code button")
+    public void clickOnConfirmButton() {
+        $(confirmButton).click();
+    }
+
+    @Step("Is Login Success?")
+    public boolean isLoginSuccess() {
+
+        return $(loginSuccess).shouldBe(Condition.visible, ofSeconds(10)).isDisplayed();
     }
 }

@@ -7,11 +7,11 @@ import io.qameta.allure.Story;
 import jsonBody.Response;
 import org.testng.annotations.Test;
 
+import java.sql.SQLException;
+
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
-import static by.andersen.amnbanking.data.DataUrls.API_HOST;
-import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
-import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static org.testng.Assert.assertEquals;
 
@@ -134,5 +134,22 @@ public class ConfirmationCodeTests extends BaseAPITest {
         Response resp = new PostAdapters().post(setSmsCode("1234 "), API_HOST + API_SESSIONCODE, authToken, 400).as(Response.class);
         assertEquals(resp.getMessage(),
                 "Sms code contains invalid characters");
+    }
+
+    @Test(description = "Sending a code again to confirm the login when the ban has not expired, negative test")
+    @Step("Sending a code again to confirm the login when the ban has not expired, negative test")
+    @TestRails(id = "C5937934")
+    void sendSMSCodeAgainWhenTheBanHasNotExpired() throws SQLException {
+        createUser();
+        String authToken = getAuthToken("Eminem79", "111Gv5dvvf511");
+        for (int i = 0; i < 3; i++) {
+            new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + API_SESSIONCODE, authToken, 400);
+        }
+        assertEquals(new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + API_SESSIONCODE, authToken, 423).as(Response.class).getMessage(),
+                "Ban time is not over yet...");
+        assertEquals(new PostAdapters().post(setFilterType("SMS_FOR_SESSION"),
+                API_HOST + SMS_CODE, authToken, 423).as(Response.class).getMessage(),
+                "Ban time is not over yet...");
+        deleteUser();
     }
 }
