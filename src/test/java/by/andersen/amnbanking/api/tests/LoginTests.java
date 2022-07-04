@@ -18,7 +18,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 
 @Story("UC 1.2 - Web application login")
-public class LoginTests extends BaseTest {
+public class LoginTests extends BaseAPITest {
 
     @TestRails(id = "C5888309")
     @Step("User Log In with valid data, positive test")
@@ -44,14 +44,17 @@ public class LoginTests extends BaseTest {
     @Step("Block User After Three Incorrect Password Entries, negative test")
     @Test(description = "Block User After Three Incorrect Password Entries, negative test")
     public void loginWithBanUser() throws SQLException {
-        createUser();
-        for (int i = 0; i < 3; i++) {
-            new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_WRONG_PASS),
-                    API_HOST + API_LOGIN, 400);
+        try {
+            createUser();
+            for (int i = 0; i < 3; i++) {
+                new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_WRONG_PASS),
+                        API_HOST + API_LOGIN, 400);
+            }
+            assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_BAN_PASS),
+                    API_HOST + API_LOGIN, 423).asString(), "message"), BAN_USER.getValue());
+        } finally {
+            deleteUser();
         }
-        assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_BAN_PASS),
-                API_HOST + API_LOGIN, 423).asString(), "message"), BAN_USER.getValue());
-        deleteUser();
     }
 
     @TestRails(id = "C5895962")

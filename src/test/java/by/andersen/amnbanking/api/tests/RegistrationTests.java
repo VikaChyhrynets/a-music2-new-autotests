@@ -26,77 +26,98 @@ public class RegistrationTests {
     @Step("Registration new user with valid data, positive test")
     @Test(description = "Registration user with passport, valid date, positive test")
     public void registrationWithValidDateTest() throws SQLException {
-        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "tPvpXJGRqAtbWN8I", "125649846", "+71895555555"),
-                API_HOST + API_REGISTRATION, 200).as(Response.class);
-        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
-        deleteUserFromDB();
+        try {
+            Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                            ("Eminem78", "tPvpXJGRqAtbWN8I", "125649846", "+71895555555"),
+                    API_HOST + API_REGISTRATION, 200).as(Response.class);
+            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        } finally {
+            deleteUserFromDB();
+        }
     }
 
     @TestRails(id = "C5901579")
     @Step("Registration new user with valid data and BIG letters and numbers in passport field, positive test")
     @Test(description = "Registration, valid data, BIG letters and numbers in passport field, positive test")
     public void registrationValidDateWithPassportTest() throws SQLException {
-        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Rvjsio457c", "NX4536489235", "+863455555555"),
-                API_HOST + API_REGISTRATION, 200).as(Response.class);
-        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
-        deleteUserFromDB();
+        try {
+            Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                            ("Eminem78", "8Rvjsio457c", "NX4536489235", "+863455555555"),
+                    API_HOST + API_REGISTRATION, 200).as(Response.class);
+            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        } finally {
+            deleteUserFromDB();
+        }
     }
 
     @TestRails(id = "C5901827")
     @Step("Registration new user with valid data and only digits in passport field, positive test")
     @Test(description = "Registration, valid data, only digits in passport field, positive test")
     public void registrationValidDateWithOnlyDigitsInPassportTest() throws SQLException {
-        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "2Loc4567E", "112364486235", "+72355555555"),
-                API_HOST + API_REGISTRATION, 200).as(Response.class);
-        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
-        deleteUserFromDB();
+        try {
+            Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                            ("Eminem78", "2Loc4567E", "112364486235", "+72355555555"),
+                    API_HOST + API_REGISTRATION, 200).as(Response.class);
+            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        } finally {
+            deleteUserFromDB();
+        }
     }
 
     @TestRails(id = "C5901829")
     @Step("Registration new user with valid data and only two BIG letters in passport field, positive test")
     @Test(description = "Registration, valid data, only two BIG letters in passport field, positive test")
     public void registrationValidDateWithTwoLettersInPassportTest() throws SQLException {
-        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "2Loc4567E", "LK", "+8565555555555"),
-                API_HOST + API_REGISTRATION, 200).as(Response.class);
-        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
-        deleteUserFromDB();
+        try {
+            Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                            ("Eminem78", "2Loc4567E", "LK", "+8565555555555"),
+                    API_HOST + API_REGISTRATION, 200).as(Response.class);
+            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        } finally {
+            deleteUserFromDB();
+        }
     }
 
     @TestRails(id = "C5901830")
     @Step("Registration new user with valid data and thirty symbols in passport field, positive test")
     @Test(description = "Registration, valid data, 30 symbols in passport field, positive test")
     public void registrationValidDateWithThirtyValidSymbolsInPassportTest() throws SQLException {
-        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "2Loc4567E", "11236489235FR456871230L78D9632", "+3459755555555"),
-                API_HOST + API_REGISTRATION, 200).as(Response.class);
-        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
-        deleteUserFromDB();
+        try {
+            Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                            ("Eminem78", "2Loc4567E", "11236489235FR456871230L78D9632", "+3459755555555"),
+                    API_HOST + API_REGISTRATION, 200).as(Response.class);
+            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        } finally {
+            deleteUserFromDB();
+        }
     }
 
     @TestRails(id = "C5901579")
     @Step("Registration new user with valid data 12 chars in phone field, positive test")
     @Test(description = "Registration, valid data, 12 chars in phone field, positive test")
     public void registrationValidDateWithTwelveCharsPhoneTest() throws SQLException {
-        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Rvjsio457c", "NX4536489235", "+96023478512"),
-                API_HOST + API_REGISTRATION, 200).as(Response.class);
-        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
-        deleteUserFromDB();
+        try {
+            Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                            ("Eminem78", "8Rvjsio457c", "NX4536489235", "+96023478512"),
+                    API_HOST + API_REGISTRATION, 200).as(Response.class);
+            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        } finally {
+            deleteUserFromDB();
+        }
     }
 
     @TestRails(id = "C5901579")
     @Step("Registration new user with valid data 16 chars in phone field, positive test")
     @Test(description = "Registration, valid data, 16 chars in phone field, positive test")
     public void registrationValidDateWithSixteenCharsPhoneTest() throws SQLException {
-        Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("Eminem78", "8Rvjsio457c", "NX4536489235", "+960234785126325"),
-                API_HOST + API_REGISTRATION, 200).as(Response.class);
-        Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
-        deleteUserFromDB();
+        try {
+            Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
+                            ("Eminem78", "8Rvjsio457c", "NX4536489235", "+960234785126325"),
+                    API_HOST + API_REGISTRATION, 200).as(Response.class);
+            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        } finally {
+            deleteUserFromDB();
+        }
     }
 
     @TestRails(id = "C5901876")

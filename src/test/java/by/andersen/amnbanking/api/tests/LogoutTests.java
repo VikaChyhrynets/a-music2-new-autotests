@@ -15,7 +15,7 @@ import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 
 
-public class LogoutTests extends BaseTest {
+public class LogoutTests extends BaseAPITest {
 
     static String authKey = getAuthToken("Maleficent1", "Number1");
 
