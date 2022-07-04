@@ -1,6 +1,5 @@
 package by.andersen.amnbanking.ui.tests;
 
-import by.andersen.amnbanking.api.tests.BaseAPITest;
 import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
