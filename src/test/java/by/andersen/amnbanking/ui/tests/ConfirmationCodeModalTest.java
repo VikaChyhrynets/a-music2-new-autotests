@@ -56,7 +56,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @Test(description = "Enter wrong sms code and then authorization again, positive test")
     public void authAfterEnteringWrongConfirmationCodeOneTimeTest() throws SQLException {
         try {
-            new BaseAPITest().createUser();
+            createUser();
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("Eminem79")
                     .clickLoginButton();
@@ -71,7 +71,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                     .clickLoginButton();
             Assert.assertEquals(confirmationCodeModalPage.confirmationCodeWindowIsOpen(), true);
         } finally {
-            new BaseAPITest().deleteUser();
+           deleteUser();
         }
     }
 
@@ -104,7 +104,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
 
     @TestRails(id = "C5931955")
     @Step("Sending a confirmation code when the ban has not expired, positive test ")
-    @Test(description = "send sms-code when the ban time hasn't expired, positive test")
+    @Test(description = "send sms-code when the ban time hasn't expired, positive test ")
     public void sendSmsCodeWhenBanNotExpiredTest() throws SQLException {
         try {
             createUser();
