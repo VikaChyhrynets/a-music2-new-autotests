@@ -1,23 +1,23 @@
 package by.andersen.amnbanking.ui.tests;
 
+import by.andersen.amnbanking.DBConnector.DBConnector;
+import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setPassportLoginPasswordForRegistration;
+import static com.codeborne.selenide.Selenide.refresh;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class LoginTest extends BaseTest {
-
-    @BeforeMethod
-    public void setUp() {
-        loginPage.open();
-    }
 
     @TestRails(id = "C5869665")
     @Step("Enter invalid login shorter than 7 symbols")
@@ -630,6 +630,7 @@ public class LoginTest extends BaseTest {
                     .inputPasswordField(USER_WRONG_PASS)
                     .clickLoginButton();
 //        assertEquals(loginPage.someMethod(), "Login or password are entered incorrectly.”);
+            refresh();
         }
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
                 .inputPasswordField(USER_WRONG_PASS)
@@ -646,6 +647,7 @@ public class LoginTest extends BaseTest {
                     .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                     .clickLoginButton();
 //        assertEquals(loginPage.someMethod(), "Login or password are entered incorrectly.”);
+            refresh();
         }
         loginPage.inputLoginField(NOT_REGISTERED_USER_LOGIN)
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
@@ -680,7 +682,7 @@ public class LoginTest extends BaseTest {
         loginPage.inputLoginField(NOT_REGISTERED_USER_LOGIN)
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                 .clickLoginButton();
-//        assertEquals(в loginPage должен быть метод, который найдет надрись, “Login or password are entered incorrectly.”,
+//        assertEquals(в loginPage должен быть метод, который найдет надпись, “Login or password are entered incorrectly.”,
 //        но пока нету xpath, по которому эту надпись искать, соответственно нету и метода);
     }
 
@@ -693,8 +695,54 @@ public class LoginTest extends BaseTest {
                 .clickLoginButton();
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
         confirmationCodeModalPage
-                .inputLoginField("1234")
+                .inputConfirmSMSField("1234")
                 .clickOnConfirmButton();
         assertTrue(confirmationCodeModalPage.isLoginSuccess());
+    }
+
+    @TestRails(id = "C5880157")
+    @Step("First authorization with valid data, positive test")
+    @Test(description = "First authorization with valid data, positive test", enabled = false)
+    public void testFirstAuthorizationWithValidData() throws SQLException {
+        new PostAdapters().post(setPassportLoginPasswordForRegistration
+                        ("Eminem100", "111Gv5dv", "PVS153215DS", "+10000000000"),
+                API_HOST + API_REGISTRATION, 200);
+        loginPage.inputLoginField("Eminem100")
+                .inputPasswordField("111Gv5dv")
+                .clickLoginButton();
+        confirmationCodeModalPage
+                .inputConfirmSMSField("1234")
+                .clickOnConfirmButton();
+//        assertEquals(после ввода правильного смс-кода должны быть перенапрвлены на страницу, где будет предложено
+//        изменить логин/пароль при первом входе);
+        new DBConnector().deleteUser("Eminem100");
+    }
+
+    @TestRails(id = "C5880167")
+    @Step("First authorization with an unregistered login, negative test")
+    @Test(description = "First authorization with an unregistered login, negative test")
+    public void testFirstAuthorizationWithAnUnregisteredLogin() {
+
+    }
+
+    @TestRails(id = "C5880176")
+    @Step("First authorization with an unregistered password, negative test")
+    @Test(description = "First authorization with an unregistered password, negative test")
+    public void testFirstAuthorizationWithAnUnregisteredPassword() {
+
+    }
+
+    @TestRails(id = "C5880179")
+    @Step("Password recovery on first authorization, negative test")
+    @Test(description = "Password recovery on first authorization, negative test")
+    public void testPasswordRecoveryOnFirstAuthorization() {
+
+    }
+
+    @TestRails(id = "C5880189")
+    @Step("First authorization after entering the wrong login or password three times , negative test")
+    @Test(description = "First authorization after entering the wrong login or password three times , negative test")
+    public void testFirstAuthorizationAfterEnteringTheWrongLoginOrPasswordThreeTimes() {
+
     }
 }
