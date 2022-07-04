@@ -7,7 +7,6 @@ import by.andersen.amnbanking.utils.ParserJson;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
-import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -23,8 +22,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     @Step("Change password after first login, valid date")
     @Test(description = "positive test. Change password after first login")
     public void changePasswordAfterFirstLoginValidDateTest() throws SQLException {
-        try {
             createUser();
+        try {
             String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
             new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
             String response = new PostAdapters().post(setNewPassword("Number1"),
@@ -42,13 +41,13 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     @Step("Change password with less than 7 characters, invalid data")
     @Test(description = "negative test. Change password after first login with less than 7 characters")
     public void changePasswordAfterFirstLoginLessThan7CharsTest() throws SQLException {
-        try {
             createUser();
+        try {
             String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
             new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            Response response = new PostAdapters().post(setNewPassword("Num1"),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).as(Response.class);
-            Assert.assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
+            String response = new PostAdapters().post(setNewPassword("Num1"),
+                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
+            Assert.assertEquals(ParserJson.parser(response,"message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
         } finally {
             deleteUser();
         }
