@@ -31,28 +31,38 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @TestRails(id = "C5931949")
     @Step("Enter forbidden letter in smsCode field, negative test")
     @Test(description = "Enter invalid smsCode with 1 letter at the end, negative test")
-    public void authWithInValidDataLetterForSmsCodeConfirmationTest() {
-        loginPage.inputLoginField("UserTest1")
-                .inputPasswordField("UserTest1")
-                .clickLoginButton()
-                .confirmationCodeWindowIsOpen();
-        confirmationCodeModalPage.enterSmsCodeInFieldForCode("123l")
-                .clickConfirmButton();
-        Assert.assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
+    public void authWithInValidDataLetterForSmsCodeConfirmationTest() throws SQLException {
+        createUser();
+        try {
+            loginPage.inputLoginField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
+                    .clickLoginButton()
+                    .confirmationCodeWindowIsOpen();
+            confirmationCodeModalPage.enterSmsCodeInFieldForCode("123l")
+                    .clickConfirmButton();
+            assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
+        } finally {
+            deleteUser();
+        }
     }
 
     @TestRails(id = "C5931951")
     @Step("Enter forbidden symbol")
     @Test(description = "Enter invalid smsCode with forbidden symbol slash at the end, negative test")
-    public void authWithForbiddenSymbolForSmsCodeConfirmationTest() {
-        loginPage.inputLoginField("UserTest1")
-                .inputPasswordField("UserTest1")
+    public void authWithForbiddenSymbolForSmsCodeConfirmationTest() throws SQLException {
+            createUser();
+        try {
+        loginPage.inputLoginField("Eminem79")
+                .inputPasswordField("111Gv5dvvf511")
                 .clickLoginButton()
                 .confirmationCodeWindowIsOpen();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode("123/")
                 .clickConfirmButton();
-        Assert.assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
-    }
+        assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
+        } finally {
+            deleteUser();
+        }
+        }
 
     @TestRails(id = "C5931952")
     @Step("Enter wrong sms code and then authorization again, positive test ")
@@ -112,19 +122,19 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         try {
             createUser();
             for (int i = 0; i < 3; i++) {
-                loginPage.inputLoginField("Eminem79")
-                        .inputPasswordField("111Gv5dvvf511")
-                        .clickLoginButton();
-                confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
-                        .clickConfirmButton();
-                confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
-                confirmationCodeModalPage.refreshPage();
-            }
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
                     .clickConfirmButton();
+            confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
+            confirmationCodeModalPage.refreshPage();
+            }
+            loginPage.inputLoginField("Eminem79")
+                   .inputPasswordField("111Gv5dvvf511")
+                   .clickLoginButton();
+            confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
+                   .clickConfirmButton();
             Assert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(), "Send code again in");
         } finally {
             deleteUser();

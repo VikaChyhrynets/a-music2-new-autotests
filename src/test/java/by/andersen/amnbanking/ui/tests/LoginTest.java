@@ -627,7 +627,7 @@ public class LoginTest extends BaseUITest {
 
     @TestRails(id = "C5893442")
     @Step("Authorization after entering the wrong password three times, negative test")
-    @Test(description = "Authorization after entering the wrong password three times, negative test")
+    @Test(description = "Authorization after entering the wrong password three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongPasswordThreeTimes() {
         for (int i = 0; i < 3; i++) {
             loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
@@ -644,7 +644,7 @@ public class LoginTest extends BaseUITest {
 
     @TestRails(id = "C5869765")
     @Step("Authorization after entering the wrong login three times, negative test")
-    @Test(description = "Authorization after entering the wrong login three times, negative test")
+    @Test(description = "Authorization after entering the wrong login three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongLoginThreeTimes() {
         for (int i = 0; i < 3; i++) {
             loginPage.inputLoginField(NOT_REGISTERED_USER_LOGIN)
