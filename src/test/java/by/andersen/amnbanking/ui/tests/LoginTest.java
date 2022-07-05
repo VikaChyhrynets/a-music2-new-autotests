@@ -6,17 +6,16 @@ import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
+
 import java.sql.SQLException;
 
+import static by.andersen.amnbanking.api.tests.BaseAPITest.createUser;
+import static by.andersen.amnbanking.api.tests.BaseAPITest.deleteUser;
 import static by.andersen.amnbanking.data.Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS;
-import static by.andersen.amnbanking.data.DataUrls.API_HOST;
-import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
-import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.NOT_REGISTERED_USER_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.setPassportLoginPasswordForRegistration;
+import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
+import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static com.codeborne.selenide.Selenide.refresh;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -693,15 +692,24 @@ public class LoginTest extends BaseUITest {
     @TestRails(id = "C5869618")
     @Step("Login with valid data, positive test")
     @Test(description = "Login with valid data, positive test")
-    public void testLoginProcedureWithValidData() {
-        loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
-                .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
-                .clickLoginButton();
-        assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
-        confirmationCodeModalPage
-                .inputConfirmSMSField("1234")
-                .clickOnConfirmButton();
-        assertTrue(confirmationCodeModalPage.isLoginSuccess());
+    public void testLoginProcedureWithValidData() throws SQLException {
+        createUser();
+        String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
+        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
+        new PostAdapters().post(setNewPassword("Number12"),
+                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 200);
+        try {
+            loginPage.inputLoginField("Eminem79")
+                    .inputPasswordField("Number12")
+                    .clickLoginButton();
+            assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
+            confirmationCodeModalPage
+                    .inputConfirmSMSField("1234")
+                    .clickOnConfirmButton();
+            assertTrue(confirmationCodeModalPage.isLoginSuccess());
+        } finally {
+            deleteUser();
+        }
     }
 
     @TestRails(id = "C5880157")
