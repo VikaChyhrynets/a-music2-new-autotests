@@ -7,9 +7,8 @@
             <class name="by.andersen.amnbanking.api.tests.RegistrationTests"></class>
             <class name="by.andersen.amnbanking.api.tests.PasswordRecoveryTests"></class>
             <class name="by.andersen.amnbanking.api.tests.ChangePasswordAfterFirstLoginTests"></class>
+            <class name="by.andersen.amnbanking.api.tests.LogoutTests"></class>
+            <class name="by.andersen.amnbanking.api.tests.LoginTests"></class>
         </classes>
     </test>
-    <suite-files>
-        <suite-file path="login_tests.xml"/>
-    </suite-files>
 </suite>

@@ -4,7 +4,10 @@ import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
@@ -17,9 +20,11 @@ import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static com.codeborne.selenide.Selenide.refresh;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Epic("E-1. Registration and authorization")
 public class LoginTest extends BaseUITest {
 
     @TestRails(id = "C5869665")
@@ -624,7 +629,8 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.clickHidePasswordCheckbox("Drn1f7sC", "type"), "password");
     }
 
-    @TestRails(id = "C5893442")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5893442")
     @Step("Authorization after entering the wrong password three times, negative test")
     @Test(description = "Authorization after entering the wrong password three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongPasswordThreeTimes() {
@@ -641,7 +647,8 @@ public class LoginTest extends BaseUITest {
 //        assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
     }
 
-    @TestRails(id = "C5869765")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5869765")
     @Step("Authorization after entering the wrong login three times, negative test")
     @Test(description = "Authorization after entering the wrong login three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongLoginThreeTimes() {
@@ -658,7 +665,8 @@ public class LoginTest extends BaseUITest {
 //        assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
     }
 
-    @TestRails(id = "C5898536")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5898536")
     @Step("Authorization with valid Login and invalid Password (less than 7 characters) fields, negative test")
     @Test(description = "Authorization with valid Login and invalid Password (less than 7 characters) fields, negative test")
     public void testLoginProcedureWithPasswordLessThanSevenCharacters() {
@@ -668,7 +676,8 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "C5869680")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5869680")
     @Step("Login in lower case, negative test")
     @Test(description = "Login in lower case, negative test")
     public void testLoginProcedureWithLoginInLowerCase() {
@@ -678,7 +687,8 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getTextFromLoginErrorMessage(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }
 
-    @TestRails(id = "C5869677")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5869677")
     @Step("Login from bank (user changed login) and valid password, negative test")
     @Test(description = "Login from bank (user changed login) and valid password, negative test")
     public void testLoginProcedureWithIncorrectLoginAndValidPassword() {
@@ -689,7 +699,8 @@ public class LoginTest extends BaseUITest {
 //        но пока нету xpath, по которому эту надпись искать, соответственно нету и метода);
     }
 
-    @TestRails(id = "C5869618")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5869618")
     @Step("Login with valid data, positive test")
     @Test(description = "Login with valid data, positive test")
     public void testLoginProcedureWithValidData() throws SQLException {
@@ -697,7 +708,7 @@ public class LoginTest extends BaseUITest {
         String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
         new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
         new PostAdapters().post(setNewPassword("Number12"),
-                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 200);
+                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
         try {
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("Number12")
@@ -712,13 +723,14 @@ public class LoginTest extends BaseUITest {
         }
     }
 
-    @TestRails(id = "C5880157")
+    @Story("UC-1.4 Registration (first login)")
+    @TmsLink("5880157")
     @Step("First authorization with valid data, positive test")
     @Test(description = "First authorization with valid data, positive test", enabled = false)
     public void testFirstAuthorizationWithValidData() throws SQLException {
         new PostAdapters().post(setPassportLoginPasswordForRegistration
                         ("Eminem100", "111Gv5dv", "PVS153215DS", "+10000000000"),
-                API_HOST + API_REGISTRATION, 200);
+                API_HOST + API_REGISTRATION, SC_OK);
         loginPage.inputLoginField("Eminem100")
                 .inputPasswordField("111Gv5dv")
                 .clickLoginButton();
@@ -730,28 +742,32 @@ public class LoginTest extends BaseUITest {
         new DBConnector().deleteUser("Eminem100");
     }
 
-    @TestRails(id = "C5880167")
+    @Story("UC-1.4 Registration (first login)")
+    @TmsLink("5880167")
     @Step("First authorization with an unregistered login, negative test")
     @Test(description = "First authorization with an unregistered login, negative test")
     public void testFirstAuthorizationWithAnUnregisteredLogin() {
 
     }
 
-    @TestRails(id = "C5880176")
+    @Story("UC-1.4 Registration (first login)")
+    @TmsLink("5880176")
     @Step("First authorization with an unregistered password, negative test")
     @Test(description = "First authorization with an unregistered password, negative test")
     public void testFirstAuthorizationWithAnUnregisteredPassword() {
 
     }
 
-    @TestRails(id = "C5880179")
+    @Story("UC-1.4 Registration (first login)")
+    @TmsLink("5880179")
     @Step("Password recovery on first authorization, negative test")
     @Test(description = "Password recovery on first authorization, negative test")
     public void testPasswordRecoveryOnFirstAuthorization() {
 
     }
 
-    @TestRails(id = "C5880189")
+    @Story("UC-1.4 Registration (first login)")
+    @TmsLink("5880189")
     @Step("First authorization after entering the wrong login or password three times , negative test")
     @Test(description = "First authorization after entering the wrong login or password three times , negative test")
     public void testFirstAuthorizationAfterEnteringTheWrongLoginOrPasswordThreeTimes() {

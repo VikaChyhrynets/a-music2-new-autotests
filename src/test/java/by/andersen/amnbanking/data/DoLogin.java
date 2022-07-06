@@ -6,6 +6,7 @@ import static by.andersen.amnbanking.data.AlertAPI.INVALID_USERNAME_OR_PASSWORD;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setJsonObjectForRegistrationAndLogin;
 import static by.andersen.amnbanking.utils.ParserJson.parser;
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.testng.Assert.assertEquals;
 
 public class DoLogin {
@@ -22,6 +23,6 @@ public class DoLogin {
     private static String getMessageFromResponse(String login, String password) {
         return parser(new PostAdapters()
                 .post(setJsonObjectForRegistrationAndLogin(login, password),
-                        API_HOST + API_LOGIN, 400).asString(), "message");
+                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message");
     }
 }
