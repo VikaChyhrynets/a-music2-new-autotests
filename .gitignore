@@ -2,3 +2,4 @@ build
 target
 .idea/
 amnbanking.iml
+.allure/

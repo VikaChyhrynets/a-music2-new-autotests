@@ -8,7 +8,9 @@ import io.qameta.allure.Step;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
+import static org.apache.http.HttpStatus.SC_OK;
 
 public class BaseAPITest {
 
@@ -16,7 +18,7 @@ public class BaseAPITest {
     public static void createUser() {
         new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
                         ("Eminem79", "111Gv5dvvf511", "PVS153215DSV", "+40796842639"),
-                API_HOST + API_REGISTRATION, 200);
+                API_HOST + API_REGISTRATION, SC_OK);
     }
 
     @Step("Deletes the created user after the test")

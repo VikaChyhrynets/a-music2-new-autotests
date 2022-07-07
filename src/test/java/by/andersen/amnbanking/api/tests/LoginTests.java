@@ -28,12 +28,12 @@ public class LoginTests extends BaseAPITest {
     @Step("User Log In with valid data, positive test")
     @Test(description = "User Log In with valid data, positive test")
     public void loginPositive() throws SQLException {
-        createUser();
-        String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-        new PostAdapters().post(setNewPassword("Number12"),
-                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
         try {
+            createUser();
+            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
+            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
+            new PostAdapters().post(setNewPassword("Number12"),
+                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
             String response = new PostAdapters()
                     .post(setJsonObjectForRegistrationAndLogin("Eminem79", "Number12"),
                             API_HOST + API_LOGIN, SC_OK).asString();
