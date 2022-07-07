@@ -1,57 +1,44 @@
 package by.andersen.amnbanking.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class User {
-    private final String loginPhone;
-    private final String passport;
-    private final String password;
     private final String login;
+    private final String password;
+    private final String passport;
+    private final String phoneNumber;
 
-    public User(UserBuilder builder) {
-        this.loginPhone = builder.loginPhone;
-        this.passport = builder.passport;
-        this.password = builder.password;
+        public User(UserBuilder builder) {
         this.login = builder.login;
+        this.password = builder.password;
+        this.passport = builder.passport;
+        this.phoneNumber = builder.phoneNumber;
     }
-
-    public String getLoginPhone() {
-
-        return loginPhone;
-    }
-
-    public String getPassport() {
-
-        return passport;
-    }
-
-    public String getPassword() {
-
-        return password;
-    }
-
-    public String getLogin(){
-
-        return login;
-    }
-
-
 
     public static class UserBuilder {
-        private String loginPhone;
-        private String passport;
-        private String password;
         private String login;
+        private String password;
+        private String passport;
+        private String phoneNumber;
 
         public UserBuilder() {
         }
 
-        public UserBuilder(String loginPhone, String passport, String password) {
-            this.loginPhone = loginPhone;
-            this.passport = passport;
-            this.password = password;
-        }
+//        public UserBuilder(String login, String password, String passport,  String phoneNumber) {
+//            this.login = login;
+//            this.password = password;
+//            this.passport = passport;
+//            this.phoneNumber = phoneNumber;
+//        }
 
         public UserBuilder withPhone(String phone) {
-            this.loginPhone = phone;
+            this.phoneNumber = phone;
 
             return this;
         }
@@ -68,8 +55,9 @@ public class User {
             return this;
         }
 
-        public UserBuilder withLogin(String login){
+        public UserBuilder withLoginPassword(String login, String password){
             this.login = login;
+            this.password = password;
 
             return this;
         }

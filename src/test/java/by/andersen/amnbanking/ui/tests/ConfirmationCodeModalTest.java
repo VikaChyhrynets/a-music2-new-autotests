@@ -1,17 +1,16 @@
 package by.andersen.amnbanking.ui.tests;
 
 import by.andersen.amnbanking.data.Alert;
-import by.andersen.amnbanking.utils.TestRails;
-import io.qameta.allure.Step;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.api.tests.BaseAPITest.createUser;
-import static by.andersen.amnbanking.api.tests.BaseAPITest.deleteUser;
-
+@Epic("Epic 1: Registration and authorization")
 public class ConfirmationCodeModalTest extends BaseUITest {
 
     SoftAssert softAssert = new SoftAssert();
@@ -24,8 +23,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         Assert.assertEquals(confirmationCodeModalPage.confirmationCodeWindowIsOpen(), true);
     }
 
-    @TestRails(id = "C5931949")
-    @Step("Enter forbidden letter in smsCode field, negative test")
+    @TmsLink("5931949")
+    @Story("UC-1.10 Code confirmation.")
     @Test(description = "Enter invalid smsCode with 1 letter at the end, negative test")
     public void authWithInValidDataLetterForSmsCodeConfirmationTest() {
         loginPage.inputLoginField("UserTest1")
@@ -37,8 +36,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         Assert.assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.WRONG_CODE_CONFIRMATION_MODAL.getValue());
     }
 
-    @TestRails(id = "C5931951")
-    @Step("Enter forbidden symbol")
+    @TmsLink("5931951")
+    @Story("UC-1.10 Code confirmation.")
     @Test(description = "Enter invalid smsCode with forbidden symbol slash at the end, negative test")
     public void authWithForbiddenSymbolForSmsCodeConfirmationTest() {
         loginPage.inputLoginField("UserTest1")
@@ -50,12 +49,12 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         Assert.assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.WRONG_CODE_CONFIRMATION_MODAL.getValue());
     }
 
-    @TestRails(id = "C5931952")
-    @Step("Enter wrong sms code and then authorization again, positive test ")
+    @TmsLink("5931952")
+    @Story("UC-1.10 Code confirmation.")
     @Test(description = "Enter wrong sms code and then authorization again, positive test")
     public void authAfterEnteringWrongConfirmationCodeOneTimeTest() throws SQLException {
         try {
-            createUser();
+            baseAPITest.createUser();
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
@@ -70,16 +69,16 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                     .clickLoginButton();
             Assert.assertEquals(confirmationCodeModalPage.confirmationCodeWindowIsOpen(), true);
         } finally {
-           deleteUser();
+            baseAPITest.deleteUser();
         }
     }
 
-    @TestRails(id = "C5869688")
-    @Step("Enter the wrong sms code three times and get the ban, positive test ")
+    @TmsLink("5869688")
+    @Story("UC-1.10 Code confirmation.")
     @Test(description = "wrong sms code 3 times, get the ban on 30 minutes, positive test ")
     public void authAfterEnteringWrongSmsCodeThreeTimesTest() throws SQLException {
         try {
-            createUser();
+            baseAPITest.createUser();
             for (int i = 0; i < 2; i++) {
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("111Gv5dvvf511")
@@ -97,16 +96,16 @@ public class ConfirmationCodeModalTest extends BaseUITest {
             Assert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
                     "You have entered an incorrect SMS code three times");
         } finally {
-            deleteUser();
+            baseAPITest.deleteUser();
         }
     }
 
-    @TestRails(id = "C5931955")
-    @Step("Sending a confirmation code when the ban has not expired, positive test ")
+    @TmsLink("5931955")
+    @Story("UC-1.10 Code confirmation.")
     @Test(description = "send sms-code when the ban time hasn't expired, positive test ")
     public void sendSmsCodeWhenBanNotExpiredTest() throws SQLException {
         try {
-            createUser();
+            baseAPITest.createUser();
             for (int i = 0; i < 3; i++) {
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("111Gv5dvvf511")
@@ -123,7 +122,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                     .clickConfirmButton();
             Assert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(), "Send code again in");
         } finally {
-            deleteUser();
+            baseAPITest.deleteUser();
         }
     }
 }

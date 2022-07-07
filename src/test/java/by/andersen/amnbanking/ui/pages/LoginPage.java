@@ -24,14 +24,14 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public MainPage doLogin(User user) {
-        this.logInInput.click();
-        this.telInput.setValue(user.getLoginPhone());
-        this.passwordInput.setValue(user.getPassword());
-        this.logInInput.click();
-
-        return new MainPage();
-    }
+//    public MainPage doLogin(User user) {
+//        this.logInInput.click();
+//        this.telInput.setValue(user.getLoginPhone());
+//        this.passwordInput.setValue(user.getPassword());
+//        this.logInInput.click();
+//
+//        return new MainPage();
+//    }
 
     @Step("Entering a user login into Login input field")
     public LoginPage inputLoginField(String login) {
