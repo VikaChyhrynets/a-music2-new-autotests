@@ -1,5 +1,6 @@
 package by.andersen.amnbanking.ui.tests;
 
+import by.andersen.amnbanking.api.tests.CreateDeleteUser;
 import by.andersen.amnbanking.api.tests.BaseAPITest;
 import by.andersen.amnbanking.ui.pages.ConfirmationCodeModalPage;
 import by.andersen.amnbanking.ui.pages.LoginPage;
@@ -11,9 +12,11 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import java.sql.SQLException;
+
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-public abstract class BaseUITest {
+public abstract class BaseUITest implements CreateDeleteUser {
 
     protected LoginPage loginPage = new LoginPage();
     protected ConfirmationCodeModalPage confirmationCodeModalPage = new ConfirmationCodeModalPage();
@@ -33,4 +36,14 @@ public abstract class BaseUITest {
 
     @AfterSuite
     public void closeDriver() {getWebDriver().quit();}
+
+    @Override
+    public void deleteUser() throws SQLException {
+
+    }
+
+    @Override
+    public void createUser() {
+
+    }
 }

@@ -3,7 +3,10 @@ package by.andersen.amnbanking.data;
 import by.andersen.amnbanking.adapters.PostAdapters;
 
 import static by.andersen.amnbanking.data.AlertAPI.INVALID_USERNAME_OR_PASSWORD;
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
+import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setJsonObjectForRegistrationAndLogin;
 import static by.andersen.amnbanking.utils.ParserJson.parser;
 import static org.testng.Assert.assertEquals;

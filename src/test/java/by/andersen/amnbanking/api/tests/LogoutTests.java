@@ -2,6 +2,7 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
+import by.andersen.amnbanking.data.UsersData;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
@@ -22,7 +23,8 @@ import static org.apache.hc.core5.http.HttpStatus.SC_PRECONDITION_FAILED;
 @Epic("Epic 1: Registration and authorization")
 public class LogoutTests extends BaseAPITest {
 
-    static String authKey = getAuthToken("Maleficent1", "Number1");
+    static String authKey = getAuthToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
+            UsersData.USER_MALEFICENT.getUser().getPassword());
 
     @TmsLink("5893156")
     @Story("UC-1.4 Registration (first login)")

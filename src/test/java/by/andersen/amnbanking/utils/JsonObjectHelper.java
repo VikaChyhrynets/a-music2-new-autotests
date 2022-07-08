@@ -1,6 +1,5 @@
 package by.andersen.amnbanking.utils;
 
-import by.andersen.amnbanking.data.UsersData;
 import org.json.simple.JSONObject;
 
 public class JsonObjectHelper {

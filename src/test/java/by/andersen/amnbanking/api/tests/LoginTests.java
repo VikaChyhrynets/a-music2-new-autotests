@@ -1,9 +1,13 @@
 package by.andersen.amnbanking.api.tests;
 
+import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
+import by.andersen.amnbanking.data.UsersData;
+import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
@@ -14,11 +18,27 @@ import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidLoginWithSpeci
 import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidPasswordWithSpecialCharacter;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setJsonObjectForRegistrationAndLogin;
 import static by.andersen.amnbanking.utils.ParserJson.parser;
+import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 
 @Story("UC 1.2 - Web application login")
 public class LoginTests extends BaseAPITest {
+    @Override
+    @BeforeMethod
+    public void deleteUser() throws SQLException {
+        new DBConnector().deleteUser("Eminem79");
+    }
+
+    @Override
+    public void createUser() {
+        new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration(
+                        UsersData.USER_EMINEM79.getUser().getLogin(),
+                        UsersData.USER_EMINEM79.getUser().getPassword(),
+                        UsersData.USER_EMINEM79.getUser().getPassport(),
+                        UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
+                API_HOST + API_REGISTRATION, SC_OK);
+    }
 
     @TestRails(id = "C5888309")
     @Step("User Log In with valid data, positive test")
@@ -44,7 +64,6 @@ public class LoginTests extends BaseAPITest {
     @Step("Block User After Three Incorrect Password Entries, negative test")
     @Test(description = "Block User After Three Incorrect Password Entries, negative test")
     public void loginWithBanUser() throws SQLException {
-        try {
             createUser();
             for (int i = 0; i < 3; i++) {
                 new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_WRONG_PASS),
@@ -52,9 +71,6 @@ public class LoginTests extends BaseAPITest {
             }
             assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_BAN_PASS),
                     API_HOST + API_LOGIN, 423).asString(), "message"), BAN_USER.getValue());
-        } finally {
-            deleteUser();
-        }
     }
 
     @TestRails(id = "C5895962")
