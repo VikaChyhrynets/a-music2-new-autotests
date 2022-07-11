@@ -8,6 +8,7 @@ public class DataUrls {
     public static final String API_LOGIN = PropertyHelper.getProperty("api.login");
     public static final String API_SESSIONCODE = PropertyHelper.getProperty("api.session_code");
     public static final String API_REGISTRATION = PropertyHelper.getProperty("api.registration");
+    public static final String API_BANK_INFO = PropertyHelper.getProperty("api.bankInfo");
     public static final String API_LOGOUT = PropertyHelper.getProperty("api.logout");
     public static final String USER_BAN_PASS = PropertyHelper.getProperty("api.testBanPass");
     public static final String USER_WRONG_PASS = PropertyHelper.getProperty("api.testWrongPass");

@@ -8,8 +8,9 @@ import lombok.Getter;
 public enum UsersData {
     USER_EMINEM79(new User("Eminem79", "111Gv5dvvf511", "PVS153215DSV", "+40796842639")),
     USER_MALEFICENT(new User("Maleficent1", "Number1", "222222AA", "+12345678911")),
-    EM79_VALID_PASS(new User("Eminem79", "tPvpXJGRqAtbWN8I", "125649846",
+    EM79_VALID_PASS(new User("Eminem79", "tPvpXJGRqAtbWN8I", "KL125649846",
             "+863455555555")),
+    USER_EM79_NEW_PASS(new User("Eminem79", "Number1", null, null)),
     EM79_VALID_PASS_DIGITS(new User("Eminem79", "2Loc4567E", "112364486235",
             "+72355555555")),
     EM79_VAL_PASS_2NUMBERS(new User("Eminem79", "2Loc4567E", "LK",
