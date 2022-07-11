@@ -1,4 +1,4 @@
-package by.andersen.amnbanking.ui.tests;
+package by.andersen.amnbanking.tests.ui_tests.test;
 
 import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
@@ -6,15 +6,13 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
 import java.sql.SQLException;
 
-
-import static by.andersen.amnbanking.api.tests.BaseAPITest.createUser;
-import static by.andersen.amnbanking.api.tests.BaseAPITest.deleteUser;
-import static org.testng.Assert.assertTrue;
 import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class ConfirmationCodeModalTest extends BaseUITest {
 
@@ -50,19 +48,19 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @Step("Enter forbidden symbol")
     @Test(description = "Enter invalid smsCode with forbidden symbol slash at the end, negative test")
     public void authWithForbiddenSymbolForSmsCodeConfirmationTest() throws SQLException {
-            createUser();
+        createUser();
         try {
-        loginPage.inputLoginField("Eminem79")
-                .inputPasswordField("111Gv5dvvf511")
-                .clickLoginButton()
-                .confirmationCodeWindowIsOpen();
-        confirmationCodeModalPage.enterSmsCodeInFieldForCode("123/")
-                .clickConfirmButton();
-        assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
+            loginPage.inputLoginField("Eminem79")
+                    .inputPasswordField("111Gv5dvvf511")
+                    .clickLoginButton()
+                    .confirmationCodeWindowIsOpen();
+            confirmationCodeModalPage.enterSmsCodeInFieldForCode("123/")
+                    .clickConfirmButton();
+            assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(), Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
         } finally {
             deleteUser();
         }
-        }
+    }
 
     @TestRails(id = "C5931952")
     @Step("Enter wrong sms code and then authorization again, positive test ")
@@ -84,7 +82,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                     .clickLoginButton();
             assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
         } finally {
-           deleteUser();
+            deleteUser();
         }
     }
 
@@ -95,13 +93,13 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         try {
             createUser();
             for (int i = 0; i < 2; i++) {
-            loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("111Gv5dvvf511")
-                    .clickLoginButton();
-            confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
-                    .clickConfirmButton();
-            confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
-            confirmationCodeModalPage.refreshPage();
+                loginPage.inputLoginField("Eminem79")
+                        .inputPasswordField("111Gv5dvvf511")
+                        .clickLoginButton();
+                confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
+                        .clickConfirmButton();
+                confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
+                confirmationCodeModalPage.refreshPage();
             }
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("111Gv5dvvf511")
@@ -122,19 +120,19 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         try {
             createUser();
             for (int i = 0; i < 3; i++) {
+                loginPage.inputLoginField("Eminem79")
+                        .inputPasswordField("111Gv5dvvf511")
+                        .clickLoginButton();
+                confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
+                        .clickConfirmButton();
+                confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
+                confirmationCodeModalPage.refreshPage();
+            }
             loginPage.inputLoginField("Eminem79")
                     .inputPasswordField("111Gv5dvvf511")
                     .clickLoginButton();
             confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
                     .clickConfirmButton();
-            confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
-            confirmationCodeModalPage.refreshPage();
-            }
-            loginPage.inputLoginField("Eminem79")
-                   .inputPasswordField("111Gv5dvvf511")
-                   .clickLoginButton();
-            confirmationCodeModalPage.enterSmsCodeInFieldForCode("1235")
-                   .clickConfirmButton();
             Assert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(), "Send code again in");
         } finally {
             deleteUser();
@@ -142,7 +140,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     }
 
     @Test(description = "Close sms confirmation window and try to login again, negative test")
-    public void closeSmsWindowAndLoginAgain(){
+    public void closeSmsWindowAndLoginAgain() {
         assertTrue(loginPage.inputLoginField("UserForTest111")
                 .inputPasswordField("Password11")
                 .clickLoginButton()

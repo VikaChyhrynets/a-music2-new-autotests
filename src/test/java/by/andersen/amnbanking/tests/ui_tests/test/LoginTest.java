@@ -1,6 +1,5 @@
-package by.andersen.amnbanking.ui.tests;
+package by.andersen.amnbanking.tests.ui_tests.test;
 
-import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.TestRails;
@@ -12,15 +11,16 @@ import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.api.tests.BaseAPITest.createUser;
-import static by.andersen.amnbanking.api.tests.BaseAPITest.deleteUser;
 import static by.andersen.amnbanking.data.Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
+import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static com.codeborne.selenide.Selenide.refresh;
-import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.hc.core5.http.HttpStatus.SC_OK;
+import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -631,7 +631,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC 1.2 - Web application login")
     @TmsLink("5893442")
-    @Step("Authorization after entering the wrong password three times, negative test")
     @Test(description = "Authorization after entering the wrong password three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongPasswordThreeTimes() {
         for (int i = 0; i < 3; i++) {
@@ -649,7 +648,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC 1.2 - Web application login")
     @TmsLink("5869765")
-    @Step("Authorization after entering the wrong login three times, negative test")
     @Test(description = "Authorization after entering the wrong login three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongLoginThreeTimes() {
         for (int i = 0; i < 3; i++) {
@@ -667,7 +665,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC 1.2 - Web application login")
     @TmsLink("5898536")
-    @Step("Authorization with valid Login and invalid Password (less than 7 characters) fields, negative test")
     @Test(description = "Authorization with valid Login and invalid Password (less than 7 characters) fields, negative test")
     public void testLoginProcedureWithPasswordLessThanSevenCharacters() {
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
@@ -678,7 +675,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC 1.2 - Web application login")
     @TmsLink("5869680")
-    @Step("Login in lower case, negative test")
     @Test(description = "Login in lower case, negative test")
     public void testLoginProcedureWithLoginInLowerCase() {
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG.toLowerCase())
@@ -689,7 +685,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC 1.2 - Web application login")
     @TmsLink("5869677")
-    @Step("Login from bank (user changed login) and valid password, negative test")
     @Test(description = "Login from bank (user changed login) and valid password, negative test")
     public void testLoginProcedureWithIncorrectLoginAndValidPassword() {
         loginPage.inputLoginField(NOT_REGISTERED_USER_LOGIN)
@@ -701,17 +696,19 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC 1.2 - Web application login")
     @TmsLink("5869618")
-    @Step("Login with valid data, positive test")
     @Test(description = "Login with valid data, positive test")
     public void testLoginProcedureWithValidData() throws SQLException {
         try {
             createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            new PostAdapters().post(setNewPassword("Number12"),
+            String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
+                    USER_0NE.getUser().getPassword());
+            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE,
+                    authTokenChangePassword, SC_PERMANENT_REDIRECT);
+            USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
+            new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
                     API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
-            loginPage.inputLoginField("Eminem79")
-                    .inputPasswordField("Number12")
+            loginPage.inputLoginField(USER_0NE.getUser().getLogin())
+                    .inputPasswordField(USER_0NE.getUser().getPassword())
                     .clickLoginButton();
             assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
             confirmationCodeModalPage
@@ -725,26 +722,26 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880157")
-    @Step("First authorization with valid data, positive test")
-    @Test(description = "First authorization with valid data, positive test", enabled = false)
+    @Test(description = "First authorization with valid data, positive test")
     public void testFirstAuthorizationWithValidData() throws SQLException {
-        new PostAdapters().post(setPassportLoginPasswordForRegistration
-                        ("Eminem100", "111Gv5dv", "PVS153215DS", "+10000000000"),
-                API_HOST + API_REGISTRATION, SC_OK);
-        loginPage.inputLoginField("Eminem100")
-                .inputPasswordField("111Gv5dv")
-                .clickLoginButton();
-        confirmationCodeModalPage
-                .inputConfirmSMSField("1234")
-                .clickOnConfirmButton();
+        try {
+            createUser();
+            loginPage.inputLoginField(USER_0NE.getUser().getLogin())
+                    .inputPasswordField(USER_0NE.getUser().getPassword())
+                    .clickLoginButton();
+            assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
+            confirmationCodeModalPage
+                    .inputConfirmSMSField("1234")
+                    .clickOnConfirmButton();
 //        assertEquals(после ввода правильного смс-кода должны быть перенапрвлены на страницу, где будет предложено
 //        изменить логин/пароль при первом входе);
-        new DBConnector().deleteUser("Eminem100");
+        } finally {
+            deleteUser();
+        }
     }
 
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880167")
-    @Step("First authorization with an unregistered login, negative test")
     @Test(description = "First authorization with an unregistered login, negative test")
     public void testFirstAuthorizationWithAnUnregisteredLogin() {
 
@@ -752,7 +749,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880176")
-    @Step("First authorization with an unregistered password, negative test")
     @Test(description = "First authorization with an unregistered password, negative test")
     public void testFirstAuthorizationWithAnUnregisteredPassword() {
 
@@ -760,7 +756,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880179")
-    @Step("Password recovery on first authorization, negative test")
     @Test(description = "Password recovery on first authorization, negative test")
     public void testPasswordRecoveryOnFirstAuthorization() {
 
@@ -768,7 +763,6 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880189")
-    @Step("First authorization after entering the wrong login or password three times , negative test")
     @Test(description = "First authorization after entering the wrong login or password three times , negative test")
     public void testFirstAuthorizationAfterEnteringTheWrongLoginOrPasswordThreeTimes() {
 

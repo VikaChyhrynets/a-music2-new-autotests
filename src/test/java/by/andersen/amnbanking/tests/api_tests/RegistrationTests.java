@@ -1,12 +1,12 @@
-package by.andersen.amnbanking.api.tests;
+package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.AlertAPI;
+import by.andersen.amnbanking.jsonBody.Response;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
-import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

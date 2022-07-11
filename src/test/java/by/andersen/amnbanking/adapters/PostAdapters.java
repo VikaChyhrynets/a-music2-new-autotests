@@ -1,6 +1,6 @@
 package by.andersen.amnbanking.adapters;
 
-import by.andersen.amnbanking.api.tests.BaseAPITest;
+import by.andersen.amnbanking.tests.api_tests.BaseAPITest;
 import io.qameta.allure.Step;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 public class PostAdapters extends BaseAPITest {
 
     @Step("Basic POST request with changeable JSON body")
-    public Response post(String body, String url, Integer statusCode) {
+    public Response post(String body, String url, int statusCode) {
 
         return given()
                 .spec(REQ_SPEC)
@@ -25,7 +25,7 @@ public class PostAdapters extends BaseAPITest {
     }
 
     @Step("Basic POST request with changeable JSON body and authorization via Cookie")
-    public Response post(String body, String url, Cookie cookie, Integer statusCode) {
+    public Response post(String body, String url, Cookie cookie, int statusCode) {
 
         return given()
                 .spec(REQ_SPEC)
@@ -40,7 +40,7 @@ public class PostAdapters extends BaseAPITest {
     }
 
     @Step("POST request with changeable JSON body and authorization via Bearer token")
-    public Response post(String body, String url, String authToken, Integer statusCode) {
+    public Response post(String body, String url, String authToken, int statusCode) {
 
         return given()
                 .spec(REQ_SPEC)

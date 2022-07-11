@@ -1,7 +1,6 @@
-package by.andersen.amnbanking.api.tests;
+package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.data.User;
-import by.andersen.amnbanking.utils.TestRails;
 import org.testng.annotations.Test;
 
 import static by.andersen.amnbanking.utils.PathResolver.AUTH_BY_PHONE;
@@ -10,10 +9,14 @@ import static java.net.HttpURLConnection.HTTP_OK;
 import static org.hamcrest.Matchers.is;
 
 public class ExampleLoginTest extends BaseAPITest {
-    @TestRails(id = "123")
     @Test(description = "Login works")
     public void getInputWorksCorrectly() {
-        User user = new User.UserBuilder().withPhone("73287083").withPassword("adkhadvk").build();
+        User user = new User.UserBuilder()
+                .withLogin("Vladivostok2000")
+                .withPassword("Vladivostok2000")
+                .withPassport("PVS153215DSV")
+                .withPhone("+10000000000")
+                .build();
 
         given().with().body(user)
                 .when()

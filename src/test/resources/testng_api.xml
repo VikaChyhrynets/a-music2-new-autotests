@@ -3,12 +3,13 @@
 <suite name="API tests" parallel="tests" thread-count="1">
     <test name="API tests">
         <classes>
-            <class name="by.andersen.amnbanking.api.tests.ConfirmationCodeTests"></class>
-            <class name="by.andersen.amnbanking.api.tests.RegistrationTests"></class>
-            <class name="by.andersen.amnbanking.api.tests.PasswordRecoveryTests"></class>
-            <class name="by.andersen.amnbanking.api.tests.ChangePasswordAfterFirstLoginTests"></class>
-            <class name="by.andersen.amnbanking.api.tests.LogoutTests"></class>
-            <class name="by.andersen.amnbanking.api.tests.LoginTests"></class>
+            <class name="by.andersen.amnbanking.tests.api_tests.ATMBranchesTests"></class>
+            <class name="by.andersen.amnbanking.tests.api_tests.ChangePasswordAfterFirstLoginTests"></class>
+            <class name="by.andersen.amnbanking.tests.api_tests.ConfirmationCodeTests"></class>
+            <class name="by.andersen.amnbanking.tests.api_tests.LoginTests"></class>
+            <class name="by.andersen.amnbanking.tests.api_tests.LogoutTests"></class>
+            <class name="by.andersen.amnbanking.tests.api_tests.PasswordRecoveryTests"></class>
+            <class name="by.andersen.amnbanking.tests.api_tests.RegistrationTests"></class>
         </classes>
     </test>
 </suite>
