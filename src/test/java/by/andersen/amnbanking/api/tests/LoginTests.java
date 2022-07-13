@@ -27,7 +27,7 @@ public class LoginTests extends BaseAPITest {
     @Override
     @BeforeMethod
     public void deleteUser() throws SQLException {
-        new DBConnector().deleteUser("Eminem79");
+        new DBConnector().deleteUser(UsersData.USER_EMINEM79.getUser().getLogin());
     }
 
     @Override
@@ -63,14 +63,15 @@ public class LoginTests extends BaseAPITest {
     @TestRails(id = "C5894544")
     @Step("Block User After Three Incorrect Password Entries, negative test")
     @Test(description = "Block User After Three Incorrect Password Entries, negative test")
-    public void loginWithBanUser() throws SQLException {
-            createUser();
-            for (int i = 0; i < 3; i++) {
-                new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_WRONG_PASS),
-                        API_HOST + API_LOGIN, 400);
-            }
-            assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_BAN_PASS),
-                    API_HOST + API_LOGIN, 423).asString(), "message"), BAN_USER.getValue());
+    public void loginWithBanUser() {
+        createUser();
+        for (int i = 0; i < 3; i++) {
+            new PostAdapters().post(setJsonObjectForRegistrationAndLogin(UsersData.USER_EMINEM79.getUser().getLogin(),
+                            USER_WRONG_PASS),
+                    API_HOST + API_LOGIN, 400);
+        }
+        assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", USER_BAN_PASS),
+                API_HOST + API_LOGIN, 423).asString(), "message"), BAN_USER.getValue());
     }
 
     @TestRails(id = "C5895962")

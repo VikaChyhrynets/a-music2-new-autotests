@@ -20,7 +20,9 @@ public enum UsersData {
     EM79_MIN_CHARS_PHONE(new User("Eminem79", "8Rvjsio457c", "NX4536489235",
             "+96023478512")),
     EM79_MAX_CHARS_PHONE(new User("Eminem79", "8Rvjsio457c", "NX4536489235",
-            "+960234785126325"));
+            "+960234785126325")),
+    REG_PHONE_NUMBER(new User(null, "+375555555555", null, null)),
+    REG_PASSPORT_NUMBER(new User(null, null, "AM4567", null));
 
     private final User user;
 }

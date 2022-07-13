@@ -37,7 +37,7 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     @Override
     @BeforeMethod
     public void deleteUser() throws SQLException {
-        new DBConnector().deleteUser("Eminem79");
+        new DBConnector().deleteUser(UsersData.USER_EMINEM79.getUser().getLogin());
     }
 
     @Override
@@ -63,10 +63,10 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK).asString();
         String response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         (UsersData.USER_EMINEM79.getUser().getLogin(),
-                         UsersData.USER_EM79_NEW_PASS.getUser().getPassword()),
+                                UsersData.USER_EM79_NEW_PASS.getUser().getPassword()),
                 API_HOST + API_LOGIN, SC_OK).asString();
         Assert.assertEquals(ParserJson.parser(response, "message"),
-                "Password changed successfully! Please login again");
+                AlertAPI.SUCCESSFUL_PASSWORD_CHANGED.getValue());
         Assert.assertEquals(ParserJson.parser(response1, "message"), AlertAPI.LOGIN_SUCCESS.getValue());
     }
 
@@ -99,7 +99,7 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
         String response = new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getValue()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT).asString();
         Assert.assertEquals(ParserJson.parser(response, "message"),
-                "Required to change password on first login");
+                AlertAPI.REQUIRED_PASSWORD.getValue());
     }
 }
 
