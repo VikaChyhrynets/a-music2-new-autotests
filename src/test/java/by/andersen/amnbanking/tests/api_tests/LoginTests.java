@@ -16,6 +16,7 @@ import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidLoginWithSpecialCharacter;
 import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidPasswordWithSpecialCharacter;
 import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
+import static by.andersen.amnbanking.data.WrongUserData.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static by.andersen.amnbanking.utils.ParserJson.parser;
 import static org.apache.hc.core5.http.HttpStatus.*;
@@ -76,7 +77,7 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Login Less Than 7 Characters, negative test")
     public void loginWithInvalidLoginLessThanSevenCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("111", PASSWORD_WITH_PASSPORT_REG),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -85,7 +86,7 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Login More Than 20 Characters, negative test")
     public void loginWithInvalidLoginMoreThanTwentyCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("111222333444777888999", PASSWORD_WITH_PASSPORT_REG),
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
                         API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
@@ -269,8 +270,10 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Login Only Numbers Without The First Three Numbers One, negative test")
     public void loginWithLoginOnlyNumbersWithoutTheFirstThreeNumbersOne() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("115457821", PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_ONLY_NUMBERS_WITHOUT_111_AT_THE_BEGINNING.getWrongData(),
+                                PASSWORD_WITH_PASSPORT_REG),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -278,8 +281,9 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Login Only Letters, negative test")
     public void loginWithLoginOnlyLetters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("SomeLogin", PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_OR_PASSWORD_ONLY_LETTERS.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -287,8 +291,10 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Login Without Capital Latin Letter And With Small Latin Letter, negative test")
     public void loginWithLoginWithoutCapitalLatinLetterAndWithSmallLatinLetter() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("userfortest111", PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITHOUT_CAPITAL_LETTER.getWrongData(),
+                                PASSWORD_WITH_PASSPORT_REG),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -296,8 +302,9 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Login Is Empty, negative test")
     public void loginWithEmptyLogin() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin("", PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_OR_PASSWORD_FIELD_IS_EMPTY.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -305,8 +312,9 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Password Less Than 7 Characters, negative test")
     public void loginWithInvalidPasswordLessSevenCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "Some1"),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData()),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -314,8 +322,10 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Password More Than 20 Characters, negative test")
     public void loginWithInvalidPasswordMoreThanTwentyCharacters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "SomePassWORd1SomePass"),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG,
+                                LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS.getWrongData()),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -323,8 +333,9 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Password Is Empty, negative test")
     public void loginWithEmptyPassword() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, ""),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, LOGIN_OR_PASSWORD_FIELD_IS_EMPTY.getWrongData()),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -332,8 +343,9 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Password Only Numbers, negative test")
     public void loginWithPasswordOnlyNumbers() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "111234569"),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, PASSWORD_ONLY_NUMBERS.getWrongData()),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -341,8 +353,9 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User's Password Only Letters, negative test")
     public void loginWithPasswordOnlyLetters() {
         assertEquals(parser(new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, "SomePassWORd"),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, LOGIN_OR_PASSWORD_ONLY_LETTERS.getWrongData()),
+                                API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
+                INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
     @Story("UC 1.2 - Web application login")

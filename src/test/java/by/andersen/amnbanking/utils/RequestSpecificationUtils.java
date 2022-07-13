@@ -11,5 +11,7 @@ public final class RequestSpecificationUtils {
     private RequestSpecificationUtils() {
     }
 
-    public static RequestSpecification requestSpecification = RestAssured.given().baseUri(API_URL).contentType(JSON);
+    public static RequestSpecification requestSpecification = RestAssured.given()
+            .baseUri(API_URL)
+            .contentType(JSON);
 }

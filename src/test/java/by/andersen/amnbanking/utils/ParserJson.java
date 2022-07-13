@@ -19,7 +19,8 @@ public class ParserJson {
 
         } catch (ParseException e) {
             e.printStackTrace();
-        } return message;
+        }
+        return message;
     }
 
     public static int parserArray(String body) {
@@ -27,9 +28,9 @@ public class ParserJson {
             JSONParser jsonParser = new JSONParser();
             JSONArray jsonArray = (JSONArray) jsonParser.parse(body);
             count = jsonArray.size();
-
         } catch (ParseException e) {
             e.printStackTrace();
-        } return count;
+        }
+        return count;
     }
 }

@@ -2,6 +2,7 @@ package by.andersen.amnbanking.tests.ui_tests.test;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.Alert;
+import by.andersen.amnbanking.data.WrongUserData;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
@@ -16,6 +17,7 @@ import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static com.codeborne.selenide.Selenide.refresh;
@@ -668,7 +670,7 @@ public class LoginTest extends BaseUITest {
     @Test(description = "Authorization with valid Login and invalid Password (less than 7 characters) fields, negative test")
     public void testLoginProcedureWithPasswordLessThanSevenCharacters() {
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
-                .inputPasswordField("Pad11")
+                .inputPasswordField(LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData())
                 .clickLoginButton();
         assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getValue());
     }

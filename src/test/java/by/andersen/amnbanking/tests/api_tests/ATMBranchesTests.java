@@ -1,5 +1,6 @@
 package by.andersen.amnbanking.tests.api_tests;
 
+import by.andersen.amnbanking.adapters.GetAdapters;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
