@@ -16,13 +16,13 @@ public enum SmsVerificationData {
     SMS_BEGIN_SPACE(" 1234"),
     SMS_SLASH_MIDDLE("12/4");
 
-    String value;
+    String sms;
 
-    SmsVerificationData(String value) {
-        this.value = value;
+    SmsVerificationData(String sms) {
+        this.sms = sms;
     }
 
     public String getValue() {
-        return value;
+        return sms;
     }
 }

@@ -13,13 +13,13 @@ import static org.testng.Assert.assertEquals;
 
 public class DoLogin {
     public static void loginWithInvalidLoginWithSpecialCharacter(String specialCharacter) {
-        assertEquals(getMessageFromResponse(LOGIN_WITH_PASSPORT_REG + specialCharacter, PASSWORD_WITH_PASSPORT_REG),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+        assertEquals(getMessageFromResponse(LOGIN_WITH_PASSPORT_REG + specialCharacter,
+                        PASSWORD_WITH_PASSPORT_REG), INVALID_USERNAME_OR_PASSWORD);
     }
 
     public static void loginWithInvalidPasswordWithSpecialCharacter(String specialCharacter) {
-        assertEquals(getMessageFromResponse(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG + specialCharacter),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+        assertEquals(getMessageFromResponse(LOGIN_WITH_PASSPORT_REG,
+                        PASSWORD_WITH_PASSPORT_REG + specialCharacter), INVALID_USERNAME_OR_PASSWORD);
     }
 
     private static String getMessageFromResponse(String login, String password) {

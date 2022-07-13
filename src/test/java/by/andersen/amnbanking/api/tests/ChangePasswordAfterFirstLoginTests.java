@@ -2,8 +2,6 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.data.AlertAPI;
-import by.andersen.amnbanking.data.SmsVerificationData;
 import by.andersen.amnbanking.data.UsersData;
 import by.andersen.amnbanking.utils.DataProviderTests;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
@@ -19,6 +17,8 @@ import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
+import static by.andersen.amnbanking.data.AlertAPI.REGISTRATION_FAILED_USER_PASSWORD;
+import static by.andersen.amnbanking.data.AlertAPI.REQUIRED_PASSWORD;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
@@ -26,6 +26,9 @@ import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
 import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
 import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
 import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
+import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
+import static by.andersen.amnbanking.data.SuccessfulMessages.LOGIN_SUCCESS;
+import static by.andersen.amnbanking.data.SuccessfulMessages.SUCCESSFUL_PASSWORD_CHANGED;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
@@ -57,17 +60,16 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
         createUser();
         String authTokenChangePassword = getAuthToken(UsersData.USER_EMINEM79.getUser().getLogin(),
                 UsersData.USER_EMINEM79.getUser().getPassword());
-        new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getValue()), API_HOST + API_SESSIONCODE,
-                authTokenChangePassword, SC_PERMANENT_REDIRECT);
+        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+                API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
         String response = new PostAdapters().post(setNewPassword(UsersData.USER_EM79_NEW_PASS.getUser().getPassword()),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK).asString();
         String response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
                         (UsersData.USER_EMINEM79.getUser().getLogin(),
                                 UsersData.USER_EM79_NEW_PASS.getUser().getPassword()),
                 API_HOST + API_LOGIN, SC_OK).asString();
-        Assert.assertEquals(ParserJson.parser(response, "message"),
-                AlertAPI.SUCCESSFUL_PASSWORD_CHANGED.getValue());
-        Assert.assertEquals(ParserJson.parser(response1, "message"), AlertAPI.LOGIN_SUCCESS.getValue());
+        Assert.assertEquals(ParserJson.parser(response, "message"), SUCCESSFUL_PASSWORD_CHANGED);
+        Assert.assertEquals(ParserJson.parser(response1, "message"), LOGIN_SUCCESS);
     }
 
     @TmsLinks(value = {@TmsLink("5924630"), @TmsLink("5924631"), @TmsLink("5924632"), @TmsLink("5924633"),
@@ -79,12 +81,11 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
         createUser();
         String authTokenChangePassword = getAuthToken(UsersData.USER_EMINEM79.getUser().getLogin(),
                 UsersData.USER_EMINEM79.getUser().getPassword());
-        new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getValue()), API_HOST + API_SESSIONCODE,
+        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()), API_HOST + API_SESSIONCODE,
                 authTokenChangePassword, SC_PERMANENT_REDIRECT);
         String response = new PostAdapters().post(setNewPassword(newPass),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_BAD_REQUEST).asString();
-        Assert.assertEquals(ParserJson.parser(response, "message"),
-                AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
+        Assert.assertEquals(ParserJson.parser(response, "message"), REGISTRATION_FAILED_USER_PASSWORD);
     }
 
     @TmsLink("5924637")
@@ -94,12 +95,11 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
         createUser();
         String authTokenChangePassword = getAuthToken(UsersData.USER_EMINEM79.getUser().getLogin(),
                 UsersData.USER_EMINEM79.getUser().getPassword());
-        new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getValue()),
+        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
-        String response = new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getValue()),
+        String response = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT).asString();
-        Assert.assertEquals(ParserJson.parser(response, "message"),
-                AlertAPI.REQUIRED_PASSWORD.getValue());
+        Assert.assertEquals(ParserJson.parser(response, "message"), REQUIRED_PASSWORD);
     }
 }
 

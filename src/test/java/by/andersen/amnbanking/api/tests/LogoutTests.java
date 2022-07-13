@@ -2,7 +2,6 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.data.AlertAPI;
 import by.andersen.amnbanking.data.SmsVerificationData;
 import by.andersen.amnbanking.data.UsersData;
 import io.qameta.allure.Epic;
@@ -12,6 +11,8 @@ import jsonBody.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static by.andersen.amnbanking.data.AlertAPI.LOGOUT_SUCCESSFULLY;
+import static by.andersen.amnbanking.data.AlertAPI.NO_ACTIVE_SESSION;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_LOGOUT;
@@ -33,7 +34,7 @@ public class LogoutTests extends BaseAPITest {
         new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getValue()), API_HOST + API_SESSIONCODE,
                 authToken, SC_OK);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authToken, SC_OK).as(Response.class);
-        Assert.assertEquals(body.getMessage(), AlertAPI.LOGOUT_SUCCESSFULLY.getValue());
+        Assert.assertEquals(body.getMessage(), LOGOUT_SUCCESSFULLY);
     }
 
 
@@ -47,6 +48,6 @@ public class LogoutTests extends BaseAPITest {
                 authToken, SC_BAD_REQUEST);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authToken,
                 SC_PRECONDITION_FAILED).as(Response.class);
-        Assert.assertEquals(body.getMessage(), AlertAPI.NO_ACTIVE_SESSION.getValue());
+        Assert.assertEquals(body.getMessage(), NO_ACTIVE_SESSION);
     }
 }

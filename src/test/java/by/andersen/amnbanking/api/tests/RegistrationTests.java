@@ -2,7 +2,6 @@ package by.andersen.amnbanking.api.tests;
 
 import by.andersen.amnbanking.DBConnector.DBConnector;
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.data.AlertAPI;
 import by.andersen.amnbanking.data.UsersData;
 import by.andersen.amnbanking.utils.DataProviderTests;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
@@ -12,14 +11,15 @@ import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
 import jsonBody.Response;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
+import static by.andersen.amnbanking.data.AlertAPI.*;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
+import static by.andersen.amnbanking.data.SuccessfulMessages.REGISTRATION_SUCCESS_USER;
 import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_UNPROCESSABLE_ENTITY;
@@ -45,7 +45,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassport(),
                                 UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
     }
 
     @TmsLink("5901579")
@@ -58,7 +58,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.EM79_VALID_PASS.getUser().getPassport(),
                                 UsersData.EM79_VALID_PASS.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
     }
 
     @TmsLink("5901827")
@@ -71,7 +71,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.EM79_VALID_PASS_DIGITS.getUser().getPassport(),
                                 UsersData.EM79_VALID_PASS_DIGITS.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
     }
 
     @TmsLink("5901829")
@@ -84,7 +84,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.EM79_VAL_PASS_2NUMBERS.getUser().getPassport(),
                                 UsersData.EM79_VAL_PASS_2NUMBERS.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
     }
 
     @TmsLink("5901830")
@@ -97,7 +97,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.EM79_MAX_SYM_PASS.getUser().getPassport(),
                                 UsersData.EM79_MAX_SYM_PASS.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
     }
 
     @TmsLink("5901579")
@@ -110,7 +110,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.EM79_MIN_CHARS_PHONE.getUser().getPassport(),
                                 UsersData.EM79_MIN_CHARS_PHONE.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
     }
 
     @TmsLink("5901579")
@@ -123,7 +123,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.EM79_MAX_CHARS_PHONE.getUser().getPassport(),
                                 UsersData.EM79_MAX_CHARS_PHONE.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_SUCCESS_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
     }
 
     @TmsLink("5901832")
@@ -136,7 +136,7 @@ public class RegistrationTests extends BaseAPITest {
                                 "AM4567",
                                 UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_UNPROCESSABLE_ENTITY).as(Response.class);
-        assertEquals(response.getMessage(), "User with passport = AM4567 already registered");
+        assertEquals(response.getMessage(), USER_PASS_REGISTERED);
     }
 
     @TmsLinks(value = {@TmsLink("5901876"), @TmsLink("5901831"), @TmsLink("5901848"),
@@ -151,7 +151,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassword(),
                                 passport, UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PASSPORT.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_FAILED_USER_PASSPORT);
     }
 
     @TmsLink("5895599")
@@ -164,7 +164,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassport(),
                                 UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_UNPROCESSABLE_ENTITY).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.ALREADY_REG_LOGIN.getValue());
+        assertEquals(response.getMessage(), ALREADY_REG_LOGIN);
     }
 
     @TmsLinks(value = {@TmsLink("5895603"), @TmsLink("5895605"), @TmsLink("5895606"),
@@ -179,7 +179,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassport(),
                                 UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_FAILED_USER);
     }
 
     @TmsLinks(value = {@TmsLink("5895776"), @TmsLink("5895786"), @TmsLink("5895791"), @TmsLink("5895794"),
@@ -194,7 +194,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassport(),
                                 UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_FAILED_USER);
     }
 
     @Story("UC-1.4 Registration (first login)")
@@ -206,7 +206,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassport(),
                                 UsersData.REG_PHONE_NUMBER.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_UNPROCESSABLE_ENTITY).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.ALREADY_REG_PHONE.getValue());
+        assertEquals(response.getMessage(), ALREADY_REG_PHONE);
 
     }
 
@@ -220,7 +220,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassword(),
                                 UsersData.USER_EMINEM79.getUser().getPassport(), phone),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.REGISTRATION_FAILED_USER_PHONE.getValue());
+        assertEquals(response.getMessage(), REGISTRATION_FAILED_USER_PHONE);
     }
 
     @Story("UC-1.4 Registration (first login)")
@@ -231,7 +231,7 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassword(),
                                 UsersData.USER_EMINEM79.getUser().getPhoneNumber()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.PASSPORT_NULL);
+        assertEquals(response.getMessage(), PASSPORT_NULL);
 
     }
 
@@ -243,6 +243,6 @@ public class RegistrationTests extends BaseAPITest {
                                 UsersData.USER_EMINEM79.getUser().getPassword(),
                                 UsersData.USER_EMINEM79.getUser().getPassport()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
-        assertEquals(response.getMessage(), AlertAPI.PHONE_NULL);
+        assertEquals(response.getMessage(), PHONE_NULL);
     }
 }
