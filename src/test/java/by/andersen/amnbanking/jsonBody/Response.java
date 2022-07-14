@@ -1,4 +1,4 @@
-package jsonBody;
+package by.andersen.amnbanking.jsonBody;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

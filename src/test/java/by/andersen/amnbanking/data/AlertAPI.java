@@ -9,7 +9,8 @@ public enum AlertAPI {
     REGISTRATION_FAILED_USER("Invalid characters in UserName or Password"),
     REGISTRATION_FAILED_USER_PASSPORT("Invalid characters in passport"),
     REGISTRATION_FAILED_USER_PASSWORD("Invalid characters in password"),
-    REGISTRATION_FAILED_USER_PHONE("Invalid characters in phone number");
+    REGISTRATION_FAILED_USER_PHONE("Invalid characters in phone number"),
+    SMS_FOR_CHANGE_PASSWORD("SMS_FOR_CHANGE_PASSWORD");
 
     String value;
 

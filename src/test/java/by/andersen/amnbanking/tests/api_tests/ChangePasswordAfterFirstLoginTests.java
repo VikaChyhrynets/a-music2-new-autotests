@@ -1,4 +1,4 @@
-package by.andersen.amnbanking.api.tests;
+package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.AlertAPI;

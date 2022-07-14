@@ -3,9 +3,10 @@ package by.andersen.amnbanking.data;
 import by.andersen.amnbanking.utils.PropertyHelper;
 
 public class DataUrls {
-    public final static String API_URL = PropertyHelper.getProperty("api.url");
+    public static final String API_URL = PropertyHelper.getProperty("api.url");
     public static final String API_HOST = PropertyHelper.getProperty("api.host");
     public static final String API_LOGIN = PropertyHelper.getProperty("api.login");
+    public static final String API_BANK_INFO = PropertyHelper.getProperty("api.bank-info");
     public static final String API_SESSIONCODE = PropertyHelper.getProperty("api.session_code");
     public static final String API_REGISTRATION = PropertyHelper.getProperty("api.registration");
     public static final String API_LOGOUT = PropertyHelper.getProperty("api.logout");
@@ -24,4 +25,5 @@ public class DataUrls {
     public static final String NEW_PASSWORD = PropertyHelper.getProperty("api.newPassword");
     public static final String CHECK_SMS = PropertyHelper.getProperty("api.checkSms");
     public static final String WRONG_SMS_CODE = PropertyHelper.getProperty("api.wrongSMSCode");
+    public static final String CHANGE_PASSWORD_FIRST_ENTRY = PropertyHelper.getProperty("api.changePasswordFirstEntry");
 }

@@ -1,4 +1,4 @@
-package by.andersen.amnbanking.ui.pages;
+package by.andersen.amnbanking.tests.ui_tests.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ClickOptions;

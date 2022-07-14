@@ -17,6 +17,7 @@ public class ParserJson {
 
         } catch (ParseException e) {
             e.printStackTrace();
-        } return message;
+        }
+        return message;
     }
 }

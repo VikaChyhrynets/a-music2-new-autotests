@@ -1,41 +1,35 @@
-package by.andersen.amnbanking.api.tests;
+package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.AlertAPI;
+import by.andersen.amnbanking.jsonBody.Response;
+import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import io.restassured.http.Cookie;
-import jsonBody.Response;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.api.tests.LogoutTests.authKey;
+import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
+import static by.andersen.amnbanking.data.AlertAPI.SMS_FOR_CHANGE_PASSWORD;
 import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
-import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
-import static by.andersen.amnbanking.data.DataUrls.API_HOST;
-import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.API_LOGOUT;
-import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
-import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
-import static by.andersen.amnbanking.data.DataUrls.CHECK_PASSPORT;
-import static by.andersen.amnbanking.data.DataUrls.CHECK_SMS;
-import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.NEW_PASSWORD;
-import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
-import static by.andersen.amnbanking.data.DataUrls.USER_SESSION_CODE_LOGIN;
-import static by.andersen.amnbanking.data.DataUrls.WRONG_SMS_CODE;
+import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
+import static by.andersen.amnbanking.tests.api_tests.LogoutTests.authKey;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
+import static org.apache.hc.core5.http.HttpStatus.*;
 import static org.testng.Assert.assertEquals;
 
 @Story("UC 1.3 - Password recovery")
+@Listeners(UserDeleteListener.class)
 public class PasswordRecoveryTests extends BaseAPITest {
 
     @TestRails(id = "C5911963")
@@ -339,29 +333,30 @@ public class PasswordRecoveryTests extends BaseAPITest {
         assertEquals(resp.getMessage(), "User has not been verified yet");
     }
 
-    @TestRails(id = "C593793")
-    @Step("Sending password recovery code again when ban hasn't expired, negative test")
+    @Story("UC-1.3 Password recovery")
+    @TmsLink("5937939")
     @Test(description = "Sending password recovery code again when ban hasn't expired, negative test")
     public void sendPasswordRecoveryCodeAgainWhenBanHasNotExpired() throws SQLException {
         createUser();
-        String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-        new PostAdapters().post(setNewPassword("Number1"),
-                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 200);
-        new PostAdapters().post(setJsonObjectForRegistrationAndLogin("Eminem79", "Number1"),
-                API_HOST + API_LOGIN, 200);
-        new PostAdapters().post(setSmsCode("1234"),API_HOST + API_SESSIONCODE, authTokenChangePassword, 200);
-        new GetAdapters().get(API_HOST + API_LOGOUT, authTokenChangePassword, 200);
-        Cookie login = getAuthLogin("PVS153215DSV");
+        String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword());
+        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
+        USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
+        new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
+                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
+        new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword()),
+                API_HOST + API_LOGIN, SC_OK);
+        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_OK);
+        new GetAdapters().get(API_HOST + API_LOGOUT, authTokenChangePassword, SC_OK);
+        Cookie login = getAuthLogin(USER_0NE.getUser().getPassport());
         for (int i = 0; i < 3; i++) {
-            new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, 400);
+            new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST);
         }
         Response response = new PostAdapters().post(setSmsCode(WRONG_SMS_CODE),
-                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, 423).as(Response.class);
-        assertEquals(response.getMessage(), "Ban time is not over yet...");
-        assertEquals(new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSWORD"),
-                API_HOST + SMS_CODE, login,423).as(Response.class).getMessage(),
-                "Ban time is not over yet...");
+                API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_LOCKED).as(Response.class);
+        assertEquals(response.getMessage(), BAN_USER.getValue());
+        assertEquals(new PostAdapters().post(setFilterType(SMS_FOR_CHANGE_PASSWORD.getValue()),
+                API_HOST + SMS_CODE, login, SC_LOCKED).as(Response.class).getMessage(),
+                BAN_USER.getValue());
         deleteUser();
     }
 }

@@ -1,4 +1,4 @@
-package by.andersen.amnbanking.ui.pages;
+package by.andersen.amnbanking.tests.ui_tests.page;
 
 import by.andersen.amnbanking.data.User;
 import com.codeborne.selenide.Selenide;
@@ -19,7 +19,7 @@ public class LoginPage extends BasePage {
 
     public MainPage doLogin(User user) {
         $(LOG_IN_INPUT).click();
-        $(TEL_INPUT).setValue(user.getLoginPhone());
+        $(TEL_INPUT).setValue(user.getPhone());
         $(PASSWORD_INPUT).setValue(user.getPassword());
         $(LOG_IN_INPUT).click();
 

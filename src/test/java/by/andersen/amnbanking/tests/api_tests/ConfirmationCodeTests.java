@@ -1,10 +1,10 @@
-package by.andersen.amnbanking.api.tests;
+package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
-import jsonBody.Response;
+import by.andersen.amnbanking.jsonBody.Response;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
