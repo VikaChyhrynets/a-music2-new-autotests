@@ -1,5 +1,10 @@
 package by.andersen.amnbanking.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum WrongUserData {
     LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS("Some1"),
     LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS("SomePassWORd1SomePass"),
@@ -10,10 +15,4 @@ public enum WrongUserData {
     LOGIN_ONLY_NUMBERS_WITHOUT_111_AT_THE_BEGINNING("115457821");
 
     private String wrongData;
-
-    WrongUserData(String wrongData) {
-        this.wrongData = wrongData;
-    }
-
-    public String getWrongData (){return wrongData;}
 }

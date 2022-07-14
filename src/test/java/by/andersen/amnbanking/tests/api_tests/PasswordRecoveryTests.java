@@ -3,8 +3,7 @@ package by.andersen.amnbanking.tests.api_tests;
 import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.AlertAPI;
-import by.andersen.amnbanking.data.DataUrls;
-import by.andersen.amnbanking.data.UserCreator;
+import by.andersen.amnbanking.jsonBody.Response;
 import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.TestRails;
@@ -12,23 +11,22 @@ import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import io.restassured.http.Cookie;
-import by.andersen.amnbanking.jsonBody.Response;
-import org.apache.hc.core5.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
+import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
+import static by.andersen.amnbanking.data.AlertAPI.SMS_FOR_CHANGE_PASSWORD;
+import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
+import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
 import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
 import static by.andersen.amnbanking.tests.api_tests.LogoutTests.authKey;
-import static by.andersen.amnbanking.data.AuthToken.getAuthLogin;
-import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static org.apache.hc.core5.http.HttpStatus.*;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
 
 @Story("UC 1.3 - Password recovery")
 @Listeners(UserDeleteListener.class)
@@ -347,7 +345,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
         new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword()),
                 API_HOST + API_LOGIN, SC_OK);
-        new PostAdapters().post(setSmsCode("1234"),API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_OK);
+        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_OK);
         new GetAdapters().get(API_HOST + API_LOGOUT, authTokenChangePassword, SC_OK);
         Cookie login = getAuthLogin(USER_0NE.getUser().getPassport());
         for (int i = 0; i < 3; i++) {
@@ -355,10 +353,10 @@ public class PasswordRecoveryTests extends BaseAPITest {
         }
         Response response = new PostAdapters().post(setSmsCode(WRONG_SMS_CODE),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_LOCKED).as(Response.class);
-        assertEquals(response.getMessage(), "Ban time is not over yet...");
-        assertEquals(new PostAdapters().post(setFilterType("SMS_FOR_CHANGE_PASSWORD"),
+        assertEquals(response.getMessage(), BAN_USER.getValue());
+        assertEquals(new PostAdapters().post(setFilterType(SMS_FOR_CHANGE_PASSWORD.getValue()),
                 API_HOST + SMS_CODE, login, SC_LOCKED).as(Response.class).getMessage(),
-                "Ban time is not over yet...");
+                BAN_USER.getValue());
         deleteUser();
     }
 }

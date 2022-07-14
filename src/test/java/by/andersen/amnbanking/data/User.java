@@ -1,6 +1,5 @@
 package by.andersen.amnbanking.data;
 
-
 import lombok.Data;
 
 @Data

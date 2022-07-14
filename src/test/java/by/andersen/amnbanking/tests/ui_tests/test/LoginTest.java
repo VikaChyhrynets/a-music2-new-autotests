@@ -2,12 +2,13 @@ package by.andersen.amnbanking.tests.ui_tests.test;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.data.Alert;
-import by.andersen.amnbanking.data.WrongUserData;
+import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
@@ -25,8 +26,10 @@ import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertFalse;
 
 @Epic("E-1. Registration and authorization")
+@Listeners(UserDeleteListener.class)
 public class LoginTest extends BaseUITest {
 
     @TestRails(id = "C5869665")
@@ -700,46 +703,40 @@ public class LoginTest extends BaseUITest {
     @TmsLink("5869618")
     @Test(description = "Login with valid data, positive test")
     public void testLoginProcedureWithValidData() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
-                    USER_0NE.getUser().getPassword());
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE,
-                    authTokenChangePassword, SC_PERMANENT_REDIRECT);
-            USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
-            new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
-            loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                    .inputPasswordField(USER_0NE.getUser().getPassword())
-                    .clickLoginButton();
-            assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
-            confirmationCodeModalPage
-                    .inputConfirmSMSField("1234")
-                    .clickOnConfirmButton();
-            assertTrue(confirmationCodeModalPage.isLoginSuccess());
-        } finally {
-            deleteUser();
-        }
+        createUser();
+        String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
+                USER_0NE.getUser().getPassword());
+        new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE,
+                authTokenChangePassword, SC_PERMANENT_REDIRECT);
+        USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
+        new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
+                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
+        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
+                .inputPasswordField(USER_0NE.getUser().getPassword())
+                .clickLoginButton();
+        assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
+        confirmationCodeModalPage
+                .inputConfirmSMSField("1234")
+                .clickOnConfirmButton();
+        assertTrue(confirmationCodeModalPage.isLoginSuccess());
+        deleteUser();
     }
 
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880157")
     @Test(description = "First authorization with valid data, positive test")
     public void testFirstAuthorizationWithValidData() throws SQLException {
-        try {
-            createUser();
-            loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                    .inputPasswordField(USER_0NE.getUser().getPassword())
-                    .clickLoginButton();
-            assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
-            confirmationCodeModalPage
-                    .inputConfirmSMSField("1234")
-                    .clickOnConfirmButton();
+        createUser();
+        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
+                .inputPasswordField(USER_0NE.getUser().getPassword())
+                .clickLoginButton();
+        assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
+        confirmationCodeModalPage
+                .inputConfirmSMSField("1234")
+                .clickOnConfirmButton();
 //        assertEquals(после ввода правильного смс-кода должны быть перенапрвлены на страницу, где будет предложено
 //        изменить логин/пароль при первом входе);
-        } finally {
-            deleteUser();
-        }
+        deleteUser();
     }
 
     @Story("UC-1.4 Registration (first login)")

@@ -2,6 +2,7 @@ package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.listener.UserDeleteListener;
+import by.andersen.amnbanking.utils.DataProviderForTests;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
@@ -13,8 +14,6 @@ import java.sql.SQLException;
 import static by.andersen.amnbanking.data.AlertAPI.*;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
-import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidLoginWithSpecialCharacter;
-import static by.andersen.amnbanking.data.DoLogin.loginWithInvalidPasswordWithSpecialCharacter;
 import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
 import static by.andersen.amnbanking.data.WrongUserData.*;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
@@ -72,7 +71,7 @@ public class LoginTests extends BaseAPITest {
         deleteUser();
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895962")
     @Test(description = "User's Login Less Than 7 Characters, negative test")
     public void loginWithInvalidLoginLessThanSevenCharacters() {
@@ -81,7 +80,7 @@ public class LoginTests extends BaseAPITest {
                         API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895963")
     @Test(description = "User's Login More Than 20 Characters, negative test")
     public void loginWithInvalidLoginMoreThanTwentyCharacters() {
@@ -90,182 +89,28 @@ public class LoginTests extends BaseAPITest {
                         API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '!', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterExclamatory() {
-        loginWithInvalidLoginWithSpecialCharacter("!");
+    @Test(description = "User's Login Contain Special Character, negative test",
+            dataProvider = "Special Character", dataProviderClass = DataProviderForTests.class)
+    public void testLoginProcedureWhenLoginContainSpecialCharacter(String specialCharacter) {
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG + specialCharacter, PASSWORD_WITH_PASSPORT_REG),
+                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '@', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterDog() {
-        loginWithInvalidLoginWithSpecialCharacter("@");
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
+    @TmsLink("5895967")
+    @Test(description = "User's Password Contain Special Character, negative test",
+            dataProvider = "Special Character", dataProviderClass = DataProviderForTests.class)
+    public void testLoginProcedureWhenPasswordContainSpecialCharacter(String specialCharacter) {
+        assertEquals(parser(new PostAdapters()
+                .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG + specialCharacter),
+                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '#', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterLattice() {
-        loginWithInvalidLoginWithSpecialCharacter("#");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '$', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterDollar() {
-        loginWithInvalidLoginWithSpecialCharacter("$");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '%', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterPercent() {
-        loginWithInvalidLoginWithSpecialCharacter("%");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '^', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterLid() {
-        loginWithInvalidLoginWithSpecialCharacter("^");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '&', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterAmpersand() {
-        loginWithInvalidLoginWithSpecialCharacter("&");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '?', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterInterrogative() {
-        loginWithInvalidLoginWithSpecialCharacter("?");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '*', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterStar() {
-        loginWithInvalidLoginWithSpecialCharacter("*");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '\"', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterQuote() {
-        loginWithInvalidLoginWithSpecialCharacter("\"");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '№', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterNumber() {
-        loginWithInvalidLoginWithSpecialCharacter("№");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character ';', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterSemicolon() {
-        loginWithInvalidLoginWithSpecialCharacter(";");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character ':', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterColon() {
-        loginWithInvalidLoginWithSpecialCharacter(":");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character ', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterSingleQuote() {
-        loginWithInvalidLoginWithSpecialCharacter("'");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '\\', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterBackslash() {
-        loginWithInvalidLoginWithSpecialCharacter("\\");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '/', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterSlash() {
-        loginWithInvalidLoginWithSpecialCharacter("/");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '(', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterOpenParenthesis() {
-        loginWithInvalidLoginWithSpecialCharacter("(");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character ')', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterCloseParenthesis() {
-        loginWithInvalidLoginWithSpecialCharacter(")");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '[', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterOpenSquareBracket() {
-        loginWithInvalidLoginWithSpecialCharacter("[");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character ']', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterCloseSquareBracket() {
-        loginWithInvalidLoginWithSpecialCharacter("]");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '{', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterOpenBrace() {
-        loginWithInvalidLoginWithSpecialCharacter("{");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '}', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterCloseBrace() {
-        loginWithInvalidLoginWithSpecialCharacter("}");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '<', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterLess() {
-        loginWithInvalidLoginWithSpecialCharacter("<");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895964")
-    @Test(description = "User's Login Contain Character '>', negative test")
-    public void loginWithInvalidLoginWithSpecialCharacterMore() {
-        loginWithInvalidLoginWithSpecialCharacter(">");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895965")
-    @Test(description = "User's Login Contain Character 'Я', negative test")
-    public void loginWithInvalidLoginWithCyrillicCharacter() {
-        loginWithInvalidLoginWithSpecialCharacter("Я");
-    }
-
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5896429")
     @Test(description = "User's Login Only Numbers Without The First Three Numbers One, negative test")
     public void loginWithLoginOnlyNumbersWithoutTheFirstThreeNumbersOne() {
@@ -276,7 +121,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5896425")
     @Test(description = "User's Login Only Letters, negative test")
     public void loginWithLoginOnlyLetters() {
@@ -286,7 +131,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5896434")
     @Test(description = "User's Login Without Capital Latin Letter And With Small Latin Letter, negative test")
     public void loginWithLoginWithoutCapitalLatinLetterAndWithSmallLatinLetter() {
@@ -297,7 +142,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895966")
     @Test(description = "User's Login Is Empty, negative test")
     public void loginWithEmptyLogin() {
@@ -307,7 +152,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895968")
     @Test(description = "User's Password Less Than 7 Characters, negative test")
     public void loginWithInvalidPasswordLessSevenCharacters() {
@@ -317,7 +162,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895969")
     @Test(description = "User's Password More Than 20 Characters, negative test")
     public void loginWithInvalidPasswordMoreThanTwentyCharacters() {
@@ -328,7 +173,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895972")
     @Test(description = "User's Password Is Empty, negative test")
     public void loginWithEmptyPassword() {
@@ -338,7 +183,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895973")
     @Test(description = "User's Password Only Numbers, negative test")
     public void loginWithPasswordOnlyNumbers() {
@@ -348,7 +193,7 @@ public class LoginTests extends BaseAPITest {
                 INVALID_USERNAME_OR_PASSWORD.getValue());
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login (second and subsequent logins)")
     @TmsLink("5895974")
     @Test(description = "User's Password Only Letters, negative test")
     public void loginWithPasswordOnlyLetters() {
@@ -356,180 +201,5 @@ public class LoginTests extends BaseAPITest {
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, LOGIN_OR_PASSWORD_ONLY_LETTERS.getWrongData()),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
                 INVALID_USERNAME_OR_PASSWORD.getValue());
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '!', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterExclamatory() {
-        loginWithInvalidPasswordWithSpecialCharacter("!");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '@', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterDog() {
-        loginWithInvalidPasswordWithSpecialCharacter("@");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '#', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterLattice() {
-        loginWithInvalidPasswordWithSpecialCharacter("#");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '$', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterDollar() {
-        loginWithInvalidPasswordWithSpecialCharacter("$");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '%', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterPercent() {
-        loginWithInvalidPasswordWithSpecialCharacter("%");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '^', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterLid() {
-        loginWithInvalidPasswordWithSpecialCharacter("^");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '!', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterAmpersand() {
-        loginWithInvalidPasswordWithSpecialCharacter("&");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '?', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterInterrogative() {
-        loginWithInvalidPasswordWithSpecialCharacter("?");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '*', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterStar() {
-        loginWithInvalidPasswordWithSpecialCharacter("*");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '\"', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterQuote() {
-        loginWithInvalidPasswordWithSpecialCharacter("\"");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '№', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterNumber() {
-        loginWithInvalidPasswordWithSpecialCharacter("№");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character ';', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterSemicolon() {
-        loginWithInvalidPasswordWithSpecialCharacter(";");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character ':', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterColon() {
-        loginWithInvalidPasswordWithSpecialCharacter(":");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character ', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterSingleQuote() {
-        loginWithInvalidPasswordWithSpecialCharacter("'");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '\\', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterBackslash() {
-        loginWithInvalidPasswordWithSpecialCharacter("\\");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '/', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterSlash() {
-        loginWithInvalidPasswordWithSpecialCharacter("/");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '(', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterOpenParenthesis() {
-        loginWithInvalidPasswordWithSpecialCharacter("(");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character ')', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterCloseParenthesis() {
-        loginWithInvalidPasswordWithSpecialCharacter(")");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '[', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterOpenSquareBracket() {
-        loginWithInvalidPasswordWithSpecialCharacter("[");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character ']', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterCloseSquareBracket() {
-        loginWithInvalidPasswordWithSpecialCharacter("]");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '{', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterOpenBrace() {
-        loginWithInvalidPasswordWithSpecialCharacter("{");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '}', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterCloseBrace() {
-        loginWithInvalidPasswordWithSpecialCharacter("}");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '<', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterLess() {
-        loginWithInvalidPasswordWithSpecialCharacter("<");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895967")
-    @Test(description = "User's Password Contain Character '>', negative test")
-    public void loginWithInvalidPasswordWithSpecialCharacterMore() {
-        loginWithInvalidPasswordWithSpecialCharacter(">");
-    }
-
-    @Story("UC 1.2 - Web application login")
-    @TmsLink("5895970")
-    @Test(description = "User's Password Contain Character 'Я', negative test")
-    public void loginWithInvalidPasswordWithCyrillicCharacter() {
-        loginWithInvalidPasswordWithSpecialCharacter("Я");
     }
 }

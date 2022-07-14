@@ -28,7 +28,8 @@ public final class RequestUtils {
                 .request(method, uri)
                 .then()
                 .statusCode(statusCode)
-                .log().all()
-                .extract().response();
+                .log().ifValidationFails()
+                .extract()
+                .response();
     }
 }
