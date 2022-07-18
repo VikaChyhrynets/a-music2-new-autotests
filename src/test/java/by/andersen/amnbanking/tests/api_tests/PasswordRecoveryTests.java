@@ -100,7 +100,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "negative test, wrong code confirmation")
     public void enteringWrongCodeInCodeConfirmation1TimeTest() {
         Cookie login = getAuthLogin(PASSPORT_REG);
-        Response response = new PostAdapters().post(SMS_INVALID.getValue(),
+        Response response = new PostAdapters().post(setSmsCode(SMS_INVALID.getValue()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
         Assert.assertEquals(response.getMessage(), INVALID_SMS);
         Assert.assertEquals(response.getFailsCount(), 1);
@@ -274,7 +274,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Password recovery without changing the password at first login, positive test")
     public void passwordRecoveryWithoutChangingPasswordFirstLoginTest() throws SQLException {
             createUser();
-            Response response = new PostAdapters().post(setPassportForRegistration("PVS153215DSV"),
+            Response response = new PostAdapters().post(setPassportForRegistration("ASD153215ASD"),
                     API_HOST + CHANGE_PASSWORD + CHECK_PASSPORT, SC_PRECONDITION_FAILED).as(Response.class);
             assertEquals(response.getMessage(), FAILED_CHANGE_PASSWORD_FROM_BANK);
             deleteUser();

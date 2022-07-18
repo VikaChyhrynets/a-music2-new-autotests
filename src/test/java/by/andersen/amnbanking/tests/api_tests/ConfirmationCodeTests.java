@@ -153,7 +153,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "C5937934")
     void sendSMSCodeAgainWhenTheBanHasNotExpired() throws SQLException {
         createUser();
-        String authToken = getAuthToken("Eminem79", "111Gv5dvvf511");
+        String authToken = getAuthToken("Vladivostok2000", "Vladivostok2000");
         for (int i = 0; i < 3; i++) {
             new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + API_SESSIONCODE, authToken, 400);
         }
