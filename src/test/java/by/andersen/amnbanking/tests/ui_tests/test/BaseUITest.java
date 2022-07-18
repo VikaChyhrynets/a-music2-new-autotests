@@ -3,6 +3,7 @@ package by.andersen.amnbanking.tests.ui_tests.test;
 import by.andersen.amnbanking.tests.base_test.BaseTest;
 import by.andersen.amnbanking.tests.ui_tests.page.ConfirmationCodeModalPage;
 import by.andersen.amnbanking.tests.ui_tests.page.LoginPage;
+import by.andersen.amnbanking.tests.ui_tests.page.PasswordRecoveryModalPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -13,6 +14,7 @@ public abstract class BaseUITest extends BaseTest {
 
     protected LoginPage loginPage = new LoginPage();
     protected ConfirmationCodeModalPage confirmationCodeModalPage = new ConfirmationCodeModalPage();
+    protected PasswordRecoveryModalPage passwordRecovery = new PasswordRecoveryModalPage();
 
     @BeforeMethod
     public void setUp() {

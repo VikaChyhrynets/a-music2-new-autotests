@@ -1,6 +1,7 @@
 package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
+import by.andersen.amnbanking.data.UsersData;
 import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.DataProviderForTests;
 import io.qameta.allure.Epic;
@@ -11,9 +12,21 @@ import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.data.AlertAPI.*;
+import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
+import static by.andersen.amnbanking.data.AlertAPI.INVALID_USERNAME_OR_PASSWORD;
+import static by.andersen.amnbanking.data.AlertAPI.NOT_REGISTERED_USER;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
+import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
+import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
+import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD_FIRST_ENTRY;
+import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.NOT_REGISTERED_USER_LOGIN;
+import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.USER_BAN_PASS;
+import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
 import static by.andersen.amnbanking.data.SuccessfulMessages.LOGIN_SUCCESS;
 import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS;
@@ -23,9 +36,15 @@ import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_T
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_ONLY_LETTERS;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_WITHOUT_CAPITAL_LETTER;
 import static by.andersen.amnbanking.data.WrongUserData.PASSWORD_ONLY_NUMBERS;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setJsonObjectForRegistrationAndLogin;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static by.andersen.amnbanking.utils.ParserJson.parser;
-import static org.apache.hc.core5.http.HttpStatus.*;
+import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.hc.core5.http.HttpStatus.SC_LOCKED;
+import static org.apache.hc.core5.http.HttpStatus.SC_NOT_FOUND;
+import static org.apache.hc.core5.http.HttpStatus.SC_OK;
+import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 

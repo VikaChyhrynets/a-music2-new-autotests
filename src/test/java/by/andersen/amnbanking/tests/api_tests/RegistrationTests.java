@@ -26,6 +26,14 @@ import static by.andersen.amnbanking.data.AlertAPI.USER_PASS_REGISTERED;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
 import static by.andersen.amnbanking.data.SuccessfulMessages.REGISTRATION_SUCCESS_USER;
+import static by.andersen.amnbanking.data.UsersData.EM79_MAX_CHARS_PHONE;
+import static by.andersen.amnbanking.data.UsersData.EM79_MAX_SYM_PASS;
+import static by.andersen.amnbanking.data.UsersData.EM79_MIN_CHARS_PHONE;
+import static by.andersen.amnbanking.data.UsersData.EM79_VALID_PASS;
+import static by.andersen.amnbanking.data.UsersData.EM79_VALID_PASS_DIGITS;
+import static by.andersen.amnbanking.data.UsersData.EM79_VAL_PASS_2NUMBERS;
+import static by.andersen.amnbanking.data.UsersData.REG_PHONE_NUMBER;
+import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_UNPROCESSABLE_ENTITY;
@@ -40,10 +48,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration user with passport, valid date, positive test")
     public void registrationWithValidDateTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.EM79_VALID_PASS.getUser().getPassword(),
-                                UsersData.EM79_VALID_PASS.getUser().getPassport(),
-                                UsersData.EM79_VALID_PASS.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                EM79_VALID_PASS.getUser().getPassword(),
+                                EM79_VALID_PASS.getUser().getPassport(),
+                                EM79_VALID_PASS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -54,10 +62,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, valid data, BIG letters and numbers in passport field, positive test")
     public void registrationValidDateWithPassportTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.EM79_VALID_PASS.getUser().getPassword(),
-                                UsersData.EM79_VALID_PASS.getUser().getPassport(),
-                                UsersData.EM79_VALID_PASS.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                EM79_VALID_PASS.getUser().getPassword(),
+                                EM79_VALID_PASS.getUser().getPassport(),
+                                EM79_VALID_PASS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -68,10 +76,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, valid data, only digits in passport field, positive test")
     public void registrationValidDateWithOnlyDigitsInPassportTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.EM79_VALID_PASS_DIGITS.getUser().getPassword(),
-                                UsersData.EM79_VALID_PASS_DIGITS.getUser().getPassport(),
-                                UsersData.EM79_VALID_PASS_DIGITS.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                EM79_VALID_PASS_DIGITS.getUser().getPassword(),
+                                EM79_VALID_PASS_DIGITS.getUser().getPassport(),
+                                EM79_VALID_PASS_DIGITS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -82,10 +90,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, valid data, only two BIG letters in passport field, positive test")
     public void registrationValidDateWithTwoLettersInPassportTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.EM79_VAL_PASS_2NUMBERS.getUser().getPassword(),
-                                UsersData.EM79_VAL_PASS_2NUMBERS.getUser().getPassport(),
-                                UsersData.EM79_VAL_PASS_2NUMBERS.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                EM79_VAL_PASS_2NUMBERS.getUser().getPassword(),
+                                EM79_VAL_PASS_2NUMBERS.getUser().getPassport(),
+                                EM79_VAL_PASS_2NUMBERS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -96,10 +104,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, valid data, 30 symbols in passport field, positive test")
     public void registrationValidDateWithThirtyValidSymbolsInPassportTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.EM79_MAX_SYM_PASS.getUser().getPassword(),
-                                UsersData.EM79_MAX_SYM_PASS.getUser().getPassport(),
-                                UsersData.EM79_MAX_SYM_PASS.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                EM79_MAX_SYM_PASS.getUser().getPassword(),
+                                EM79_MAX_SYM_PASS.getUser().getPassport(),
+                                EM79_MAX_SYM_PASS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -110,10 +118,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, valid data, 12 chars in phone field, positive test")
     public void registrationValidDateWithTwelveCharsPhoneTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.EM79_MIN_CHARS_PHONE.getUser().getPassword(),
-                                UsersData.EM79_MIN_CHARS_PHONE.getUser().getPassport(),
-                                UsersData.EM79_MIN_CHARS_PHONE.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                EM79_MIN_CHARS_PHONE.getUser().getPassword(),
+                                EM79_MIN_CHARS_PHONE.getUser().getPassport(),
+                                EM79_MIN_CHARS_PHONE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -124,10 +132,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, valid data, 16 chars in phone field, positive test")
     public void registrationValidDateWithSixteenCharsPhoneTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.EM79_MAX_CHARS_PHONE.getUser().getPassword(),
-                                UsersData.EM79_MAX_CHARS_PHONE.getUser().getPassport(),
-                                UsersData.EM79_MAX_CHARS_PHONE.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                EM79_MAX_CHARS_PHONE.getUser().getPassword(),
+                                EM79_MAX_CHARS_PHONE.getUser().getPassport(),
+                                EM79_MAX_CHARS_PHONE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -138,10 +146,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, forbidden symbol . in passport field, negative test")
     public void registrationWithDuplicatePassportTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.USER_0NE.getUser().getPassword(),
+                        (USER_0NE.getUser().getLogin(),
+                                USER_0NE.getUser().getPassword(),
                                 "AM4567",
-                                UsersData.USER_0NE.getUser().getPhone()),
+                                USER_0NE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_UNPROCESSABLE_ENTITY).as(Response.class);
         assertEquals(response.getMessage(), USER_PASS_REGISTERED);
     }
@@ -154,9 +162,9 @@ public class RegistrationTests extends BaseAPITest {
             description = "Registration with invalid passport field, negative tests")
     public void registrationInvalidPassportDataTest(String passport) {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.USER_0NE.getUser().getPassword(),
-                                passport, UsersData.USER_0NE.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                USER_0NE.getUser().getPassword(),
+                                passport, USER_0NE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_FAILED_USER_PASSPORT);
     }
@@ -167,9 +175,9 @@ public class RegistrationTests extends BaseAPITest {
     public void registrationWithDuplicateLoginTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
                         ("11122222222222233333",
-                                UsersData.USER_0NE.getUser().getPassword(),
-                                UsersData.USER_0NE.getUser().getPassport(),
-                                UsersData.USER_0NE.getUser().getPhone()),
+                                USER_0NE.getUser().getPassword(),
+                                USER_0NE.getUser().getPassport(),
+                                USER_0NE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_UNPROCESSABLE_ENTITY).as(Response.class);
         assertEquals(response.getMessage(), ALREADY_REG_LOGIN);
     }
@@ -182,9 +190,9 @@ public class RegistrationTests extends BaseAPITest {
             description = "Registration with invalid login field, negative tests")
     public void registrationInvalidLoginDataTest(String login) {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (login, UsersData.USER_0NE.getUser().getPassword(),
-                                UsersData.USER_0NE.getUser().getPassport(),
-                                UsersData.USER_0NE.getUser().getPhone()),
+                        (login, USER_0NE.getUser().getPassword(),
+                                USER_0NE.getUser().getPassport(),
+                                USER_0NE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_FAILED_USER);
     }
@@ -197,9 +205,9 @@ public class RegistrationTests extends BaseAPITest {
             description = "Registration with invalid password field, negative tests")
     public void registrationInvalidPasswordDataTest(String password) {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(), password,
-                                UsersData.USER_0NE.getUser().getPassport(),
-                                UsersData.USER_0NE.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(), password,
+                                USER_0NE.getUser().getPassport(),
+                                USER_0NE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_FAILED_USER);
     }
@@ -208,10 +216,10 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration with duplicate phone number, negative test")
     public void firstRegWithDuplicatePhoneNumberTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.USER_0NE.getUser().getPassword(),
-                                UsersData.USER_0NE.getUser().getPassport(),
-                                UsersData.REG_PHONE_NUMBER.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                USER_0NE.getUser().getPassword(),
+                                USER_0NE.getUser().getPassport(),
+                                REG_PHONE_NUMBER.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_UNPROCESSABLE_ENTITY).as(Response.class);
         assertEquals(response.getMessage(), ALREADY_REG_PHONE);
 
@@ -223,9 +231,9 @@ public class RegistrationTests extends BaseAPITest {
             description = "Registration with invalid phone field, negative tests")
     public void registrationInvalidPhoneDataTest(String phone) {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.USER_0NE.getUser().getPassword(),
-                                UsersData.USER_0NE.getUser().getPassport(), phone),
+                        (USER_0NE.getUser().getLogin(),
+                                USER_0NE.getUser().getPassword(),
+                                USER_0NE.getUser().getPassport(), phone),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_FAILED_USER_PHONE);
     }
@@ -234,9 +242,9 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration with valid login, password and without passport, negative test")
     public void firstRegWithoutPassportAndPhoneTest() {
         Response response = new PostAdapters().post(new JsonObjectHelper().setJsonObjectForRegistrationWithPhone
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.USER_0NE.getUser().getPassword(),
-                                UsersData.USER_0NE.getUser().getPhone()),
+                        (USER_0NE.getUser().getLogin(),
+                                USER_0NE.getUser().getPassword(),
+                                USER_0NE.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
         assertEquals(response.getMessage(), PASSPORT_NULL);
 
@@ -246,9 +254,9 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration with valid login, password and  passport without phone, negative test")
     public void firstRegWithoutPhoneAndPhoneTest() {
         Response response = new PostAdapters().post(new JsonObjectHelper().setJsonObjectForRegistrationWithPassport
-                        (UsersData.USER_0NE.getUser().getLogin(),
-                                UsersData.USER_0NE.getUser().getPassword(),
-                                UsersData.USER_0NE.getUser().getPassport()),
+                        (USER_0NE.getUser().getLogin(),
+                                USER_0NE.getUser().getPassword(),
+                                USER_0NE.getUser().getPassport()),
                 API_HOST + API_REGISTRATION, SC_BAD_REQUEST).as(Response.class);
         assertEquals(response.getMessage(), PHONE_NULL);
     }

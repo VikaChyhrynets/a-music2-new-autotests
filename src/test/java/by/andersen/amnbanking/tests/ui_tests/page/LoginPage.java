@@ -16,6 +16,7 @@ public class LoginPage extends BasePage {
     private static final By LOGIN_BUTTON = By.xpath("//*[contains(@class, 'formButtonLogin')]//button[contains(@type, 'submit')]");
     private static final By CHECK_BOX_SHOW_PASSWORD = By.xpath("//div[contains(@class, 'showPassword')]/*");
     private static final By LOGIN_ERROR_MESSAGE = By.xpath("//div[contains(@class,'Login_formError')]");
+    private static final By linkForgotPassword = By.xpath("//button[contains(@class,'X2kY6')]");
 
     public MainPage doLogin(User user) {
         $(LOG_IN_INPUT).click();
@@ -104,5 +105,10 @@ public class LoginPage extends BasePage {
         return new ConfirmationCodeModalPage();
     }
 
+    @Step("Click on the link forgot password")
+    public PasswordRecoveryModalPage clickLinkForgotPassword() {
+        $(linkForgotPassword).click();
+        return new PasswordRecoveryModalPage();
+    }
 }
 
