@@ -14,8 +14,15 @@ import java.sql.SQLException;
 import static by.andersen.amnbanking.data.AlertAPI.*;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
-import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
-import static by.andersen.amnbanking.data.WrongUserData.*;
+import static by.andersen.amnbanking.data.SuccessfulMessages.LOGIN_SUCCESS;
+import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_ONLY_NUMBERS_WITHOUT_111_AT_THE_BEGINNING;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_FIELD_IS_EMPTY;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_ONLY_LETTERS;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_WITHOUT_CAPITAL_LETTER;
+import static by.andersen.amnbanking.data.WrongUserData.PASSWORD_ONLY_NUMBERS;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
 import static by.andersen.amnbanking.utils.ParserJson.parser;
 import static org.apache.hc.core5.http.HttpStatus.*;
@@ -42,7 +49,7 @@ public class LoginTests extends BaseAPITest {
                 .post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(),
                         USER_0NE.getUser().getPassword()),
                         API_HOST + API_LOGIN, SC_OK).asString();
-        assertEquals(parser(response, "message"), LOGIN_SUCCESS.getValue());
+        assertEquals(parser(response, "message"), LOGIN_SUCCESS);
         assertNotEquals(parser(response, "phone"), null);
         deleteUser();
     }
@@ -53,7 +60,7 @@ public class LoginTests extends BaseAPITest {
     public void loginWithNotRegisteredUser() {
         assertEquals(parser(new PostAdapters()
                 .post(setJsonObjectForRegistrationAndLogin(NOT_REGISTERED_USER_LOGIN, PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_NOT_FOUND).asString(), "message"), NOT_REGISTERED_USER.getValue());
+                        API_HOST + API_LOGIN, SC_NOT_FOUND).asString(), "message"), NOT_REGISTERED_USER);
     }
 
     @Story("UC-1.4 Registration (first login)")
@@ -67,7 +74,7 @@ public class LoginTests extends BaseAPITest {
                     API_HOST + API_LOGIN, SC_BAD_REQUEST);
         }
         assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(),
-                USER_BAN_PASS), API_HOST + API_LOGIN, SC_LOCKED).asString(), "message"), BAN_USER.getValue());
+                USER_BAN_PASS), API_HOST + API_LOGIN, SC_LOCKED).asString(), "message"), BAN_USER);
         deleteUser();
     }
 
@@ -77,7 +84,7 @@ public class LoginTests extends BaseAPITest {
     public void loginWithInvalidLoginLessThanSevenCharacters() {
         assertEquals(parser(new PostAdapters()
                 .post(setJsonObjectForRegistrationAndLogin(LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -86,7 +93,7 @@ public class LoginTests extends BaseAPITest {
     public void loginWithInvalidLoginMoreThanTwentyCharacters() {
         assertEquals(parser(new PostAdapters()
                 .post(setJsonObjectForRegistrationAndLogin(LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD);
     }
 
 
@@ -97,7 +104,7 @@ public class LoginTests extends BaseAPITest {
     public void testLoginProcedureWhenLoginContainSpecialCharacter(String specialCharacter) {
         assertEquals(parser(new PostAdapters()
                 .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG + specialCharacter, PASSWORD_WITH_PASSPORT_REG),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -107,7 +114,7 @@ public class LoginTests extends BaseAPITest {
     public void testLoginProcedureWhenPasswordContainSpecialCharacter(String specialCharacter) {
         assertEquals(parser(new PostAdapters()
                 .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG + specialCharacter),
-                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD.getValue());
+                        API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"), INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -118,7 +125,7 @@ public class LoginTests extends BaseAPITest {
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_ONLY_NUMBERS_WITHOUT_111_AT_THE_BEGINNING.getWrongData(),
                                 PASSWORD_WITH_PASSPORT_REG),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -128,7 +135,7 @@ public class LoginTests extends BaseAPITest {
         assertEquals(parser(new PostAdapters()
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_OR_PASSWORD_ONLY_LETTERS.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -139,7 +146,7 @@ public class LoginTests extends BaseAPITest {
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITHOUT_CAPITAL_LETTER.getWrongData(),
                                 PASSWORD_WITH_PASSPORT_REG),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -149,7 +156,7 @@ public class LoginTests extends BaseAPITest {
         assertEquals(parser(new PostAdapters()
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_OR_PASSWORD_FIELD_IS_EMPTY.getWrongData(), PASSWORD_WITH_PASSPORT_REG),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -159,7 +166,7 @@ public class LoginTests extends BaseAPITest {
         assertEquals(parser(new PostAdapters()
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData()),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -170,7 +177,7 @@ public class LoginTests extends BaseAPITest {
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG,
                                 LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS.getWrongData()),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -180,7 +187,7 @@ public class LoginTests extends BaseAPITest {
         assertEquals(parser(new PostAdapters()
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, LOGIN_OR_PASSWORD_FIELD_IS_EMPTY.getWrongData()),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -190,7 +197,7 @@ public class LoginTests extends BaseAPITest {
         assertEquals(parser(new PostAdapters()
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, PASSWORD_ONLY_NUMBERS.getWrongData()),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 
     @Story("UC-1.2 Web application login (second and subsequent logins)")
@@ -200,6 +207,6 @@ public class LoginTests extends BaseAPITest {
         assertEquals(parser(new PostAdapters()
                         .post(setJsonObjectForRegistrationAndLogin(LOGIN_WITH_PASSPORT_REG, LOGIN_OR_PASSWORD_ONLY_LETTERS.getWrongData()),
                                 API_HOST + API_LOGIN, SC_BAD_REQUEST).asString(), "message"),
-                INVALID_USERNAME_OR_PASSWORD.getValue());
+                INVALID_USERNAME_OR_PASSWORD);
     }
 }

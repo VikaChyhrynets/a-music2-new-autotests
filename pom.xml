@@ -23,6 +23,7 @@
         <allure-version>2.17.3</allure-version>
         <allure-maven-version>2.11.2</allure-maven-version>
         <log4j.version>2.17.1</log4j.version>
+        <log4j.core>2.18.0</log4j.core>
         <postgreSQL.version>42.3.1</postgreSQL.version>
         <extentreports-version>5.0.8</extentreports-version>
         <maven-surefire-plugin-version>3.0.0-M5</maven-surefire-plugin-version>

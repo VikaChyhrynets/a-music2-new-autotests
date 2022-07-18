@@ -56,6 +56,7 @@ public class JsonObjectHelper {
         return jsonObject.toJSONString();
     }
 
+
     public static String setPassportForRegistration(String passport){
         jsonObject.clear();
         jsonObject.put("passport", passport);

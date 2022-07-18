@@ -1,168 +1,87 @@
 package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.data.AlertAPI;
+import by.andersen.amnbanking.data.UsersData;
+import by.andersen.amnbanking.listener.UserDeleteListener;
+import by.andersen.amnbanking.utils.DataProviderTests;
 import by.andersen.amnbanking.utils.JsonObjectHelper;
 import by.andersen.amnbanking.utils.ParserJson;
-import by.andersen.amnbanking.utils.TestRails;
-import io.qameta.allure.Step;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
+import static by.andersen.amnbanking.data.AlertAPI.REGISTRATION_FAILED_USER_PASSWORD;
+import static by.andersen.amnbanking.data.AlertAPI.REQUIRED_PASSWORD;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.*;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.*;
+import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
+import static by.andersen.amnbanking.data.SuccessfulMessages.LOGIN_SUCCESS;
+import static by.andersen.amnbanking.data.SuccessfulMessages.SUCCESSFUL_PASSWORD_CHANGED;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
+import static org.apache.hc.core5.http.HttpStatus.*;
 
-@Story("UC 1.5 - Changing password on first login")
+@Listeners(UserDeleteListener.class)
+@Epic("Epic 1: Registration and authorization")
 public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
-    @TestRails(id = "C5923855")
-    @Step("Change password after first login, valid date")
+
+
+    @TmsLink("5923855")
+    @Story("UC 1.5 - Changing password on first login")
     @Test(description = "positive test. Change password after first login")
     public void changePasswordAfterFirstLoginValidDateTest() throws SQLException {
-            createUser();
-        try {
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword("Number1"),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 200).asString();
-            String response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin("Eminem79", "Number1"),
-                    API_HOST + API_LOGIN, 200).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), "Password changed successfully! Please login again");
-            Assert.assertEquals(ParserJson.parser(response1, "message"), AlertAPI.LOGIN_SUCCESS.getValue());
-        } finally {
-            deleteUser();
-        }
+        createUser();
+        String authTokenChangePassword = getAuthToken(UsersData.USER_0NE.getUser().getLogin(),
+                UsersData.USER_0NE.getUser().getPassword());
+        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+                API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
+        String response = new PostAdapters().post(setNewPassword(UsersData.USER_EM79_NEW_PASS.getUser().getPassword()),
+                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK).asString();
+        String response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
+                        (UsersData.USER_0NE.getUser().getLogin(),
+                                UsersData.USER_0NE.getUser().getPassword()),
+                API_HOST + API_LOGIN, SC_OK).asString();
+        Assert.assertEquals(ParserJson.parser(response, "message"), SUCCESSFUL_PASSWORD_CHANGED);
+        Assert.assertEquals(ParserJson.parser(response1, "message"), LOGIN_SUCCESS);
+        deleteUser();
     }
 
-    @TestRails(id = "C5924630")
-    @Step("Change password with less than 7 characters, invalid data")
-    @Test(description = "negative test. Change password after first login with less than 7 characters")
-    public void changePasswordAfterFirstLoginLessThan7CharsTest() throws SQLException {
-            createUser();
-        try {
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword("Num1"),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
-            Assert.assertEquals(ParserJson.parser(response,"message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
-        } finally {
-            deleteUser();
-        }
+    @TmsLinks(value = {@TmsLink("5924630"), @TmsLink("5924631"), @TmsLink("5924632"), @TmsLink("5924633"),
+            @TmsLink("5924634"), @TmsLink("5924635"), @TmsLink("5924636")})
+    @Story("UC 1.5 - Changing password on first login")
+    @Test(dataProvider = "ChangePasswordAfter1LoginInvalidPass", dataProviderClass = DataProviderTests.class,
+            description = "Change password after first login with invalid password, negative test.")
+    public void changePasswordAfterFirstLoginLessThan7CharsTest(String newPass) throws SQLException {
+        createUser();
+        String authTokenChangePassword = getAuthToken(UsersData.USER_0NE.getUser().getLogin(),
+                UsersData.USER_0NE.getUser().getPassword());
+        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()), API_HOST + API_SESSIONCODE,
+                authTokenChangePassword, SC_PERMANENT_REDIRECT);
+        String response = new PostAdapters().post(setNewPassword(newPass),
+                API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_BAD_REQUEST).asString();
+        Assert.assertEquals(ParserJson.parser(response, "message"), REGISTRATION_FAILED_USER_PASSWORD);
+        deleteUser();
     }
 
-    @TestRails(id = "C5924631")
-    @Step("Change password with with more than 20 characters, invalid data")
-    @Test(description = "negative test. Change password after first login with more than 20 characters")
-    public void changePasswordAfterFirstLoginMoreThan20CharsTest() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword("NumLcnd78554C23569712D1"),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
-        } finally {
-            deleteUser();
-        }
-    }
-
-    @TestRails(id = "C5924632")
-    @Step("Change password with with only letters, invalid data")
-    @Test(description = "negative test. Change password after first login with only letters")
-    public void changePasswordAfterFirstLoginOnlyLettersTest() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword("NumLcndvS"),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
-        } finally {
-            deleteUser();
-        }
-    }
-
-    @TestRails(id = "C5924633")
-    @Step("Change password with with only numbers, invalid data")
-    @Test(description = "negative test. Change password after first login with only numbers")
-    public void changePasswordAfterFirstLoginOnlyNumbersTest() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword("569102561"),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
-        } finally {
-            deleteUser();
-        }
-    }
-
-    @TestRails(id = "C5924634")
-    @Step("Change password with with special characters, invalid data")
-    @Test(description = "negative test. Change password after first login with special characters")
-    public void changePasswordAfterFirstLoginWithSpecialCharactersTest() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword("5691Lvd."),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
-        } finally {
-            deleteUser();
-        }
-    }
-
-    @TestRails(id = "C5924635")
-    @Step("Change password with with empty new password line, invalid data")
-    @Test(description = "negative test. Change password after first login with empty new password line")
-    public void changePasswordAfterFirstLoginWithEmptyNewPasswordLineTest() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword(""),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
-        } finally {
-            deleteUser();
-        }
-    }
-
-    @TestRails(id = "C5924636")
-    @Step("Change password with with space new password line, invalid data")
-    @Test(description = "negative test. Change password after first login with space new password line")
-    public void changePasswordAfterFirstLoginWithSpaceNewPasswordLineTest() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setNewPassword("Number1 "),
-                    API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, 400).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), AlertAPI.REGISTRATION_FAILED_USER_PASSWORD.getValue());
-        } finally {
-            deleteUser();
-        }
-    }
-
-    @TestRails(id = "C5924637")
-    @Step("Re-login when you cancel the password change at the first login, negative test")
+    @TmsLink("5924637")
+    @Story("UC 1.5 - Changing password on first login")
     @Test(description = "negative test. Re-login when you cancel the password change at the first login")
     public void changePasswordAfterFirstLoginReLoginTest() throws SQLException {
-        try {
-            createUser();
-            String authTokenChangePassword = getAuthToken("Eminem79", "111Gv5dvvf511");
-            new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, 308);
-            String response = new PostAdapters().post(setSmsCode("1234"),
-                    API_HOST + API_SESSIONCODE, authTokenChangePassword, 308).asString();
-            Assert.assertEquals(ParserJson.parser(response, "message"), "Required to change password on first login");
-        } finally {
-            deleteUser();
-        }
+        createUser();
+        String authTokenChangePassword = getAuthToken(UsersData.USER_0NE.getUser().getLogin(),
+                UsersData.USER_0NE.getUser().getPassword());
+        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+                API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
+        String response = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+                API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT).asString();
+        Assert.assertEquals(ParserJson.parser(response, "message"), REQUIRED_PASSWORD);
+        deleteUser();
     }
 }
 

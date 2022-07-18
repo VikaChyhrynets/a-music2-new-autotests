@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
-import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setPassportLoginPasswordForRegistration;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 

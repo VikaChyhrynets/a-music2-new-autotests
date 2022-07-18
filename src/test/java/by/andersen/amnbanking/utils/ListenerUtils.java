@@ -1,6 +1,7 @@
 package by.andersen.amnbanking.utils;
 
 import lombok.extern.log4j.Log4j2;
+import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
@@ -12,6 +13,7 @@ public final class ListenerUtils {
     private ListenerUtils() {
     }
 
+    @Test
     public static void takeScreenshotOnDeletingUser() {
         try {
             deleteUser();

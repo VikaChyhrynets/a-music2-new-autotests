@@ -16,8 +16,16 @@ import java.sql.SQLException;
 import static by.andersen.amnbanking.data.Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
-import static by.andersen.amnbanking.data.DataUrls.*;
-import static by.andersen.amnbanking.data.UserCreator.USER_0NE;
+import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
+import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
+import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD_FIRST_ENTRY;
+import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.NOT_REGISTERED_USER_LOGIN;
+import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
+import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
@@ -26,7 +34,6 @@ import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.testng.AssertJUnit.assertFalse;
 
 @Epic("E-1. Registration and authorization")
 @Listeners(UserDeleteListener.class)
