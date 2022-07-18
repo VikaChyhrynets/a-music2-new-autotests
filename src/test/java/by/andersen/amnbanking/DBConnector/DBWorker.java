@@ -12,7 +12,7 @@ public class DBWorker {
     private Connection connection;
     private Statement statement;
 
-    public DBWorker() {
+    public DBWorker()  {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(HOST, USERNAME, PASSWORD);

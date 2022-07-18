@@ -2,6 +2,7 @@ package by.andersen.amnbanking.DBConnector;
 
 import by.andersen.amnbanking.utils.BDHelper;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,14 +10,17 @@ import java.sql.Statement;
 public class DBConnector {
     DBWorker worker = new DBWorker();
     Statement statement;
+    Connection connection;
     String query;
     public static String LOGIN_USER;
 
     public void deleteUser(String login) throws SQLException {
         query = new BDHelper().setRequestForDeleteUser(login);
-        statement = worker.getConnection().createStatement();
+        connection = worker.getConnection();
+        statement = connection.createStatement();
         statement.executeUpdate(query);
         statement.close();
+        connection.close();
     }
 
     public void getFirstRegistrationUserFromDB() throws SQLException {

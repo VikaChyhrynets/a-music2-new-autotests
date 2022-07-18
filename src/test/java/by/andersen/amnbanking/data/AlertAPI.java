@@ -14,7 +14,7 @@ public class AlertAPI {
     public static final String REQUIRED_PASSWORD = "Required to change password on first login";
     public static final String LOGOUT_SUCCESSFULLY = "Logged out successfully";
     public static final String NO_ACTIVE_SESSION = "No active session";
-    public static final String ALREADY_REG_PHONE = "User with phone = +375555555555 already registered";
+    public static final String ALREADY_REG_PHONE = "User with phone = +375555555501 already registered";
     public static final String ALREADY_REG_LOGIN = "User with login = 11122222222222233333 already registered";
     public static final String PASSPORT_NULL = "Passport cannot be null";
     public static final String PHONE_NULL = "Phone cannot be null";
