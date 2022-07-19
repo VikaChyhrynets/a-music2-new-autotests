@@ -11,17 +11,20 @@ import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
 import org.testng.annotations.Listeners;
+
 import org.testng.annotations.Test;
 import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.Alert.ID_WITHOUT_CHANGING_PASSWORD;
 import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
-import static by.andersen.amnbanking.data.DataUrls.*;
+import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
+import static by.andersen.amnbanking.data.DataUrls.API_HOST;
+import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
+import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_INVALID;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
 import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
 import static org.testng.Assert.assertEquals;

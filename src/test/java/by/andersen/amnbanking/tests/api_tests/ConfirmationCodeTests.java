@@ -16,6 +16,10 @@ import java.sql.SQLException;
 import static by.andersen.amnbanking.data.AlertAPI.SMS_CODE_INVALID;
 import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
 import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
+import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
+import static by.andersen.amnbanking.data.DataUrls.WRONG_SMS_CODE;
+import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SESSION_CODE_CORRECT;
 import static org.apache.hc.core5.http.HttpStatus.SC_LOCKED;
@@ -23,10 +27,6 @@ import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
-import static by.andersen.amnbanking.data.DataUrls.WRONG_SMS_CODE;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static org.testng.Assert.assertEquals;
 
 
