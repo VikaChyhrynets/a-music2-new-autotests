@@ -5,6 +5,7 @@
         <classes>
             <class name="by.andersen.amnbanking.tests.ui_tests.test.LoginTest"></class>
             <class name="by.andersen.amnbanking.tests.ui_tests.test.ConfirmationCodeModalTest"></class>
+            <class name="by.andersen.amnbanking.tests.ui_tests.test.PasswordRecoveryUITest"></class>
         </classes>
     </test>
 </suite>

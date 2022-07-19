@@ -5,9 +5,8 @@ import com.codeborne.selenide.ClickOptions;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.Selenide.*;
 import static java.time.Duration.ofSeconds;
-import static com.codeborne.selenide.Selenide.$;
 
 public class ConfirmationCodeModalPage extends BasePage {
     private static final By confirmationCodeModal = (By.id(":r5:"));
@@ -58,7 +57,7 @@ public class ConfirmationCodeModalPage extends BasePage {
     @Step("Get the error messages from modal window after entering wrong sms code confirmation ")
     public String getErrorMessageFromModalWrongSmsCode() {
 
-        return $(errorModalSmsCode).shouldBe(Condition.visible, ofSeconds(7)).getText();
+        return $(errorModalSmsCode).shouldBe(Condition.visible, ofSeconds(15)).getText();
     }
 
     @Step("Click proceed button on the modal after entering wrong for sms code confirmation ")

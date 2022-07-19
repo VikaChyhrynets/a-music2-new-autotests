@@ -1,6 +1,7 @@
 package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
+import by.andersen.amnbanking.data.UsersData;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
@@ -13,6 +14,7 @@ import static by.andersen.amnbanking.data.AlertAPI.SMS_CODE_INVALID;
 import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
 import static by.andersen.amnbanking.data.DataUrls.WRONG_SMS_CODE;
+import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
@@ -153,7 +155,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "C5937934")
     void sendSMSCodeAgainWhenTheBanHasNotExpired() throws SQLException {
         createUser();
-        String authToken = getAuthToken("Vladivostok2000", "Vladivostok2000");
+        String authToken = getAuthToken(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword());
         for (int i = 0; i < 3; i++) {
             new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + API_SESSIONCODE, authToken, 400);
         }

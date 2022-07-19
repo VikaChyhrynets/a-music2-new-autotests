@@ -73,5 +73,27 @@ public class DataProviderTests {
                 {"Number1 "}
         };
     }
+
+    @DataProvider(name = "Forbidden symbols in Id number field")
+    public Object[][] InvalidIdNumberUiNegativeTest() {
+        return new Object[][]{
+                {"l7895G"},
+                {"P.48654"},
+                {"ж785F4"},
+                {"ЧF78545"},
+                {" PG452"},
+                {"LM89 "}
+        };
+    }
+
+    @DataProvider(name = "Valid ID number")
+    public Object[][] ValidIdNumberUiPositiveTest() {
+        return new Object[][]{
+                {"BF12334376763", "+90237467824742"},
+                {"UT1234567891234567891234567891", "+51547599564785"},
+                {"20PDCOLX3I406UWJKQ3GU8THHTZUO", "+21547599564785"},
+                {"2C", "+11547599564785"}
+        };
+    }
 }
 

@@ -1,12 +1,12 @@
 package by.andersen.amnbanking.tests.ui_tests.test;
 
 import by.andersen.amnbanking.data.Alert;
+import by.andersen.amnbanking.utils.DataProviderTests;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static by.andersen.amnbanking.data.Alert.ID_WITHOUT_CHANGING_PASSWORD;
@@ -16,19 +16,10 @@ import static org.testng.Assert.assertTrue;
 @Epic("E-1. Registration and authorization")
 public class PasswordRecoveryUITest extends BaseUITest {
 
-    @DataProvider(name = "Valid ID number")
-    public Object[][] SumCorrectNumbers() {
-        return new Object[][]{
-                {"BF12334376763", "+90237467824742"},
-                {"UT1234567891234567891234567891", "+51547599564785"},
-                {"20PDCOLX3I406UWJKQ3GU8THHTZUO", "+21547599564785"},
-                {"2C", "+11547599564785"}
-        };
-    }
-
     @Story("UC-1.3 Password recovery")
     @Issue("A2N-492")
-    @Test(description = "Send correct ID number", dataProvider = "Valid ID number")
+    @Test(description = "Send correct ID number", dataProvider = "Valid ID number",
+            dataProviderClass = DataProviderTests.class)
     public void enterValidIdNumberTest(String idNumber, String phoneNumber) {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(idNumber)
@@ -44,7 +35,8 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber("")
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(), Alert.EMPTY_FIELDS.getValue());
+        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+                Alert.EMPTY_FIELDS.getValue());
     }
 
     @Story("UC-1.3 Password recovery")
@@ -71,23 +63,11 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 Alert.ID_MORE_30_SYMBOLS.getValue());
     }
 
-    @DataProvider(name = "Forbidden symbols in Id number field")
-    public Object[][] InvalidIdNumber() {
-        return new Object[][]{
-                {"l7895G"},
-                {"P.48654"},
-                {"ж785F4"},
-                {"ЧF78545"},
-                {" PG452"},
-                {"LM89 "}
-        };
-    }
-
     @Story("UC-1.3 Password recovery")
     @Issue("A2N-492")
     @TmsLinks({@TmsLink("5871565"), @TmsLink("5944823"), @TmsLink("5944832")})
     @Test(description = "Forbidden symbols in password field (small letter, russian letter, chars...)",
-            dataProvider = "Forbidden symbols in Id number field")
+            dataProvider = "Forbidden symbols in Id number field",  dataProviderClass = DataProviderTests.class)
     public void enterForbiddenSymbolsInIdFieldTest(String idNumber) {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(idNumber)
@@ -104,7 +84,8 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber("DC")
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(), ID_WITHOUT_CHANGING_PASSWORD.getValue());
+        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+                ID_WITHOUT_CHANGING_PASSWORD.getValue());
     }
 }
 

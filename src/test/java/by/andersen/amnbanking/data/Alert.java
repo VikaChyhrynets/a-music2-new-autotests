@@ -13,6 +13,9 @@ public enum Alert {
     ID_MORE_30_SYMBOLS("Must be 30 characters or less"),
     ID_WITHOUT_CHANGING_PASSWORD("The one-time password cannot be changed via password recovery. " +
             "Please contact the bank in case of problems with the one-time password"),
+    INCORRECT_SMS_CODE("You have entered an incorrect SMS code"),
+    MESSAGE_INCORRECT_SMS_3_TIMES("You have entered an incorrect SMS code three times"),
+    SEND_CODE_AGAIN("Send code again in"),
     ID_WRONG_SYMBOLS("Field should contain capital letters and numbers");
 
     String value;
