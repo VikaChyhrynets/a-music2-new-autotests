@@ -16,6 +16,9 @@ public class PasswordRecoveryModalPage {
     private static final By greyTextAboveSmsCodeField = By.xpath("//p[contains(@class,'Fmyzh')]");
     private static final By errorMessageInputIdNumber = By.xpath("//*[contains(@class,'RvDTg')]");
     private static final By titleTextWithPhoneNumber2Step = By.xpath("//p[contains(@class,'rg9OK')]");
+    private static final By modalWindowPasswordRecovery = By.xpath("//*[contains(@class,'LvKN9')]");
+    private static final By backButton = By.xpath("//*[text()= 'Back']");
+    private static final By errorMessageSmsConfirmation = By.xpath("//*[contains(@class,'+xIHL')]");
 
     @Step("In the modal Password Recovery first step is enter user's ID number")
     public PasswordRecoveryModalPage enterIdNumber(String idNumber) {
@@ -42,6 +45,40 @@ public class PasswordRecoveryModalPage {
     @Step("Get text with user's phone number")
     public boolean getPhoneNumberFrom2StepAfterSendSms(String phoneNumber) {
         return $(titleTextWithPhoneNumber2Step).getText().contains(phoneNumber);
+    }
+
+    @Step("Get text with user's phone number")
+    public String getText2StepAfterSendSms() {
+        return $(titleTextWithPhoneNumber2Step).getText();
+    }
+
+    @Step("Click on back arrow")
+    public LoginPage clickBackArrow() {
+        $(backButton).click();
+
+        return new LoginPage();
+    }
+
+    @Step("Close modal window use back button")
+    public boolean modalWindowIsNotVisible() {
+        return $(modalWindowPasswordRecovery).isDisplayed();
+    }
+
+    @Step("Enter an sms code to the field")
+    public PasswordRecoveryModalPage enterSmsCodeConfirmation(String smsCode) {
+        $(inputSmsCode).sendKeys(smsCode);
+        return this;
+    }
+
+    @Step("Get error message after entered invalid sms-code confirmation")
+    public String getErrorMessageCodeConfirmation() {
+       return $(errorMessageSmsConfirmation).getText();
+    }
+
+    @Step("Click continue button after entered sms code")
+    public PasswordRecoveryModalPage clickContinueButtonAfterEnteringSms() {
+        $(continueButtonAfterEnterSms).click();
+        return this;
     }
 }
 

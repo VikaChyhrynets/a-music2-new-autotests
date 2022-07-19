@@ -2,6 +2,9 @@ package by.andersen.amnbanking.utils;
 
 import org.testng.annotations.DataProvider;
 
+import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
+import static by.andersen.amnbanking.data.SmsVerificationData.*;
+
 public class DataProviderTests {
 
     @DataProvider(name = "User's registration with invalid passport field data")
@@ -93,6 +96,19 @@ public class DataProviderTests {
                 {"UT1234567891234567891234567891", "+51547599564785"},
                 {"20PDCOLX3I406UWJKQ3GU8THHTZUO", "+21547599564785"},
                 {"2C", "+11547599564785"}
+        };
+    }
+
+    @DataProvider(name = "Invalid sms-code on 2 step password recovery")
+    public Object[][] invalidSmsCodeConfirmation2StepOnModalPagePasswordRecoveryTest() {
+        return new Object[][]{
+                {PASSPORT_REG, SMS_3_SYMBOLS.getValue()},
+                {PASSPORT_REG, SMS_5_SYMBOLS.getValue()},
+                {PASSPORT_REG, SMS_BEGIN_SPACE.getValue()},
+                {PASSPORT_REG, SMS_SPACE_END.getValue()},
+                {PASSPORT_REG, SMS_4_SPACES.getValue()},
+                {PASSPORT_REG, SMS_WITH_LETTER.getValue()},
+                {PASSPORT_REG, SMS_ASTERISK_PLUSES.getValue()}
         };
     }
 }

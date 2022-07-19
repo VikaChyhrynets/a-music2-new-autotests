@@ -16,7 +16,9 @@ public enum Alert {
     INCORRECT_SMS_CODE("You have entered an incorrect SMS code"),
     MESSAGE_INCORRECT_SMS_3_TIMES("You have entered an incorrect SMS code three times"),
     SEND_CODE_AGAIN("Send code again in"),
-    ID_WRONG_SYMBOLS("Field should contain capital letters and numbers");
+    UNREGISTERED_ID("This ID number is not registered. Please check the entered data or contact the bank"),
+    ID_WRONG_SYMBOLS("Field should contain capital letters and numbers"),
+    SEND_SMS_POSITIVE("We sent an SMS with a 4-digit verification code to +90237467824742");
 
     String value;
 

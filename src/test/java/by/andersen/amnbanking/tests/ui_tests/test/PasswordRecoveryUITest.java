@@ -1,6 +1,5 @@
 package by.andersen.amnbanking.tests.ui_tests.test;
 
-import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.utils.DataProviderTests;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Issue;
@@ -9,9 +8,10 @@ import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
 import org.testng.annotations.Test;
 
-import static by.andersen.amnbanking.data.Alert.ID_WITHOUT_CHANGING_PASSWORD;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static by.andersen.amnbanking.data.Alert.*;
+import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
+import static by.andersen.amnbanking.data.SmsVerificationData.EMPTY_SMS;
+import static org.testng.Assert.*;
 
 @Epic("E-1. Registration and authorization")
 public class PasswordRecoveryUITest extends BaseUITest {
@@ -27,6 +27,39 @@ public class PasswordRecoveryUITest extends BaseUITest {
         assertTrue(passwordRecovery.getPhoneNumberFrom2StepAfterSendSms(phoneNumber));
     }
 
+    @TmsLink("5945567")
+    @Issue("A2N-492")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Try to change password with unregistered id number, positive test")
+    public void passwordRecoveryWithUnregisteredIdTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber("MLF4568756DB123")
+                .clickContinueButton();
+        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+                UNREGISTERED_ID);
+    }
+
+    @TmsLink("5945581")
+    @Issue("A2N-492")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Go to the previous page using the Back button, positive test")
+    public void previouslyPageWithBackButtonOnTneFirstStepTest() {
+        loginPage.clickLinkForgotPassword()
+                .clickBackArrow();
+        assertFalse(passwordRecovery.modalWindowIsNotVisible());
+    }
+
+    @TmsLink("5945657")
+    @Story("UC-1.3 Password recovery")
+    @Issue("A2N-492")
+    @Test(description = "Presence of the Enter the Confirmation code text on the code confirmation page, positive test")
+    public void presenceTelephoneNumberWithTextTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber("BF12334376763")
+                .clickContinueButton();
+        assertEquals(passwordRecovery.getText2StepAfterSendSms(), SEND_SMS_POSITIVE.getValue());
+    }
+
     @Story("UC-1.3 Password recovery")
     @Issue("A2N-492")
     @TmsLink("C5944799")
@@ -36,7 +69,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                Alert.EMPTY_FIELDS.getValue());
+                EMPTY_FIELDS.getValue());
     }
 
     @Story("UC-1.3 Password recovery")
@@ -48,7 +81,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("P")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                Alert.ID_LESS_THAN_2_SYMBOLS.getValue());
+                ID_LESS_THAN_2_SYMBOLS.getValue());
     }
 
     @Story("UC-1.3 Password recovery")
@@ -60,7 +93,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("PKVRT21587469532014567852154879")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                Alert.ID_MORE_30_SYMBOLS.getValue());
+                ID_MORE_30_SYMBOLS.getValue());
     }
 
     @Story("UC-1.3 Password recovery")
@@ -73,19 +106,49 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber(idNumber)
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                Alert.ID_WRONG_SYMBOLS.getValue());
+                ID_WRONG_SYMBOLS.getValue());
     }
 
     @TmsLink("5945073")
     @Issue("A2N-492")
     @Story("UC-1.3 Password recovery")
-    @Test()
+    @Test(description = "Password recovery by a user who did not change their password on first login, positive test")
     public void enterValidPassportWithoutChangingFirstPassword() {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber("DC")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
                 ID_WITHOUT_CHANGING_PASSWORD.getValue());
+    }
+
+    @TmsLinks(value = {@TmsLink("5945658"), @TmsLink("5945661"), @TmsLink("5945662"), @TmsLink("5945663"),
+            @TmsLink("5945664"), @TmsLink("5945665")})
+    @Issue("A2N-492")
+    @Story("UC-1.3 Password recovery")
+    @Test(dataProvider = "Invalid sms-code on 2 step password recovery", dataProviderClass = DataProviderTests.class,
+            description = "Password recovery with invalid code confirmation field, negative test")
+    public void enterInvalidSmsCodeConfirmationTest(String passport, String smsCode) {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(passport)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(smsCode)
+                        .clickContinueButtonAfterEnteringSms();
+        assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
+    }
+
+    @TmsLink("5945660")
+    @Issue("A2N-492")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Password recovery with empty confirmation code")
+    public void sendEmptyCodeConfirmationTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(EMPTY_SMS.getValue())
+                .clickContinueButtonAfterEnteringSms();
+        assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
+                CONFIRMATION_CODE_MUST_BE_FILLED.getValue());
     }
 }
 
