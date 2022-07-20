@@ -1,7 +1,6 @@
 package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.data.UsersData;
 import by.andersen.amnbanking.jsonBody.Response;
 import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.DataProviderTests;

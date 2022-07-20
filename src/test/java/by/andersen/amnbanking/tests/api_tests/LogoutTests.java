@@ -31,7 +31,7 @@ public class LogoutTests extends BaseAPITest {
     public void logoutActiveSessionTest() {
         String authToken = getAuthToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
                 UsersData.USER_MALEFICENT.getUser().getPassword());
-        new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getValue()), API_HOST + API_SESSIONCODE,
+        new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getSms()), API_HOST + API_SESSIONCODE,
                 authToken, SC_OK);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authToken, SC_OK).as(Response.class);
         Assert.assertEquals(body.getMessage(), LOGOUT_SUCCESSFULLY);
@@ -43,7 +43,7 @@ public class LogoutTests extends BaseAPITest {
     public void logoutWithNoActiveTokenTest() {
         String authToken = getAuthToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
                 UsersData.USER_MALEFICENT.getUser().getPassword());
-        new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_INVALID.getValue()),
+        new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_INVALID.getSms()),
                 API_HOST + API_SESSIONCODE,
                 authToken, SC_BAD_REQUEST);
         Response body = new GetAdapters().get(API_HOST + API_LOGOUT, authToken,

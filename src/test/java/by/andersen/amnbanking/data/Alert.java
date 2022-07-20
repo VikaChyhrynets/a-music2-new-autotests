@@ -20,13 +20,13 @@ public enum Alert {
     ID_WRONG_SYMBOLS("Field should contain capital letters and numbers"),
     SEND_SMS_POSITIVE("We sent an SMS with a 4-digit verification code to +90237467824742");
 
-    String value;
+    String message;
 
-    Alert(String value) {
-        this.value = value;
+    Alert(String message) {
+        this.message = message;
     }
 
-    public String getValue() {
-        return value;
+    public String getMessage() {
+        return message;
     }
 }

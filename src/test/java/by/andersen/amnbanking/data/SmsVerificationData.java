@@ -24,7 +24,7 @@ public enum SmsVerificationData {
         this.sms = sms;
     }
 
-    public String getValue() {
+    public String getSms() {
         return sms;
     }
 }

@@ -45,7 +45,7 @@ public class LoginTest extends BaseUITest {
     public void authWithInvalidLoginLessThan7SymbolsTest() {
         loginPage.inputLoginField("Gsvop4")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessageLogin(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5869679")
@@ -54,7 +54,7 @@ public class LoginTest extends BaseUITest {
     public void authWithForbiddenSymbolLoginTest() {
         loginPage.inputLoginField("Fklid7*@")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900035")
@@ -63,7 +63,7 @@ public class LoginTest extends BaseUITest {
     public void authWithTwentyOneSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbjgldrkmk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), Alert.LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), Alert.LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS.getMessage());
     }
 
     @TestRails(id = "C5900176")
@@ -72,7 +72,7 @@ public class LoginTest extends BaseUITest {
     public void authTildaSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnb~mk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900198")
@@ -81,7 +81,7 @@ public class LoginTest extends BaseUITest {
     public void authAtSymbolLoginTest() {
         loginPage.inputLoginField("@5Dvkfefnbmk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900200")
@@ -90,7 +90,7 @@ public class LoginTest extends BaseUITest {
     public void authMinusSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkf-efnbmk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900201")
@@ -99,7 +99,7 @@ public class LoginTest extends BaseUITest {
     public void authSlashSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbmk8ftt/")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900204")
@@ -108,7 +108,7 @@ public class LoginTest extends BaseUITest {
     public void authPlusSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbmk8+ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900206")
@@ -117,7 +117,7 @@ public class LoginTest extends BaseUITest {
     public void authCircumflexSymbolLoginTest() {
         loginPage.inputLoginField("5Dv^kfefnbmk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900210")
@@ -126,7 +126,7 @@ public class LoginTest extends BaseUITest {
     public void authQuotationSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnb«mkftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900241")
@@ -135,7 +135,7 @@ public class LoginTest extends BaseUITest {
     public void authAsteriskSymbolLoginTest() {
         loginPage.inputLoginField("5*Dvkfefnbmk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900242")
@@ -144,7 +144,7 @@ public class LoginTest extends BaseUITest {
     public void authDotSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm.k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900244")
@@ -153,7 +153,7 @@ public class LoginTest extends BaseUITest {
     public void authTagSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm>k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900246")
@@ -162,7 +162,7 @@ public class LoginTest extends BaseUITest {
     public void authSQLSymbolLoginTest() {
         loginPage.inputLoginField("SELECT*FROM users")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900247")
@@ -171,7 +171,7 @@ public class LoginTest extends BaseUITest {
     public void authQuestionSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm?k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900249")
@@ -180,7 +180,7 @@ public class LoginTest extends BaseUITest {
     public void authAmpersandSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm&k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900250")
@@ -189,7 +189,7 @@ public class LoginTest extends BaseUITest {
     public void authHashtagSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm#k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900283")
@@ -198,7 +198,7 @@ public class LoginTest extends BaseUITest {
     public void authNumberSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm]k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900285")
@@ -207,7 +207,7 @@ public class LoginTest extends BaseUITest {
     public void authWhitespaceLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900295")
@@ -216,7 +216,7 @@ public class LoginTest extends BaseUITest {
     public void authDoubleUpperCommaLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm❞k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900468")
@@ -225,7 +225,7 @@ public class LoginTest extends BaseUITest {
     public void authDollarSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm$k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900469")
@@ -234,7 +234,7 @@ public class LoginTest extends BaseUITest {
     public void authUnderliningSymbolLoginTest() {
         loginPage.inputLoginField("_5Dvkfefnbmk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900470")
@@ -243,7 +243,7 @@ public class LoginTest extends BaseUITest {
     public void authApostropheSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm'k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900471")
@@ -252,7 +252,7 @@ public class LoginTest extends BaseUITest {
     public void authEquallySymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm=k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900473")
@@ -261,7 +261,7 @@ public class LoginTest extends BaseUITest {
     public void authColonSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefn:k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900751")
@@ -270,7 +270,7 @@ public class LoginTest extends BaseUITest {
     public void authSemicolonSymbolLoginTest() {
         loginPage.inputLoginField("5Dvkfefn;k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900752")
@@ -279,7 +279,7 @@ public class LoginTest extends BaseUITest {
     public void authExclamationMarkLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm!k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5900753")
@@ -288,7 +288,7 @@ public class LoginTest extends BaseUITest {
     public void authWithArrowLoginTest() {
         loginPage.inputLoginField("5Dvkfefnbm←k8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "")
@@ -297,7 +297,7 @@ public class LoginTest extends BaseUITest {
     public void authRussianSymbolLoginTest() {
         loginPage.inputLoginField("А5Dvkfefbmk8ftt")
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "")
@@ -306,7 +306,7 @@ public class LoginTest extends BaseUITest {
     public void authWithTwentyOneSymbolPasswordTest() {
         loginPage.inputPasswordField("584841Cd2154ddvnvddvb")
                 .clickLoginField();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS.getMessage());
     }
 
     @TestRails(id = "")
@@ -315,7 +315,7 @@ public class LoginTest extends BaseUITest {
     public void authWithQuotationSymbolPasswordTest() {
         loginPage.inputPasswordField("584841Cd»nvddvb")
                 .clickLoginField();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -324,7 +324,7 @@ public class LoginTest extends BaseUITest {
     public void authWithDoubleUpperCommaSymbolPasswordTest() {
         loginPage.inputPasswordField("584841Cd❝nvddvb")
                 .clickLoginField();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "C5869669")
@@ -334,7 +334,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("")
                 .inputPasswordField("84dcB565d")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessageLogin(), Alert.EMPTY_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), Alert.EMPTY_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5869673")
@@ -344,7 +344,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.EMPTY_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.EMPTY_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5869681")
@@ -354,7 +354,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("RTNZKCVF")
                 .inputPasswordField("84dDc565d")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @TestRails(id = "C5869674")
@@ -364,7 +364,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("*12Ty354785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -374,7 +374,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("!1235Xc4785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -384,7 +384,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("-1Vc2354785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -394,7 +394,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("@2354Lk785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -404,7 +404,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("+23547Mn85")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -414,7 +414,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Кsc8kvmx")
                 .inputPasswordField("З23Rb54785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -424,7 +424,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("-235Xn4785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -434,7 +434,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField(" 23Dv54785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -444,7 +444,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("/23Dv54785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -454,7 +454,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("2354,78Dc5")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -464,7 +464,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("<2354785Fv")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -474,7 +474,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("X∑235n4785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -484,7 +484,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("SELECT*FROM users1")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -494,7 +494,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("235478Sa5?")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -504,7 +504,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q4&7z85")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -514,7 +514,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q4.c785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -524,7 +524,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q4:c785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -534,7 +534,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q4;c785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -544,7 +544,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q4c785%")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -554,7 +554,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q4c785$")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -564,7 +564,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("#23Q4c785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -574,7 +574,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("№23Q4c785")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -584,7 +584,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q~4c785d")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -594,7 +594,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q➝4c785d")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -604,7 +604,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q¼4c785d")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -614,7 +614,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("23Q^4c785d")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -624,7 +624,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField("Ksc8kvmx")
                 .inputPasswordField("I'l4584c785d")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getValue());
+        assertEquals(loginPage.getAlertMessagePassword(), Alert.FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
     }
 
     @TestRails(id = "")
@@ -682,7 +682,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
                 .inputPasswordField(LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData())
                 .clickLoginButton();
-        assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @Story("UC 1.2 - Web application login")
@@ -692,7 +692,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG.toLowerCase())
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                 .clickLoginButton();
-        assertEquals(loginPage.getTextFromLoginErrorMessage(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getValue());
+        assertEquals(loginPage.getTextFromLoginErrorMessage(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
     }
 
     @Story("UC 1.2 - Web application login")

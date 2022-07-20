@@ -8,10 +8,20 @@ import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
 import org.testng.annotations.Test;
 
-import static by.andersen.amnbanking.data.Alert.*;
+import static by.andersen.amnbanking.data.Alert.CONFIRMATION_CODE_MUST_BE_FILLED;
+import static by.andersen.amnbanking.data.Alert.EMPTY_FIELDS;
+import static by.andersen.amnbanking.data.Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS;
+import static by.andersen.amnbanking.data.Alert.ID_LESS_THAN_2_SYMBOLS;
+import static by.andersen.amnbanking.data.Alert.ID_MORE_30_SYMBOLS;
+import static by.andersen.amnbanking.data.Alert.ID_WITHOUT_CHANGING_PASSWORD;
+import static by.andersen.amnbanking.data.Alert.ID_WRONG_SYMBOLS;
+import static by.andersen.amnbanking.data.Alert.SEND_SMS_POSITIVE;
+import static by.andersen.amnbanking.data.Alert.UNREGISTERED_ID;
 import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
 import static by.andersen.amnbanking.data.SmsVerificationData.EMPTY_SMS;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 @Epic("E-1. Registration and authorization")
 public class PasswordRecoveryUITest extends BaseUITest {
@@ -36,7 +46,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("MLF4568756DB123")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                UNREGISTERED_ID);
+                UNREGISTERED_ID.getMessage());
     }
 
     @TmsLink("5945581")
@@ -57,7 +67,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber("BF12334376763")
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getText2StepAfterSendSms(), SEND_SMS_POSITIVE.getValue());
+        assertEquals(passwordRecovery.getText2StepAfterSendSms(), SEND_SMS_POSITIVE.getMessage());
     }
 
     @Story("UC-1.3 Password recovery")
@@ -69,7 +79,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                EMPTY_FIELDS.getValue());
+                EMPTY_FIELDS.getMessage());
     }
 
     @Story("UC-1.3 Password recovery")
@@ -81,7 +91,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("P")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_LESS_THAN_2_SYMBOLS.getValue());
+                ID_LESS_THAN_2_SYMBOLS.getMessage());
     }
 
     @Story("UC-1.3 Password recovery")
@@ -93,20 +103,20 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("PKVRT21587469532014567852154879")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_MORE_30_SYMBOLS.getValue());
+                ID_MORE_30_SYMBOLS.getMessage());
     }
 
     @Story("UC-1.3 Password recovery")
     @Issue("A2N-492")
     @TmsLinks({@TmsLink("5871565"), @TmsLink("5944823"), @TmsLink("5944832")})
     @Test(description = "Forbidden symbols in password field (small letter, russian letter, chars...)",
-            dataProvider = "Forbidden symbols in Id number field",  dataProviderClass = DataProviderTests.class)
+            dataProvider = "Forbidden symbols in Id number field", dataProviderClass = DataProviderTests.class)
     public void enterForbiddenSymbolsInIdFieldTest(String idNumber) {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(idNumber)
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_WRONG_SYMBOLS.getValue());
+                ID_WRONG_SYMBOLS.getMessage());
     }
 
     @TmsLink("5945073")
@@ -118,7 +128,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber("DC")
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_WITHOUT_CHANGING_PASSWORD.getValue());
+                ID_WITHOUT_CHANGING_PASSWORD.getMessage());
     }
 
     @TmsLinks(value = {@TmsLink("5945658"), @TmsLink("5945661"), @TmsLink("5945662"), @TmsLink("5945663"),
@@ -134,7 +144,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         passwordRecovery.enterSmsCodeConfirmation(smsCode)
                         .clickContinueButtonAfterEnteringSms();
         assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
-                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getValue());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
     }
 
     @TmsLink("5945660")
@@ -145,10 +155,10 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(PASSPORT_REG)
                 .clickContinueButton();
-        passwordRecovery.enterSmsCodeConfirmation(EMPTY_SMS.getValue())
+        passwordRecovery.enterSmsCodeConfirmation(EMPTY_SMS.getSms())
                 .clickContinueButtonAfterEnteringSms();
         assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
-                CONFIRMATION_CODE_MUST_BE_FILLED.getValue());
+                CONFIRMATION_CODE_MUST_BE_FILLED.getMessage());
     }
 }
 

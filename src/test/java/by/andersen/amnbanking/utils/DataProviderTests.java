@@ -78,7 +78,7 @@ public class DataProviderTests {
     }
 
     @DataProvider(name = "Forbidden symbols in Id number field")
-    public Object[][] InvalidIdNumberUiNegativeTest() {
+    public static Object[][] InvalidIdNumberUiNegativeTest() {
         return new Object[][]{
                 {"l7895G"},
                 {"P.48654"},
@@ -90,7 +90,7 @@ public class DataProviderTests {
     }
 
     @DataProvider(name = "Valid ID number")
-    public Object[][] ValidIdNumberUiPositiveTest() {
+    public static Object[][] ValidIdNumberUiPositiveTest() {
         return new Object[][]{
                 {"BF12334376763", "+90237467824742"},
                 {"UT1234567891234567891234567891", "+51547599564785"},
@@ -100,15 +100,15 @@ public class DataProviderTests {
     }
 
     @DataProvider(name = "Invalid sms-code on 2 step password recovery")
-    public Object[][] invalidSmsCodeConfirmation2StepOnModalPagePasswordRecoveryTest() {
+    public static Object[][] invalidSmsCodeConfirmation2StepOnModalPagePasswordRecoveryTest() {
         return new Object[][]{
-                {PASSPORT_REG, SMS_3_SYMBOLS.getValue()},
-                {PASSPORT_REG, SMS_5_SYMBOLS.getValue()},
-                {PASSPORT_REG, SMS_BEGIN_SPACE.getValue()},
-                {PASSPORT_REG, SMS_SPACE_END.getValue()},
-                {PASSPORT_REG, SMS_4_SPACES.getValue()},
-                {PASSPORT_REG, SMS_WITH_LETTER.getValue()},
-                {PASSPORT_REG, SMS_ASTERISK_PLUSES.getValue()}
+                {PASSPORT_REG, SMS_3_SYMBOLS.getSms()},
+                {PASSPORT_REG, SMS_5_SYMBOLS.getSms()},
+                {PASSPORT_REG, SMS_BEGIN_SPACE.getSms()},
+                {PASSPORT_REG, SMS_SPACE_END.getSms()},
+                {PASSPORT_REG, SMS_4_SPACES.getSms()},
+                {PASSPORT_REG, SMS_WITH_LETTER.getSms()},
+                {PASSPORT_REG, SMS_ASTERISK_PLUSES.getSms()}
         };
     }
 }
