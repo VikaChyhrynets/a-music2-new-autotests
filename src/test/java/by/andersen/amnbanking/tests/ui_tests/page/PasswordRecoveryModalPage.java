@@ -43,5 +43,12 @@ public class PasswordRecoveryModalPage {
     public boolean getPhoneNumberFrom2StepAfterSendSms(String phoneNumber) {
         return $(titleTextWithPhoneNumber2Step).getText().contains(phoneNumber);
     }
+
+    @Step("Enter SMS")
+    public PasswordRecoveryModalPage enterSms(String sms) {
+        $(inputSmsCode).sendKeys(sms);
+        return this;
+    }
+
 }
 
