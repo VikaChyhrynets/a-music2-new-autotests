@@ -1,5 +1,10 @@
 package by.andersen.amnbanking.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum Alert {
     EMPTY_FIELDS("Field must be filled"),
     EMPTY_LOGIN_OR_PASSWORD_FIELDS("Field must be filled"),
@@ -20,13 +25,5 @@ public enum Alert {
     ID_WRONG_SYMBOLS("Field should contain capital letters and numbers"),
     SEND_SMS_POSITIVE("We sent an SMS with a 4-digit verification code to +90237467824742");
 
-    String message;
-
-    Alert(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
+   private final String message;
 }

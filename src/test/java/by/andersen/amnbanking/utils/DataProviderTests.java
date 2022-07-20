@@ -111,5 +111,83 @@ public class DataProviderTests {
                 {PASSPORT_REG, SMS_ASTERISK_PLUSES.getSms()}
         };
     }
+
+    @DataProvider(name = "invalid login validation")
+    public static Object[][] invalidLoginUIValidationTest() {
+        return new Object[][]{
+                {"Fklid7*@"},
+                {"5Dvkfefnb~mk8ftt"},
+                {"@5Dvkfefnbmk8ftt"},
+                {"5Dvkf-efnbmk8ftt"},
+                {"5Dvkfefnbmk8ftt/"},
+                {"5Dvkfefnbmk8+ftt"},
+                {"5Dv^kfefnbmk8ftt"},
+                {"5Dvkfefnb«mkftt"},
+                {"5*Dvkfefnbmk8ftt"},
+                {"5Dvkfefnbm.k8ftt"},
+                {"5Dvkfefnbm>k8ftt"},
+                {"SELECT*FROM users"},
+                {"5Dvkfefnbm?k8ftt"},
+                {"5Dvkfefnbm&k8ftt"},
+                {"5Dvkfefnbm#k8ftt"},
+                {"5Dvkfefnbm]k8ftt"},
+                {"5Dvkfefnbm k8ftt"},
+                {"5Dvkfefnbm❞k8ftt"},
+                {"5Dvkfefnbm$k8ftt"},
+                {"_5Dvkfefnbmk8ftt"},
+                {"5Dvkfefnbm'k8ftt"},
+                {"5Dvkfefnbm=k8ftt"},
+                {"5Dvkfefn:k8ftt"},
+                {"5Dvkfefn;k8ftt"},
+                {"5Dvkfefnbm!k8ftt"},
+                {"5Dvkfefnbm←k8ftt"},
+                {"А5Dvkfefbmk8ftt"},
+                {"RTNZKCVF"}
+        };
+    }
+
+    @DataProvider(name = "invalid password validation")
+    public static Object[][] invalidPasswordUIValidationTest() {
+        return new Object[][]{
+                {"584841Cd2154ddvnvddvb"},
+                {"584841Cd»nvddvb"},
+                {"584841Cd❝nvddvb"}
+        };
+    }
+
+    @DataProvider(name = "invalid password valid login validation")
+    public static Object[][] invalidPasswordValidLoginUIValidationTest() {
+        return new Object[][]{
+                {"*12Ty354785"},
+                {"!1235Xc4785"},
+                {"-1Vc2354785"},
+                {"@2354Lk785"},
+                {"+23547Mn85"},
+                {"З23Rb54785"},
+                {"-235Xn4785"},
+                {" 23Dv54785"},
+                {"/23Dv54785"},
+                {"2354,78Dc5"},
+                {"<2354785Fv"},
+                {"X∑235n4785"},
+                {"SELECT*FROM users1"},
+                {"235478Sa5?"},
+                {"23Q4&7z85"},
+                {"23Q4.c785"},
+                {"23Q4:c785"},
+                {"23Q4;c785"},
+                {"23Q4c785%"},
+                {"23Q4c785$"},
+                {"#23Q4c785"},
+                {"№23Q4c785"},
+                {"23Q~4c785d"},
+                {"23Q➝4c785d"},
+                {"23Q¼4c785d"},
+                {"23Q^4c785d"},
+                {"I'l4584c785d"},
+                {"584841Cd»nvddvb"},
+                {"584841Cd❝nvddvb"}
+        };
+    }
 }
 
