@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.Alert.ID_WITHOUT_CHANGING_PASSWORD;
-import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
+import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
@@ -106,7 +106,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @Test(description = "Trying to send confirmation code when ban is not expired")
     public void sendConfirmCodeWhenBanNotExpired() throws SQLException {
         createUser();
-        String authToken = getAuthToken(USER_0NE.getUser().getLogin(),
+        String authToken = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
                 USER_0NE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
                 API_HOST + API_SESSIONCODE, authToken, SC_OK);

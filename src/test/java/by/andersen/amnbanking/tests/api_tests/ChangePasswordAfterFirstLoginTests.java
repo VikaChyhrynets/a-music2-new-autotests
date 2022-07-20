@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.AlertAPI.REGISTRATION_FAILED_USER_PASSWORD;
 import static by.andersen.amnbanking.data.AlertAPI.REQUIRED_PASSWORD;
-import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
+import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
@@ -44,7 +44,7 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     @Test(description = "positive test. Change password after first login")
     public void changePasswordAfterFirstLoginValidDateTest() throws SQLException {
         createUser();
-        String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
+        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
                 USER_0NE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
@@ -66,7 +66,7 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
             description = "Change password after first login with invalid password, negative test.")
     public void changePasswordAfterFirstLoginLessThan7CharsTest(String newPass) throws SQLException {
         createUser();
-        String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
+        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
                 USER_0NE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getValue()), API_HOST + API_SESSIONCODE,
                 authTokenChangePassword, SC_PERMANENT_REDIRECT);
@@ -81,7 +81,7 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     @Test(description = "negative test. Re-login when you cancel the password change at the first login")
     public void changePasswordAfterFirstLoginReLoginTest() throws SQLException {
         createUser();
-        String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
+        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
                 USER_0NE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);

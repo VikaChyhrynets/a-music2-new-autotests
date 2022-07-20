@@ -1,7 +1,8 @@
 package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.data.AlertAPI;
+
+import by.andersen.amnbanking.data.SuccessfulMessages;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import by.andersen.amnbanking.model.Response;
@@ -11,16 +12,19 @@ import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
+import static by.andersen.amnbanking.data.AlertAPI.SMS_CODE_INVALID;
+import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
+import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
-import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
+import static org.apache.hc.core5.http.HttpStatus.SC_LOCKED;
 import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
 import static by.andersen.amnbanking.data.DataUrls.WRONG_SMS_CODE;
+import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
-import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static org.testng.Assert.assertEquals;
+
 
 @Epic("E-1. Registration and authorization")
 public class ConfirmationCodeTests extends BaseAPITest {
@@ -30,9 +34,9 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5888309")
     void sendValidSessionCode() {
         assertEquals(authentication.sendSessionCode(
-                getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
                 "1234", HttpStatus.SC_OK).getMessage(),
-                AlertAPI.SESSION_CODE_CORRECT);
+                SuccessfulMessages.SESSION_CODE_CORRECT);
     }
 
     @Test(description = "Three digit session code")
@@ -40,8 +44,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5895560")
     void sendSessionCodeWithThreeDigits() {
         assertEquals(authentication.sendSessionCode(
-                getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                "231", HttpStatus.SC_BAD_REQUEST).getMessage(), AlertAPI.SMS_CODE_INVALID);
+                loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                "231", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Five digits session code")
@@ -49,9 +53,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5895561")
     void sendSessionCodeWithFiveDigits() {
         assertEquals(authentication.sendSessionCode(
-                getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                "12345", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                "12345", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Blank session code")
@@ -59,9 +62,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5895562")
     void sendBlankSessionCode() {
         assertEquals(authentication.sendSessionCode(
-                getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                "", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                "", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Code with only letters")
@@ -69,9 +71,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5895563")
     void sendSessionCodeWithLetters() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "brab", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "brab", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Code with one letter")
@@ -79,9 +80,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5895563")
     void sendSessionCodeWithLetter() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "123a", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "123a", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Code with only symbols")
@@ -89,9 +89,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5895564")
     void sendSessionCodeWithSymbols() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "+++*", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "+++*", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Code with one symbol")
@@ -99,9 +98,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5895564")
     void sendSessionCodeWithSymbol() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "123&", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "123&", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Code with one space")
@@ -109,9 +107,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5900178")
     void sendSessionCodeWithSpace() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "123 ", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "123 ", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Code with spaces")
@@ -119,9 +116,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5900284")
     void sendSessionCodeWithSpaces() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "    ", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "    ", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Valid code with space")
@@ -129,9 +125,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5900296")
     void sendValidSessionCodeWithSpace() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "12 34", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "12 34", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Valid code with space in the end")
@@ -139,9 +134,8 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5900325")
     void sendValidSessionCodeEndingWithSpace() {
         assertEquals(authentication.sendSessionCode(
-                        getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                        "1234 ", HttpStatus.SC_BAD_REQUEST).getMessage(),
-                AlertAPI.SMS_CODE_INVALID);
+                        loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
+                        "1234 ", HttpStatus.SC_BAD_REQUEST).getMessage(), SMS_CODE_INVALID);
     }
 
     @Test(description = "Sending a code again to confirm the login when the ban has not expired, negative test")
@@ -149,15 +143,13 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5937934")
     void sendSMSCodeAgainWhenTheBanHasNotExpired() throws SQLException {
         createUser();
-        String authToken = getAuthToken("Eminem79", "111Gv5dvvf511");
+        String authToken = loginAndGetBearerToken(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword());
         for (int i = 0; i < 3; i++) {
-            new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + API_SESSIONCODE, authToken, 400);
+            authentication.sendSessionCode(authToken, WRONG_SMS_CODE, HttpStatus.SC_BAD_REQUEST);
         }
-        assertEquals(new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + API_SESSIONCODE, authToken, 423).as(Response.class).getMessage(),
-                "Ban time is not over yet...");
+        assertEquals(authentication.sendSessionCode(authToken, WRONG_SMS_CODE, SC_LOCKED).getMessage(), BAN_USER);
         assertEquals(new PostAdapters().post(setFilterType("SMS_FOR_SESSION"),
-                API_HOST + SMS_CODE, authToken, 423).as(Response.class).getMessage(),
-                "Ban time is not over yet...");
+                API_HOST + SMS_CODE, authToken, SC_LOCKED).as(Response.class).getMessage(), BAN_USER);
         deleteUser();
     }
 }
