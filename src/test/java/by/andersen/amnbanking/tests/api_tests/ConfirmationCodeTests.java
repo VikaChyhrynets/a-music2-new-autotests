@@ -7,7 +7,6 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import by.andersen.amnbanking.model.Response;
 import io.qameta.allure.TmsLink;
-import org.apache.hc.core5.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
@@ -18,6 +17,8 @@ import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SESSION_CODE_CORRECT;
 import static org.apache.hc.core5.http.HttpStatus.SC_LOCKED;
+import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
@@ -36,7 +37,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendValidSessionCode() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_VALID.getValue(), HttpStatus.SC_OK).getMessage(),
+                SmsVerificationData.SMS_VALID.getValue(), SC_OK).getMessage(),
                 SESSION_CODE_CORRECT);
     }
 
@@ -46,7 +47,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithThreeDigits() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_3_SYMBOLS.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_3_SYMBOLS.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -56,7 +57,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithFiveDigits() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_5_SYMBOLS.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_5_SYMBOLS.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -66,7 +67,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendBlankSessionCode() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.EMPTY_SMS.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.EMPTY_SMS.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -76,7 +77,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithLetters() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_SMALL_LETTERS.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_SMALL_LETTERS.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -86,7 +87,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithLetter() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_1_LETTER.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_1_LETTER.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -96,7 +97,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithSymbols() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_ASTERISK_PLUSES.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_ASTERISK_PLUSES.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -106,7 +107,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithSymbol() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_AMPERSAND.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_AMPERSAND.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -116,7 +117,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithSpace() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_SPACE_END.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_SPACE_END.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -126,7 +127,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendSessionCodeWithSpaces() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_4_SPACES.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_4_SPACES.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -136,7 +137,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendValidSessionCodeWithSpace() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_MIDDLE_SPACE.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_MIDDLE_SPACE.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -146,7 +147,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     void sendValidSessionCodeEndingWithSpace() {
         assertEquals(authentication.sendSessionCode(
                 loginAndGetBearerToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG),
-                SmsVerificationData.SMS_SPACE_END.getValue(), HttpStatus.SC_BAD_REQUEST).getMessage(),
+                SmsVerificationData.SMS_SPACE_END.getValue(), SC_BAD_REQUEST).getMessage(),
                 SMS_CODE_INVALID);
     }
 
@@ -157,7 +158,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
         createUser();
         String authToken = loginAndGetBearerToken(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword());
         for (int i = 0; i < 3; i++) {
-            authentication.sendSessionCode(authToken, WRONG_SMS_CODE, HttpStatus.SC_BAD_REQUEST);
+            authentication.sendSessionCode(authToken, WRONG_SMS_CODE, SC_BAD_REQUEST);
         }
         assertEquals(authentication.sendSessionCode(authToken, WRONG_SMS_CODE, SC_LOCKED).getMessage(), BAN_USER);
         assertEquals(new PostAdapters().post(setFilterType("SMS_FOR_SESSION"),
