@@ -2,7 +2,7 @@ package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.jsonBody.Response;
+import by.andersen.amnbanking.model.Response;
 import by.andersen.amnbanking.data.SmsVerificationData;
 import by.andersen.amnbanking.data.UsersData;
 import io.qameta.allure.Epic;

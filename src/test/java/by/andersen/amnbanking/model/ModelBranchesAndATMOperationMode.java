@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ModelBranchesAndATMOperationMode {
+public class ModelBranchesAndATMOperationMode extends Response {
     private String dayOfWeek;
     private String openingTime;
     private String closingTime;

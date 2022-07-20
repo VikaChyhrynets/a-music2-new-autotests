@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static by.andersen.amnbanking.serviceATM.ServiceBranchesATM.getInfoAboutATMAndBranches;
+import static by.andersen.amnbanking.apiControllers.BankInfo.getInfoAboutATMAndBranches;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;

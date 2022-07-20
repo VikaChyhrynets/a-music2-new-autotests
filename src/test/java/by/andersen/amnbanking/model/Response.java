@@ -1,4 +1,4 @@
-package by.andersen.amnbanking.jsonBody;
+package by.andersen.amnbanking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

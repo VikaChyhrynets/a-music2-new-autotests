@@ -25,4 +25,5 @@ public class AlertAPI {
     public static final String NOT_REGISTER_ID = "This ID number is not registered. " +
             "Please check the entered data or contact the bank";
     public static final String USER_PASS_REGISTERED = "User with passport = AM4567 already registered";
+    public static final String SESSION_CODE_CORRECT = "Session code is correct";
 }
