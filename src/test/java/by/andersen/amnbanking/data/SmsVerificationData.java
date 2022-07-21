@@ -1,5 +1,10 @@
 package by.andersen.amnbanking.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum SmsVerificationData {
     SMS_VALID("1234"),
     SMS_INVALID("1235"),
@@ -18,13 +23,6 @@ public enum SmsVerificationData {
     SMS_SLASH_END("123/"),
     SMS_WITH_LETTER("123L");
 
-    String sms;
-
-    SmsVerificationData(String sms) {
-        this.sms = sms;
-    }
-
-    public String getValue() {
-        return sms;
-    }
+    private final String sms;
 }
+

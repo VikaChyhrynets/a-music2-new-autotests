@@ -1,7 +1,6 @@
 package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.data.UsersData;
 import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
@@ -35,7 +34,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "C5888309")
     void sendValidSessionCode() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_OK).as(Response.class);
         assertEquals(resp.getMessage(), SESSION_CODE_CORRECT);
     }
@@ -45,7 +44,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5895560")
     void sendSessionCodeWithThreeDigits() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_3_SYMBOLS.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_3_SYMBOLS.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -55,7 +54,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5895561")
     void sendSessionCodeWithFiveDigits() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_5_SYMBOLS.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_5_SYMBOLS.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -65,7 +64,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "C5895562")
     void sendBlankSessionCode() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(EMPTY_SMS.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(EMPTY_SMS.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -75,7 +74,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5895563")
     void sendSessionCodeWithLetters() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_SMALL_LETTERS.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_SMALL_LETTERS.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -85,7 +84,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5895563")
     void sendSessionCodeWithLetter() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_1_LETTER.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_1_LETTER.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -95,7 +94,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5895564")
     void sendSessionCodeWithSymbols() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_ASTERISK_PLUSES.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_ASTERISK_PLUSES.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -105,7 +104,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5895564")
     void sendSessionCodeWithSymbol() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_AMPERSAND.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_AMPERSAND.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -115,7 +114,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5900178")
     void sendSessionCodeWithSpace() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_SPACE_END.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_SPACE_END.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -125,7 +124,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5900284")
     void sendSessionCodeWithSpaces() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_4_SPACES.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_4_SPACES.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -135,7 +134,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5900296")
     void sendValidSessionCodeWithSpace() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_MIDDLE_SPACE.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_MIDDLE_SPACE.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -145,7 +144,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TestRails(id = "С5900325")
     void sendValidSessionCodeEndingWithSpace() {
         String authToken = getAuthToken(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_BEGIN_SPACE.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_BEGIN_SPACE.getSms()),
                 API_HOST + API_SESSIONCODE, authToken, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
