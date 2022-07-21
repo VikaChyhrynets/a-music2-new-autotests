@@ -1,9 +1,9 @@
 package by.andersen.amnbanking.tests.ui_tests.test;
 
-import by.andersen.amnbanking.data.Alert;
 import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.TestRails;
-import io.qameta.allure.Step;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -11,6 +11,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.sql.SQLException;
 
+import static by.andersen.amnbanking.data.Alert.CONFIRMATION_CODE_MUST_BE_FILLED;
+import static by.andersen.amnbanking.data.Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS;
 import static by.andersen.amnbanking.data.Alert.INCORRECT_SMS_CODE;
 import static by.andersen.amnbanking.data.Alert.MESSAGE_INCORRECT_SMS_3_TIMES;
 import static by.andersen.amnbanking.data.Alert.SEND_CODE_AGAIN;
@@ -35,6 +37,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
 
     SoftAssert softAssert = new SoftAssert();
 
+    @Story("UC - 1.10 Code Confirmation")
     @Test(description = "Enter correct 7 symbols in the login and password fields, positive test")
     public void authWithValidDataForLoginAndPasswordFieldsWithSevenSymbolsTest() {
         loginPage.inputLoginField(USER_MALEFICENT.getUser().getLogin())
@@ -43,8 +46,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
     }
 
+    @Story("UC - 1.10 Code Confirmation")
     @TestRails(id = "C5931949")
-    @Step("Enter forbidden letter in smsCode field, negative test")
     @Test(description = "Enter invalid smsCode with 1 letter at the end, negative test")
     public void authWithInValidDataLetterForSmsCodeConfirmationTest() throws SQLException {
         createUser();
@@ -55,12 +58,12 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_WITH_LETTER.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(),
-                Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
         deleteUser();
     }
 
+    @Story("UC - 1.10 Code Confirmation")
     @TestRails(id = "C5931951")
-    @Step("Enter forbidden symbol")
     @Test(description = "Enter invalid smsCode with forbidden symbol slash at the end, negative test")
     public void authWithForbiddenSymbolForSmsCodeConfirmationTest() throws SQLException {
         createUser();
@@ -71,12 +74,12 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_SLASH_END.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.getErrorMessageForWrongCodeConfirmation(),
-                Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
         deleteUser();
     }
 
+    @Story("UC - 1.10 Code Confirmation")
     @TestRails(id = "C5931952")
-    @Step("Enter wrong sms code and then authorization again, positive test ")
     @Test(description = "Enter wrong sms code and then authorization again, positive test")
     public void authAfterEnteringWrongConfirmationCodeOneTimeTest() throws SQLException {
         createUser();
@@ -87,7 +90,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .clickConfirmButton()
                 .getErrorMessageFromModalWrongSmsCode();
         softAssert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
-                INCORRECT_SMS_CODE.getMessage());
+                INCORRECT_SMS_CODE);
         confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode()
                 .refreshPage();
         loginPage.inputLoginField(USER_0NE.getUser().getLogin())
@@ -97,9 +100,9 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         deleteUser();
     }
 
-    @TestRails(id = "C5869688")
-    @Step("Enter the wrong sms code three times and get the ban, positive test ")
-    @Test(description = "wrong sms code 3 times, get the ban on 30 minutes, positive test ")
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5869688")
+    @Test(description = "Enter the wrong sms code three times and get the ban, positive test, positive test ")
     public void authAfterEnteringWrongSmsCodeThreeTimesTest() throws SQLException {
         createUser();
         for (int i = 0; i < 2; i++) {
@@ -117,13 +120,13 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
-                MESSAGE_INCORRECT_SMS_3_TIMES.getMessage());
+                MESSAGE_INCORRECT_SMS_3_TIMES);
         deleteUser();
     }
 
-    @TestRails(id = "C5931955")
-    @Step("Sending a confirmation code when the ban has not expired, positive test ")
-    @Test(description = "send sms-code when the ban time hasn't expired, positive test ")
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5931955")
+    @Test(description = "Sending a confirmation code when the ban has not expired, positive test, positive test ")
     public void sendSmsCodeWhenBanNotExpiredTest() throws SQLException {
         createUser();
         for (int i = 0; i < 3; i++) {
@@ -141,10 +144,11 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                 .clickConfirmButton();
         Assert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
-                SEND_CODE_AGAIN.getMessage());
+                SEND_CODE_AGAIN);
         deleteUser();
     }
 
+    @Story("UC - 1.10 Code Confirmation")
     @Test(description = "Close sms confirmation window and try to login again, negative test")
     public void closeSmsWindowAndLoginAgain() {
         assertTrue(loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
@@ -154,63 +158,69 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .clickLoginButton().confirmationCodeWindowIsOpen());
     }
 
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5931941")
     @Test(description = "Authorization with less than 4 characters in the Code confirmation field, negative test")
-    @TestRails(id = "C5931941")
     public void authWithLessThan4Digits() {
         loginPage.loginUserWithCreds(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG)
                 .inputSmsCode(SMS_3_SYMBOLS.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.checkSmsInputValidationText(),
-                Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5931942")
     @Test(description = "Authorization with more than 4 characters in the Сode confirmation field, negative test")
-    @TestRails(id = "C5931942")
     public void authWithLessMore4Digits() {
         loginPage.loginUserWithCreds(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG)
                 .inputSmsCode(SMS_5_SYMBOLS.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.checkSmsInputValidationText(),
-                Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5931938")
     @Test(description = "Authorization with more than 4 characters in the Сode confirmation field, negative test")
-    @TestRails(id = "C5931938")
     public void authWithEmptySms() {
         loginPage.loginUserWithCreds(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG)
                 .inputSmsCode(EMPTY_SMS.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.checkSmsInputValidationText(),
-                Alert.CONFIRMATION_CODE_MUST_BE_FILLED.getMessage());
+               CONFIRMATION_CODE_MUST_BE_FILLED);
     }
 
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5931945")
     @Test(description = "Authorization with a space at the beginning of the Code confirmation field")
-    @TestRails(id = "C5931945")
     public void authWithSmsWithSpaceAtTheBeginning() {
         loginPage.loginUserWithCreds(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG)
                 .inputSmsCode(SMS_BEGIN_SPACE.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.checkSmsInputValidationText(),
-                Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5931947")
     @Test(description = "Authorization with a space at the end of the Code confirmation field")
-    @TestRails(id = "C5931947")
     public void authWithSmsWithSpaceAtTheEnd() {
         loginPage.loginUserWithCreds(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG)
                 .inputSmsCode(SMS_SPACE_END.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.checkSmsInputValidationText(),
-                Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
+    @Story("UC - 1.10 Code Confirmation")
+    @TmsLink("5931948")
     @Test(description = "Authorization with only spaces in the Code confirmation field")
-    @TestRails(id = "C5931948")
     public void authWithSmsWithOnlySpaces() {
         loginPage.loginUserWithCreds(LOGIN_WITH_PASSPORT_REG, PASSWORD_WITH_PASSPORT_REG)
                 .inputSmsCode(SMS_4_SPACES.getSms())
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.checkSmsInputValidationText(),
-                Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 }

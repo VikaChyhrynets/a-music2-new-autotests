@@ -19,6 +19,7 @@ import static by.andersen.amnbanking.data.Alert.SEND_SMS_POSITIVE;
 import static by.andersen.amnbanking.data.Alert.UNREGISTERED_ID;
 import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
 import static by.andersen.amnbanking.data.SmsVerificationData.EMPTY_SMS;
+import static by.andersen.amnbanking.data.UsersData.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -43,10 +44,10 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @Test(description = "Try to change password with unregistered id number, positive test")
     public void passwordRecoveryWithUnregisteredIdTest() {
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber("MLF4568756DB123")
+                .enterIdNumber(EM79_VALID_PASS.getUser().getPassport())
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                UNREGISTERED_ID.getMessage());
+                UNREGISTERED_ID);
     }
 
     @TmsLink("5945581")
@@ -67,7 +68,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber("BF12334376763")
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getText2StepAfterSendSms(), SEND_SMS_POSITIVE.getMessage());
+        assertEquals(passwordRecovery.getText2StepAfterSendSms(), SEND_SMS_POSITIVE);
     }
 
     @Story("UC-1.3 Password recovery")
@@ -76,10 +77,10 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @Test(description = "Try to send empty ID number")
     public void enterEmptyIdNumberTest() {
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber("")
+                .enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport())
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                EMPTY_FIELDS.getMessage());
+                EMPTY_FIELDS);
     }
 
     @Story("UC-1.3 Password recovery")
@@ -88,10 +89,10 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @Test(description = "Try to send ID Number with less than 2 symbols")
     public void enterLessThan2CharsInIdNumberTest() {
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber("P")
+                .enterIdNumber(LESS_THAN_MIN_CHARS.getUser().getPassport())
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_LESS_THAN_2_SYMBOLS.getMessage());
+                ID_LESS_THAN_2_SYMBOLS);
     }
 
     @Story("UC-1.3 Password recovery")
@@ -100,10 +101,10 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @Test(description = "Try to send ID number with more than 30 symbols")
     public void enter31SymbolsInIdNumberTest() {
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber("PKVRT21587469532014567852154879")
+                .enterIdNumber(MORE_THAN_MAX_CHARS.getUser().getPassport())
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_MORE_30_SYMBOLS.getMessage());
+                ID_MORE_30_SYMBOLS);
     }
 
     @Story("UC-1.3 Password recovery")
@@ -116,7 +117,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber(idNumber)
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_WRONG_SYMBOLS.getMessage());
+                ID_WRONG_SYMBOLS);
     }
 
     @TmsLink("5945073")
@@ -125,10 +126,10 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @Test(description = "Password recovery by a user who did not change their password on first login, positive test")
     public void enterValidPassportWithoutChangingFirstPassword() {
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber("DC")
+                .enterIdNumber(EM79_VAL_PASS_2NUMBERS.getUser().getPassport())
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_WITHOUT_CHANGING_PASSWORD.getMessage());
+                ID_WITHOUT_CHANGING_PASSWORD);
     }
 
     @TmsLinks(value = {@TmsLink("5945658"), @TmsLink("5945661"), @TmsLink("5945662"), @TmsLink("5945663"),
@@ -144,7 +145,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         passwordRecovery.enterSmsCodeConfirmation(smsCode)
                         .clickContinueButtonAfterEnteringSms();
         assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
-                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS.getMessage());
+                FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
     @TmsLink("5945660")
@@ -158,7 +159,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         passwordRecovery.enterSmsCodeConfirmation(EMPTY_SMS.getSms())
                 .clickContinueButtonAfterEnteringSms();
         assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
-                CONFIRMATION_CODE_MUST_BE_FILLED.getMessage());
+                CONFIRMATION_CODE_MUST_BE_FILLED);
     }
 }
 

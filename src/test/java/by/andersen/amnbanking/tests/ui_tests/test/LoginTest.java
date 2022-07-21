@@ -3,9 +3,7 @@ package by.andersen.amnbanking.tests.ui_tests.test;
 import by.andersen.amnbanking.adapters.PostAdapters;
 import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.DataProviderTests;
-import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
@@ -14,7 +12,7 @@ import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 
-import static by.andersen.amnbanking.data.Alert.EMPTY_LOGIN_OR_PASSWORD_FIELDS;
+import static by.andersen.amnbanking.data.Alert.EMPTY_FIELDS;
 import static by.andersen.amnbanking.data.Alert.FIELD_CONTAIN_LETTERS_NUMBER;
 import static by.andersen.amnbanking.data.Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS;
@@ -44,14 +42,16 @@ import static org.testng.Assert.assertTrue;
 @Listeners(UserDeleteListener.class)
 public class LoginTest extends BaseUITest {
 
+    @Story("UC 1.2 - Web application login")
     @TmsLink("5869665")
     @Test(description = "negative test")
     public void authWithInvalidLoginLessThan7SymbolsTest() {
         loginPage.inputLoginField("Gsvop4")
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessageLogin(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getMessage());
+        assertEquals(loginPage.getAlertMessageLogin(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
     }
 
+    @Story("UC 1.2 - Web application login")
     @TmsLinks(value = {@TmsLink("5869679"), @TmsLink("5900176"), @TmsLink("5900198"), @TmsLink("5900200"),
     @TmsLink("5900201"), @TmsLink("5900204"), @TmsLink("5900206"), @TmsLink("5900210"), @TmsLink("5900241"),
     @TmsLink("5900242"), @TmsLink("5900244"), @TmsLink("5900246"), @TmsLink("5900247"), @TmsLink("5900249"),
@@ -63,66 +63,67 @@ public class LoginTest extends BaseUITest {
     public void authWithForbiddenSymbolLoginTest(String login) {
         loginPage.inputLoginField(login)
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
+        assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS);
     }
 
+    @Story("UC 1.2 - Web application login")
     @TmsLink("5869674")
-    @Step("Enter valid login and invalid password with forbidden symbols")
-    @Test(description = "negative test", dataProvider = "invalid password valid login validation",
-            dataProviderClass = DataProviderTests.class)
+    @Test(description = "Enter valid login and invalid password with forbidden symbols, negative test",
+            dataProvider = "invalid password valid login validation", dataProviderClass = DataProviderTests.class)
     public void authAsteriskSymbolPasswordAndValidLoginTest(String password) {
         loginPage.inputLoginField(USER_0NE.getUser().getLogin())
                 .inputPasswordField(password)
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), FIELD_CONTAIN_LETTERS_NUMBER.getMessage());
+        assertEquals(loginPage.getAlertMessagePassword(), FIELD_CONTAIN_LETTERS_NUMBER);
     }
 
-    @TestRails(id = "C5900035")
-    @Step("Enter invalid login longer than 20 symbols")
-    @Test(description = "negative test")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5900035")
+    @Test(description = "Enter invalid login longer than 20 symbols, negative test")
     public void authWithTwentyOneSymbolLoginTest() {
         loginPage.inputLoginField(MORE_20_CHARS.getUser().getLogin())
                 .clickPasswordField();
-        assertEquals(loginPage.getAlertMessageLogin(), LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS.getMessage());
+        assertEquals(loginPage.getAlertMessageLogin(), LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS);
     }
 
+    @Story("UC 1.2 - Web application login")
     @Test(description = "Enter password longer than 20 symbols, negative test")
     public void authWithTwentyOneSymbolPasswordTest() {
         loginPage.inputPasswordField(MORE_20_CHARS.getUser().getPassword())
                 .clickLoginField();
-        assertEquals(loginPage.getAlertMessagePassword(), LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS.getMessage());
+        assertEquals(loginPage.getAlertMessagePassword(), LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS);
     }
 
-    @TestRails(id = "C5869669")
-    @Step("Enter valid password with blank login field")
-    @Test(description = "negative test")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5869669")
+    @Test(description = "Enter valid password with blank login field, negative test")
     public void authEmptyLoginAndValidPasswordTest() {
-        loginPage.inputLoginField(EMPTY_FIELDS.getUser().getLogin())
+        loginPage.inputLoginField(EMPTY_USER_FIELDS.getUser().getLogin())
                 .inputPasswordField(USER_0NE.getUser().getPassword())
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessageLogin(), EMPTY_LOGIN_OR_PASSWORD_FIELDS.getMessage());
+        assertEquals(loginPage.getAlertMessageLogin(), EMPTY_FIELDS);
     }
 
-    @TestRails(id = "C5869673")
-    @Step("Enter valid login with blank password field")
-    @Test(description = "negative test")
+    @Story("UC 1.2 - Web application login")
+    @TmsLink("5869673")
+    @Test(description = "Enter valid login with blank password field, negative test")
     public void authEmptyPasswordAndValidLoginTest() {
         loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(EMPTY_FIELDS.getUser().getPassword())
+                .inputPasswordField(EMPTY_USER_FIELDS.getUser().getPassword())
                 .clickLoginButton();
-        assertEquals(loginPage.getAlertMessagePassword(), EMPTY_LOGIN_OR_PASSWORD_FIELDS.getMessage());
+        assertEquals(loginPage.getAlertMessagePassword(), EMPTY_FIELDS);
     }
 
-    @Step("Show password button check")
-    @Test(description = "negative test")
+    @Story("UC 1.2 - Web application login")
+    @Test(description = "Show password button check, positive test")
     public void showPasswordIconTest() {
-        assertEquals(loginPage.clickShowPasswordCheckbox("Drn1f7sC", "type"), "text");
+        assertEquals(loginPage.clickShowPasswordCheckbox(USER_0NE.getUser().getPassword(), "type"), "text");
     }
 
-    @Step("Hide password button check")
-    @Test(description = "negative test")
+    @Story("UC 1.2 - Web application login")
+    @Test(description = "Hide password button check, positive test")
     public void hidePasswordIconTest() {
-        assertEquals(loginPage.clickHidePasswordCheckbox("Drn1f7sC", "type"), "password");
+        assertEquals(loginPage.clickHidePasswordCheckbox(USER_0NE.getUser().getPassword(), "type"), "password");
     }
 
     @Story("UC 1.2 - Web application login")
@@ -166,7 +167,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
                 .inputPasswordField(LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData())
                 .clickLoginButton();
-        assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS.getMessage());
+        assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
     }
 
     @Story("UC 1.2 - Web application login")
@@ -176,7 +177,7 @@ public class LoginTest extends BaseUITest {
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG.toLowerCase())
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                 .clickLoginButton();
-        assertEquals(loginPage.getTextFromLoginErrorMessage(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS.getMessage());
+        assertEquals(loginPage.getTextFromLoginErrorMessage(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS);
     }
 
     @Story("UC 1.2 - Web application login")

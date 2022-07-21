@@ -18,13 +18,15 @@ public enum UsersData {
             "+8565555555555")),
     EM79_MAX_SYM_PASS(new User("Eminem79", "2Loc4567E", "11236489235FR456871230L78D9632",
             "+3459755555555")),
-    EM79_MIN_CHARS_PHONE(new User("Eminem79", "8Rvjsio457c", "NX4536489235",
+    EM79_MIN_CHARS(new User("Eminem79", "8Rvjsio4", "N5",
             "+96023478512")),
     EM79_MAX_CHARS_PHONE(new User("Eminem79", "8Rvjsio457c", "NX4536489235",
             "+960234785126325")),
     REG_PHONE_NUMBER(new User(null, "+375555555555", null, "+375555555501")),
     MORE_20_CHARS(new User("5Dvkfefnbjgldrkmk8ftt", "584841Cd2154ddvnvddvb", null, null)),
-    EMPTY_FIELDS(new User("", "", "", "")),
+    EMPTY_USER_FIELDS(new User("", "", "", "")),
+    MORE_THAN_MAX_CHARS(new User("", "", "PKVRT21587469532014567852154879", "")),
+    LESS_THAN_MIN_CHARS(new User("Emine7", "8mvjio", "P", "+36210548971")),
     REG_PASSPORT_NUMBER(new User(null, null, "AM4567", null));
 
     private final User user;
