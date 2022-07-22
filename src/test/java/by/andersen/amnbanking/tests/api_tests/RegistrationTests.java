@@ -125,9 +125,9 @@ public class RegistrationTests extends BaseAPITest {
     public void registrationValidDateWithSixteenCharsPhoneTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
                         (USER_0NE.getUser().getLogin(),
-                                EM79_MAX_CHARS_PHONE.getUser().getPassword(),
-                                EM79_MAX_CHARS_PHONE.getUser().getPassport(),
-                                EM79_MAX_CHARS_PHONE.getUser().getPhone()),
+                                EM79_MAX_CHARS.getUser().getPassword(),
+                                EM79_MAX_CHARS.getUser().getPassport(),
+                                EM79_MAX_CHARS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();

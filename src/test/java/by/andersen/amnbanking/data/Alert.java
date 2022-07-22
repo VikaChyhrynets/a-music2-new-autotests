@@ -20,4 +20,8 @@ public class Alert {
             "contact the bank";
     public static final String ID_WRONG_SYMBOLS = "Field should contain capital letters and numbers";
     public static final String SEND_SMS_POSITIVE = "We sent an SMS with a 4-digit verification code to +90237467824742";
+    public static final String PASSWORD_LESS_7_SYMBOLS = "Password should contain at least 7 symbols";
+    public static final String PASSWORD_MORE_20_SYMBOLS = "Must be 20 characters or less";
+    public static final String EMPTY_PASSWORD_FIELD = "Field \"Password\" must be filled";
+    public static final String PASSWORDS_MUST_MATCH = "Passwords must match";
 }

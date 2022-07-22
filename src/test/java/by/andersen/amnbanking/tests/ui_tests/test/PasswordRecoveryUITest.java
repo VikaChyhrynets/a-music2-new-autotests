@@ -8,17 +8,10 @@ import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
 import org.testng.annotations.Test;
 
-import static by.andersen.amnbanking.data.Alert.CONFIRMATION_CODE_MUST_BE_FILLED;
-import static by.andersen.amnbanking.data.Alert.EMPTY_FIELDS;
-import static by.andersen.amnbanking.data.Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS;
-import static by.andersen.amnbanking.data.Alert.ID_LESS_THAN_2_SYMBOLS;
-import static by.andersen.amnbanking.data.Alert.ID_MORE_30_SYMBOLS;
-import static by.andersen.amnbanking.data.Alert.ID_WITHOUT_CHANGING_PASSWORD;
-import static by.andersen.amnbanking.data.Alert.ID_WRONG_SYMBOLS;
-import static by.andersen.amnbanking.data.Alert.SEND_SMS_POSITIVE;
-import static by.andersen.amnbanking.data.Alert.UNREGISTERED_ID;
+import static by.andersen.amnbanking.data.Alert.*;
 import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
 import static by.andersen.amnbanking.data.SmsVerificationData.EMPTY_SMS;
+import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
 import static by.andersen.amnbanking.data.UsersData.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -38,7 +31,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         assertTrue(passwordRecovery.getPhoneNumberFrom2StepAfterSendSms(phoneNumber));
     }
 
-    @TmsLink("5945567")
+    @TmsLink("5871567")
     @Issue("A2N-492")
     @Story("UC-1.3 Password recovery")
     @Test(description = "Try to change password with unregistered id number, positive test")
@@ -143,7 +136,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .enterIdNumber(passport)
                 .clickContinueButton();
         passwordRecovery.enterSmsCodeConfirmation(smsCode)
-                        .clickContinueButtonAfterEnteringSms();
+                .clickContinueButtonAfterEnteringSms();
         assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
                 FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
@@ -160,6 +153,175 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .clickContinueButtonAfterEnteringSms();
         assertEquals(passwordRecovery.getErrorMessageCodeConfirmation(),
                 CONFIRMATION_CODE_MUST_BE_FILLED);
+    }
+
+    @TmsLink("5949447")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter invalid new password with less than 7 symbols and get the error message, negative test")
+    public void enterInvalidNewPasswordLessThan7SymbolsTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInNewPasswordField(LESS_THAN_MIN_CHARS.getUser().getPassword())
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageNewPassword(), PASSWORD_LESS_7_SYMBOLS);
+    }
+
+    @TmsLinks(value = {@TmsLink("5949448"), @TmsLink("5949449"), @TmsLink("5949450"), @TmsLink("5949451")})
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter valid new passwords and check that aria-invalid equals false, positive test",
+            dataProvider = "valid boundary values new password ui", dataProviderClass = DataProviderTests.class)
+    public void enterValidNewPasswordTest(String newPassword) {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInNewPasswordField(newPassword)
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getAttributeStatusAfterEnterPasswordInNewPassword("aria-invalid"), "false");
+    }
+
+    @TmsLink("5949452 ")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter more than 20 characters in new password field and get error message, negative test")
+    public void enterInvalidPasswordMoreThan20SymbolsTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInNewPasswordField(MORE_20_CHARS.getUser().getPassword())
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageNewPassword(), PASSWORD_MORE_20_SYMBOLS);
+    }
+
+    @TmsLink("5949453")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter empty new password and get error message, negative test")
+    public void enterInvalidEmptyPasswordTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInNewPasswordField(EMPTY_USER_FIELDS.getUser().getPassword())
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageNewPassword(), EMPTY_PASSWORD_FIELD);
+    }
+
+    @TmsLinks(value = {@TmsLink("5949454"), @TmsLink("5949455"), @TmsLink("5949456"), @TmsLink("5949457")})
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter invalid new passwords and check error messages, negative test",
+            dataProvider = "invalid values password ui", dataProviderClass = DataProviderTests.class)
+    public void enterInvalidNewPasswordTest(String newPassword) {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInNewPasswordField(newPassword)
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageNewPassword(), FIELD_CONTAIN_LETTERS_NUMBER);
+    }
+
+    @TmsLink("5949525")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter less than 7 symbols in confirm password fields, negative test")
+    public void enterLessThan7SymbolsConfirmPasswordTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInConfirmPasswordField(LESS_THAN_MIN_CHARS.getUser().getPassword())
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageConfirmPassword(), PASSWORD_LESS_7_SYMBOLS);
+    }
+
+    @TmsLink("5949530")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter more than 20 characters in confirm password field and get error message, negative test")
+    public void enterInvalidConfirmPasswordMoreThan20SymbolsTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInConfirmPasswordField(MORE_20_CHARS.getUser().getPassword())
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageConfirmPassword(), PASSWORD_MORE_20_SYMBOLS);
+}
+
+    @TmsLink("5949531")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter empty confirm password and get error message, negative test")
+    public void enterInvalidEmptyConfirmPasswordTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInConfirmPasswordField(EMPTY_USER_FIELDS.getUser().getPassword())
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageConfirmPassword(), EMPTY_PASSWORD_FIELD);
+    }
+
+    @TmsLinks(value = {@TmsLink("5949532"), @TmsLink("5949533"), @TmsLink("5949534"), @TmsLink("5949535")})
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter invalid confirm passwords and check error messages, negative test",
+            dataProvider = "invalid values password ui", dataProviderClass = DataProviderTests.class)
+    public void enterInvalidConfirmPasswordTest(String newPassword) {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInConfirmPasswordField(newPassword)
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageConfirmPassword(), FIELD_CONTAIN_LETTERS_NUMBER);
+    }
+
+    @TmsLink("5949989")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Enter different new and confirm password and get error message, negative test")
+    public void enterDifferentNewAndConfirmPasswordTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInNewPasswordField(EM79_MIN_CHARS.getUser().getPassword())
+                .enterPasswordInConfirmPasswordField(EM79_MAX_CHARS.getUser().getPassword())
+                .clickContinueButtonNewPassword();
+        assertEquals(passwordRecovery.getErrorMessageConfirmPasswordNotMuch(), PASSWORDS_MUST_MATCH);
+    }
+
+    @TmsLink("5949994")
+    @Issue("A2N-567")
+    @Story("UC-1.3 Password recovery")
+    @Test(description = "Click the eye button to viewing entered password, positive test")
+    public void clickEyeButtonToViewingEnteringNewPasswordTest() {
+        loginPage.clickLinkForgotPassword()
+                .enterIdNumber(PASSPORT_REG)
+                .clickContinueButton();
+        passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
+                .clickContinueButtonAfterEnteringSms()
+                .enterPasswordInConfirmPasswordField(USER_0NE.getUser().getPassword())
+                .clickEyeButtonConfirmPassword();
+        assertEquals(passwordRecovery.getAttributeStatusAfterEnterPasswordInConfirmPassword("type"), "text");
     }
 }
 
