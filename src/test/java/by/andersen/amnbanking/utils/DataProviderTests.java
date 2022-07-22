@@ -4,6 +4,7 @@ import org.testng.annotations.DataProvider;
 
 import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
 import static by.andersen.amnbanking.data.SmsVerificationData.*;
+import static by.andersen.amnbanking.data.UsersData.EM79_MIN_CHARS;
 
 public class DataProviderTests {
 
@@ -187,6 +188,26 @@ public class DataProviderTests {
                 {"I'l4584c785d"},
                 {"584841Cd»nvddvb"},
                 {"584841Cd❝nvddvb"}
+        };
+    }
+
+    @DataProvider(name = "valid boundary values new password ui")
+    public static Object[][] validBoundaryValuesPasswordUiPasswordRecovery() {
+        return new Object[][]{
+                {EM79_MIN_CHARS.getUser().getPassword()},
+                {EM79_MIN_CHARS.getUser().getPassword()+"8"},
+                {"78vhfytuiropgHklbgh"},
+                {"78vhfytuiropgHklbghv"}
+        };
+    }
+
+    @DataProvider(name = "invalid values password ui")
+    public static Object[][] invalidPasswordUiPasswordRecovery() {
+        return new Object[][]{
+                {"lkdhfbhd"},
+                {"12345678"},
+                {"123.567k"},
+                {"п123456l"}
         };
     }
 }
