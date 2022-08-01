@@ -3,10 +3,12 @@ package by.andersen.amnbanking.tests.api_tests;
 import by.andersen.amnbanking.adapters.PostAdapters;
 
 import by.andersen.amnbanking.data.SmsVerificationData;
+import by.andersen.amnbanking.listener.UserDeleteListener;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import by.andersen.amnbanking.model.Response;
 import io.qameta.allure.TmsLink;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
@@ -28,6 +30,7 @@ import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static org.testng.Assert.assertEquals;
 
 
+@Listeners(UserDeleteListener.class)
 @Epic("E-1. Registration and authorization")
 public class ConfirmationCodeTests extends BaseAPITest {
 
