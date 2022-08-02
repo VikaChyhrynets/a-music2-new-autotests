@@ -22,7 +22,7 @@ import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PRECONDITION_FAILED;
 
-@Epic("Epic 1: Registration and authorization")
+@Epic("E-1. Registration and authorization")
 public class LogoutTests extends BaseAPITest {
 
     @TmsLink("5893156")
