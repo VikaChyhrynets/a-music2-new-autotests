@@ -114,7 +114,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
         Assert.assertEquals(response.getMessage(), INVALID_SMS);
         Assert.assertEquals(response.getFailsCount(), 1);
-        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_OK).as(Response.class);
     }
 
@@ -125,11 +125,11 @@ public class PasswordRecoveryTests extends BaseAPITest {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
         new PostAdapters().post(setSmsCode(SMS_INVALID.getValue()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
-        Response response = new PostAdapters().post(setSmsCode(SMS_INVALID.getValue()),
+        Response response = new PostAdapters().post(setSmsCode(SMS_INVALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
         Assert.assertEquals(response.getMessage(), INVALID_SMS);
         Assert.assertEquals(response.getFailsCount(), 2);
-        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_OK).as(Response.class);
     }
 
@@ -260,7 +260,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     public void sendSmsWithCookieReplacement() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
         Cookie replacedCookie = new Cookie.Builder(loginAsCookie.getName(), USER_SESSION_CODE_LOGIN).build();
-        Response resp = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, replacedCookie, SC_PRECONDITION_FAILED).as(Response.class);
         assertEquals(resp.getMessage(), USER_NOT_VERIFIED);
     }
@@ -271,7 +271,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     public void changingPasswordWithCookieReplacement() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
         Cookie replacedCookie = new Cookie.Builder(loginAsCookie.getName(), USER_SESSION_CODE_LOGIN).build();
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, replacedCookie, SC_PRECONDITION_FAILED).as(Response.class);

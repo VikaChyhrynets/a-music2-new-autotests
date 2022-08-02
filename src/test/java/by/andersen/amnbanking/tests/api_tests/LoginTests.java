@@ -26,6 +26,7 @@ import static by.andersen.amnbanking.data.DataUrls.NOT_REGISTERED_USER_LOGIN;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.USER_BAN_PASS;
 import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
+import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
 import static by.andersen.amnbanking.data.SuccessfulMessages.LOGIN_SUCCESS;
 import static by.andersen.amnbanking.data.UsersData.USER_0NE;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS;
@@ -58,7 +59,7 @@ public class LoginTests extends BaseAPITest {
         createUser();
         String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
                 USER_0NE.getUser().getPassword());
-        new PostAdapters().post(setSmsCode("1234"),
+        new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
         USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
         new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),

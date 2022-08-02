@@ -25,14 +25,7 @@ import static by.andersen.amnbanking.data.AlertAPI.USER_PASS_REGISTERED;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_REGISTRATION;
 import static by.andersen.amnbanking.data.SuccessfulMessages.REGISTRATION_SUCCESS_USER;
-import static by.andersen.amnbanking.data.UsersData.EM79_MAX_CHARS_PHONE;
-import static by.andersen.amnbanking.data.UsersData.EM79_MAX_SYM_PASS;
-import static by.andersen.amnbanking.data.UsersData.EM79_MIN_CHARS_PHONE;
-import static by.andersen.amnbanking.data.UsersData.EM79_VALID_PASS;
-import static by.andersen.amnbanking.data.UsersData.EM79_VALID_PASS_DIGITS;
-import static by.andersen.amnbanking.data.UsersData.EM79_VAL_PASS_2NUMBERS;
-import static by.andersen.amnbanking.data.UsersData.REG_PHONE_NUMBER;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.*;
 import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_UNPROCESSABLE_ENTITY;
@@ -118,9 +111,9 @@ public class RegistrationTests extends BaseAPITest {
     public void registrationValidDateWithTwelveCharsPhoneTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
                         (USER_0NE.getUser().getLogin(),
-                                EM79_MIN_CHARS_PHONE.getUser().getPassword(),
-                                EM79_MIN_CHARS_PHONE.getUser().getPassport(),
-                                EM79_MIN_CHARS_PHONE.getUser().getPhone()),
+                                EM79_MIN_CHARS.getUser().getPassword(),
+                                EM79_MIN_CHARS.getUser().getPassport(),
+                                EM79_MIN_CHARS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -132,9 +125,9 @@ public class RegistrationTests extends BaseAPITest {
     public void registrationValidDateWithSixteenCharsPhoneTest() throws SQLException {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
                         (USER_0NE.getUser().getLogin(),
-                                EM79_MAX_CHARS_PHONE.getUser().getPassword(),
-                                EM79_MAX_CHARS_PHONE.getUser().getPassport(),
-                                EM79_MAX_CHARS_PHONE.getUser().getPhone()),
+                                EM79_MAX_CHARS.getUser().getPassword(),
+                                EM79_MAX_CHARS.getUser().getPassport(),
+                                EM79_MAX_CHARS.getUser().getPhone()),
                 API_HOST + API_REGISTRATION, SC_OK).as(Response.class);
         assertEquals(response.getMessage(), REGISTRATION_SUCCESS_USER);
         deleteUser();
@@ -173,7 +166,7 @@ public class RegistrationTests extends BaseAPITest {
     @Test(description = "Registration, duplicate login field, negative test")
     public void registrationWithDuplicateLoginTest() {
         Response response = new PostAdapters().post(JsonObjectHelper.setPassportLoginPasswordForRegistration
-                        ("11122222222222233333",
+                        (USER_MALEFICENT.getUser().getLogin(),
                                 USER_0NE.getUser().getPassword(),
                                 USER_0NE.getUser().getPassport(),
                                 USER_0NE.getUser().getPhone()),
