@@ -2,6 +2,7 @@ package by.andersen.amnbanking.tests.ui_tests.test;
 
 import by.andersen.amnbanking.listener.UserDeleteListener;
 import by.andersen.amnbanking.utils.TestRails;
+import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import org.testng.Assert;
@@ -33,11 +34,12 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 @Listeners(UserDeleteListener.class)
+@Epic("E-1. Registration and authorization")
 public class ConfirmationCodeModalTest extends BaseUITest {
 
     SoftAssert softAssert = new SoftAssert();
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @Test(description = "Enter correct 7 symbols in the login and password fields, positive test")
     public void authWithValidDataForLoginAndPasswordFieldsWithSevenSymbolsTest() {
         loginPage.inputLoginField(USER_MALEFICENT.getUser().getLogin())
@@ -46,7 +48,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TestRails(id = "C5931949")
     @Test(description = "Enter invalid smsCode with 1 letter at the end, negative test")
     public void authWithInValidDataLetterForSmsCodeConfirmationTest() throws SQLException {
@@ -62,7 +64,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         deleteUser();
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TestRails(id = "C5931951")
     @Test(description = "Enter invalid smsCode with forbidden symbol slash at the end, negative test")
     public void authWithForbiddenSymbolForSmsCodeConfirmationTest() throws SQLException {
@@ -78,7 +80,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         deleteUser();
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TestRails(id = "C5931952")
     @Test(description = "Enter wrong sms code and then authorization again, positive test")
     public void authAfterEnteringWrongConfirmationCodeOneTimeTest() throws SQLException {
@@ -100,7 +102,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         deleteUser();
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5869688")
     @Test(description = "Enter the wrong sms code three times and get the ban, positive test, positive test ")
     public void authAfterEnteringWrongSmsCodeThreeTimesTest() throws SQLException {
@@ -124,7 +126,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         deleteUser();
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5931955")
     @Test(description = "Sending a confirmation code when the ban has not expired, positive test, positive test ")
     public void sendSmsCodeWhenBanNotExpiredTest() throws SQLException {
@@ -148,7 +150,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         deleteUser();
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @Test(description = "Close sms confirmation window and try to login again, negative test")
     public void closeSmsWindowAndLoginAgain() {
         assertTrue(loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
@@ -158,7 +160,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .clickLoginButton().confirmationCodeWindowIsOpen());
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5931941")
     @Test(description = "Authorization with less than 4 characters in the Code confirmation field, negative test")
     public void authWithLessThan4Digits() {
@@ -169,7 +171,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5931942")
     @Test(description = "Authorization with more than 4 characters in the Сode confirmation field, negative test")
     public void authWithLessMore4Digits() {
@@ -180,7 +182,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5931938")
     @Test(description = "Authorization with more than 4 characters in the Сode confirmation field, negative test")
     public void authWithEmptySms() {
@@ -191,7 +193,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                CONFIRMATION_CODE_MUST_BE_FILLED);
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5931945")
     @Test(description = "Authorization with a space at the beginning of the Code confirmation field")
     public void authWithSmsWithSpaceAtTheBeginning() {
@@ -202,7 +204,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5931947")
     @Test(description = "Authorization with a space at the end of the Code confirmation field")
     public void authWithSmsWithSpaceAtTheEnd() {
@@ -213,7 +215,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 FIELD_SHOULD_CONTAIN_FOUR_NUMBERS);
     }
 
-    @Story("UC - 1.10 Code Confirmation")
+    @Story("UC-1.10 Code Confirmation")
     @TmsLink("5931948")
     @Test(description = "Authorization with only spaces in the Code confirmation field")
     public void authWithSmsWithOnlySpaces() {
