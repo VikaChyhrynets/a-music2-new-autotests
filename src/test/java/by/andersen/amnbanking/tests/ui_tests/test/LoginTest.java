@@ -42,7 +42,7 @@ import static org.testng.Assert.assertTrue;
 @Listeners(UserDeleteListener.class)
 public class LoginTest extends BaseUITest {
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869665")
     @Test(description = "negative test")
     public void authWithInvalidLoginLessThan7SymbolsTest() {
@@ -51,7 +51,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessageLogin(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLinks(value = {@TmsLink("5869679"), @TmsLink("5900176"), @TmsLink("5900198"), @TmsLink("5900200"),
     @TmsLink("5900201"), @TmsLink("5900204"), @TmsLink("5900206"), @TmsLink("5900210"), @TmsLink("5900241"),
     @TmsLink("5900242"), @TmsLink("5900244"), @TmsLink("5900246"), @TmsLink("5900247"), @TmsLink("5900249"),
@@ -66,7 +66,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessageLogin(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869674")
     @Test(description = "Enter valid login and invalid password with forbidden symbols, negative test",
             dataProvider = "invalid password valid login validation", dataProviderClass = DataProviderTests.class)
@@ -77,7 +77,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessagePassword(), FIELD_CONTAIN_LETTERS_NUMBER);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5900035")
     @Test(description = "Enter invalid login longer than 20 symbols, negative test")
     public void authWithTwentyOneSymbolLoginTest() {
@@ -86,7 +86,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessageLogin(), LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @Test(description = "Enter password longer than 20 symbols, negative test")
     public void authWithTwentyOneSymbolPasswordTest() {
         loginPage.inputPasswordField(MORE_20_CHARS.getUser().getPassword())
@@ -94,7 +94,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessagePassword(), LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869669")
     @Test(description = "Enter valid password with blank login field, negative test")
     public void authEmptyLoginAndValidPasswordTest() {
@@ -104,7 +104,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessageLogin(), EMPTY_FIELDS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869673")
     @Test(description = "Enter valid login with blank password field, negative test")
     public void authEmptyPasswordAndValidLoginTest() {
@@ -114,19 +114,19 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessagePassword(), EMPTY_FIELDS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @Test(description = "Show password button check, positive test")
     public void showPasswordIconTest() {
         assertEquals(loginPage.clickShowPasswordCheckbox(USER_0NE.getUser().getPassword(), "type"), "text");
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @Test(description = "Hide password button check, positive test")
     public void hidePasswordIconTest() {
         assertEquals(loginPage.clickHidePasswordCheckbox(USER_0NE.getUser().getPassword(), "type"), "password");
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5893442")
     @Test(description = "Authorization after entering the wrong password three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongPasswordThreeTimes() {
@@ -143,7 +143,7 @@ public class LoginTest extends BaseUITest {
 //        assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869765")
     @Test(description = "Authorization after entering the wrong login three times, negative test", enabled = false)
     public void testLoginProcedureWithWrongLoginThreeTimes() {
@@ -160,7 +160,7 @@ public class LoginTest extends BaseUITest {
 //        assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5898536")
     @Test(description = "Authorization with valid Login and invalid Password (less than 7 characters) fields, negative test")
     public void testLoginProcedureWithPasswordLessThanSevenCharacters() {
@@ -170,7 +170,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869680")
     @Test(description = "Login in lower case, negative test")
     public void testLoginProcedureWithLoginInLowerCase() {
@@ -180,7 +180,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getTextFromLoginErrorMessage(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869677")
     @Test(description = "Login from bank (user changed login) and valid password, negative test")
     public void testLoginProcedureWithIncorrectLoginAndValidPassword() {
@@ -191,7 +191,7 @@ public class LoginTest extends BaseUITest {
 //        но пока нету xpath, по которому эту надпись искать, соответственно нету и метода);
     }
 
-    @Story("UC 1.2 - Web application login")
+    @Story("UC-1.2 Web application login")
     @TmsLink("5869618")
     @Test(description = "Login with valid data, positive test")
     public void testLoginProcedureWithValidData() throws SQLException {

@@ -34,12 +34,12 @@ import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
 
 @Listeners(UserDeleteListener.class)
-@Epic("Epic 1: Registration and authorization")
+@Epic("E-1. Registration and authorization")
 public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
 
 
     @TmsLink("5923855")
-    @Story("UC 1.5 - Changing password on first login")
+    @Story("UC-1.5 Changing password on first login")
     @Test(description = "positive test. Change password after first login")
     public void changePasswordAfterFirstLoginValidDateTest() throws SQLException {
         createUser();
@@ -60,7 +60,7 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
 
     @TmsLinks(value = {@TmsLink("5924630"), @TmsLink("5924631"), @TmsLink("5924632"), @TmsLink("5924633"),
             @TmsLink("5924634"), @TmsLink("5924635"), @TmsLink("5924636")})
-    @Story("UC 1.5 - Changing password on first login")
+    @Story("UC-1.5 Changing password on first login")
     @Test(dataProvider = "ChangePasswordAfter1LoginInvalidPass", dataProviderClass = DataProviderTests.class,
             description = "Change password after first login with invalid password, negative test.")
     public void changePasswordAfterFirstLoginLessThan7CharsTest(String newPass) throws SQLException {
@@ -76,7 +76,7 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     }
 
     @TmsLink("5924637")
-    @Story("UC 1.5 - Changing password on first login")
+    @Story("UC-1.5 Changing password on first login")
     @Test(description = "negative test. Re-login when you cancel the password change at the first login")
     public void changePasswordAfterFirstLoginReLoginTest() throws SQLException {
         createUser();

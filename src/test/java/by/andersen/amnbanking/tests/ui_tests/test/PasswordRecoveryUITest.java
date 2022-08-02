@@ -362,12 +362,14 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @TmsLink("5945657")
     @Story("UC-1.3 Password recovery")
     @Test(description = "Check presence of information text with user phone on the code confirmation page")
-    public void checkTextWithUserPhoneOnCodeConfirmationPage() {
+    public void checkTextWithUserPhoneOnCodeConfirmationPage() throws SQLException {
+        createUser();
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber(PASSPORT_REG)
+                .enterIdNumber(USER_0NE.getUser().getPassport())
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
                 ID_WITHOUT_CHANGING_PASSWORD);
+        deleteUser();
     }
 
     @TmsLink("5945672")

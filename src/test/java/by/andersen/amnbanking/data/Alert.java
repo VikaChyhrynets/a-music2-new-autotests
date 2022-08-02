@@ -18,7 +18,7 @@ public class Alert {
     public static final String SEND_CODE_AGAIN = "Send code again in";
     public static final String UNREGISTERED_ID = "This ID number is not registered. Please check the entered data or " +
             "contact the bank";
-    public static final String ID_WRONG_SYMBOLS = "Field should contain capital letters and numbers";
+    public static final String ID_WRONG_SYMBOLS = "The field must contain only capital letters and numbers";
     public static final String SEND_SMS_POSITIVE = "We sent an SMS with a 4-digit verification code to +90237467824742";
     public static final String PASSWORD_LESS_7_SYMBOLS = "Password should contain at least 7 symbols";
     public static final String PASSWORD_MORE_20_SYMBOLS = "Must be 20 characters or less";

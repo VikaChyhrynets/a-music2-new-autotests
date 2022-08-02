@@ -75,7 +75,7 @@ import static org.testng.Assert.assertEquals;
 public class PasswordRecoveryTests extends BaseAPITest {
 
     @TmsLink("5911963")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "negative test, only letters in code confirmation")
 
     public void enteringLettersInCodeConfirmationTest() {
@@ -86,7 +86,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911967")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "negative test, special character /")
     public void enteringSpecialCharacterInCodeConfirmationTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
@@ -96,7 +96,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911881")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "negative test, empty field for code confirmation")
     public void enteringWithEmptyFieldInCodeConfirmationTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
@@ -106,7 +106,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911791")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "negative test, wrong code confirmation")
     public void enteringWrongCodeInCodeConfirmation1TimeTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
@@ -119,7 +119,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911796")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "negative test,send wrong code confirmation by passport 2 times")
     public void enteringWrongCodeInCodeConfirmation2TimesTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
@@ -134,7 +134,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924835")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "positive test, change password by passport with valid data")
     public void changePasswordValidDateTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
@@ -150,7 +150,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911960")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "negative test, wrong filter type")
     public void sendConfirmationCodeAgainWithInvalidDataFilterPassportTest() {
         String authToken = loginAndGetBearerToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
@@ -161,7 +161,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911959")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "positive test, send correct filter type for change password by passport")
     public void sendConfirmationCodeAgainWithInvalidDataFilterPasswordTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
@@ -171,7 +171,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5908792")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send valid passport")
     public void sendValidPassport() {
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG),
@@ -180,7 +180,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5909076")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send valid, but unregistered passport")
     public void sendUnregisteredPassport() {
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "1111"),
@@ -189,7 +189,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5908983")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send empty passport")
     public void sendEmptyPassport() {
         Response resp = new PostAdapters().post(setIDForPassRecovery(""),
@@ -198,7 +198,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5909034")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send passport longer then 30 symbols")
     public void sendPassportWithMoreThenThirtySymbols() {
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "324567898765434567865432456"),
@@ -207,7 +207,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5909068")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send passport with special symbols, like \"*\"")
     public void sendPassportWithSymbols() {
         Response resp = new PostAdapters().post(setIDForPassRecovery(PASSPORT_REG + "*"),
@@ -216,7 +216,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5909070")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send passport with only lower case letters")
     public void sendPassportWithLowerCase() {
         Response resp = new PostAdapters().post(setIDForPassRecovery("kv24535756"),
@@ -225,7 +225,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911652")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send valid SMS")
     public void sendValidPassportConfirmedWithSms() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -235,7 +235,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911654")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send SMS shorter then 4 symbols")
     public void sendSmsWithLessThenFourDigits() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -245,7 +245,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5911746")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send SMS longer then 4 symbols")
     public void sendSmsWithMoreThenFourDigits() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -255,7 +255,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5923248")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to send SMS for another user through replacing cookie")
     public void sendSmsWithCookieReplacement() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -266,7 +266,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5923249")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to set password for another user through replacing cookie")
     public void changingPasswordWithCookieReplacement() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -280,7 +280,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924638")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Password recovery without changing the password at first login, positive test")
     public void passwordRecoveryWithoutChangingPasswordFirstLoginTest() throws SQLException {
             createUser();
@@ -291,7 +291,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924835")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to set valid password")
     public void sendValidPassword() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -304,7 +304,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924837")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to set password shorter then 7 symbols")
     public void sendPasswordWithLessThen7() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -317,7 +317,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924838")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to set password longer then 20 symbols")
     public void sendPasswordWithMoreThen20() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -330,7 +330,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924842")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to set password without numbers")
     public void sendPasswordWithOnlyLetters() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -343,7 +343,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924843")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to set password with only numbers")
     public void sendPasswordWithOnlyNumbers() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -356,7 +356,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924844")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Trying to set password with special symbols, like \"*\"")
     public void sendPasswordWithSymbols() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -369,7 +369,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924846")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Sending empty password during recovery")
     public void sendEmptyPassword() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -382,7 +382,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924849")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Sending passport with space")
     public void sendPasswordWithSpace() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
@@ -395,7 +395,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     }
 
     @TmsLink("5924850")
-    @Story("UC 1.3 - Password recovery")
+    @Story("UC-1.3 Password recovery")
     @Test(description = "Changing password without passport checking")
     public void changePasswordWithoutPassportCheck() {
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG),

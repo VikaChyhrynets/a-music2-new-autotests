@@ -31,7 +31,7 @@ import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_UNPROCESSABLE_ENTITY;
 import static org.testng.Assert.assertEquals;
 
-@Epic("Epic 1: Registration and authorization")
+@Epic("E-1. Registration and authorization")
 @Listeners(UserDeleteListener.class)
 public class RegistrationTests extends BaseAPITest {
 
