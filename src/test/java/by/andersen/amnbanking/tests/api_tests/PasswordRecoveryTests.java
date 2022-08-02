@@ -80,7 +80,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
 
     public void enteringLettersInCodeConfirmationTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
-        Response response = new PostAdapters().post(setSmsCode(SMS_SMALL_LETTERS.getValue()),
+        Response response = new PostAdapters().post(setSmsCode(SMS_SMALL_LETTERS.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
         Assert.assertEquals(response.getMessage(), SMS_CODE_INVALID);
     }
@@ -90,7 +90,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "negative test, special character /")
     public void enteringSpecialCharacterInCodeConfirmationTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
-        Response response = new PostAdapters().post(setSmsCode(SMS_SLASH_MIDDLE.getValue()),
+        Response response = new PostAdapters().post(setSmsCode(SMS_SLASH_MIDDLE.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
         Assert.assertEquals(response.getMessage(), SMS_CODE_INVALID);
     }
@@ -110,7 +110,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "negative test, wrong code confirmation")
     public void enteringWrongCodeInCodeConfirmation1TimeTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
-        Response response = new PostAdapters().post(setSmsCode(SMS_INVALID.getValue()),
+        Response response = new PostAdapters().post(setSmsCode(SMS_INVALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
         Assert.assertEquals(response.getMessage(), INVALID_SMS);
         Assert.assertEquals(response.getFailsCount(), 1);
@@ -123,7 +123,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "negative test,send wrong code confirmation by passport 2 times")
     public void enteringWrongCodeInCodeConfirmation2TimesTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
-        new PostAdapters().post(setSmsCode(SMS_INVALID.getValue()),
+        new PostAdapters().post(setSmsCode(SMS_INVALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
         Response response = new PostAdapters().post(setSmsCode(SMS_INVALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_BAD_REQUEST).as(Response.class);
@@ -138,7 +138,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "positive test, change password by passport with valid data")
     public void changePasswordValidDateTest() {
         Cookie login = checkPassportAndGetCookie(PASSPORT_REG);
-        new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, login, SC_OK);
         Response response = new PostAdapters().post(setNewPassword(PASSWORD_WITH_PASSPORT_REG),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, login, SC_OK).as(Response.class);
@@ -229,7 +229,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to send valid SMS")
     public void sendValidPassportConfirmedWithSms() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         assertEquals(resp.getMessage(), CHANGE_PASSWORD_CODE_CORRECT);
     }
@@ -239,7 +239,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to send SMS shorter then 4 symbols")
     public void sendSmsWithLessThenFourDigits() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_3_SYMBOLS.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_3_SYMBOLS.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -249,7 +249,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to send SMS longer then 4 symbols")
     public void sendSmsWithMoreThenFourDigits() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response resp = new PostAdapters().post(setSmsCode(SMS_5_SYMBOLS.getValue()),
+        Response resp = new PostAdapters().post(setSmsCode(SMS_5_SYMBOLS.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
         assertEquals(resp.getMessage(), SMS_CODE_INVALID);
     }
@@ -295,7 +295,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to set valid password")
     public void sendValidPassword() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_OK).as(Response.class);
@@ -308,7 +308,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to set password shorter then 7 symbols")
     public void sendPasswordWithLessThen7() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("8Rvjsi"),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
@@ -321,7 +321,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to set password longer then 20 symbols")
     public void sendPasswordWithMoreThen20() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("8RvjsisKKKfhdskjf23546hkdsjf"),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
@@ -334,7 +334,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to set password without numbers")
     public void sendPasswordWithOnlyLetters() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("KJGJuygggfFTYF"),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
@@ -347,7 +347,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to set password with only numbers")
     public void sendPasswordWithOnlyNumbers() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword("82485694395"),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
@@ -360,7 +360,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Trying to set password with special symbols, like \"*\"")
     public void sendPasswordWithSymbols() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG + "*"),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
@@ -373,7 +373,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Sending empty password during recovery")
     public void sendEmptyPassword() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(""),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_BAD_REQUEST).as(Response.class);
@@ -386,7 +386,7 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Sending passport with space")
     public void sendPasswordWithSpace() {
         Cookie loginAsCookie = checkPassportAndGetCookie(PASSPORT_REG);
-        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getValue()),
+        Response checkSms = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + CHANGE_PASSWORD + CHECK_SMS, loginAsCookie, SC_OK).as(Response.class);
         Response resp = new PostAdapters().post(setPassword(PASSWORD_WITH_PASSPORT_REG + " "),
                 API_HOST + CHANGE_PASSWORD + NEW_PASSWORD, loginAsCookie, SC_BAD_REQUEST).as(Response.class);

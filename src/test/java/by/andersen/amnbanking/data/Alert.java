@@ -4,8 +4,8 @@ public class Alert {
     public static final String EMPTY_FIELDS = "Field must be filled";
     public static final String LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS = "Field should contain at least 7 symbols";
     public static final String LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS = "Must be 20 characters or less";
-    public static final String FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS = "Field should contain letters, 1 capital " +
-            "letter, 1 number";
+    public static final String FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS = "Field should contain letters at least" +
+            " 1 capital and 1 lowercase letter";
     public static final String FIELD_CONTAIN_LETTERS_NUMBER = "Field should contain letters, 1 number";
     public static final String FIELD_SHOULD_CONTAIN_FOUR_NUMBERS = "Field should contain 4 numbers";
     public static final String CONFIRMATION_CODE_MUST_BE_FILLED = "The confirmation code field must be filled";
