@@ -3,9 +3,9 @@
 <suite name="UI tests" verbose="2" configfailurepolicy="continue">
     <test name="login">
         <classes>
-            <class name="by.andersen.amnbanking.tests.ui_tests.test.LoginTest"></class>
-            <class name="by.andersen.amnbanking.tests.ui_tests.test.ConfirmationCodeModalTest"></class>
-            <class name="by.andersen.amnbanking.tests.ui_tests.test.PasswordRecoveryUITest"></class>
+            <class name="by.andersen.amnbanking.tests.ui_tests.test.LoginTest"/>
+            <class name="by.andersen.amnbanking.tests.ui_tests.test.ConfirmationCodeModalTest"/>
+            <class name="by.andersen.amnbanking.tests.ui_tests.test.PasswordRecoveryUITest"/>
         </classes>
     </test>
 </suite>
