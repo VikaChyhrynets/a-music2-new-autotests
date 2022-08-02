@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
 import static by.andersen.amnbanking.data.AlertAPI.INVALID_USERNAME_OR_PASSWORD;
 import static by.andersen.amnbanking.data.AlertAPI.NOT_REGISTERED_USER;
-import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
+import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_LOGIN;
@@ -57,7 +57,7 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User Log In with valid data, positive test")
     public void loginPositive() throws SQLException {
         createUser();
-        String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
+        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
                 USER_0NE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);

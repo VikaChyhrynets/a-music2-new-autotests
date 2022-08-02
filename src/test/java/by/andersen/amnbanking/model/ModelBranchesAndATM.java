@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ModelBranchesAndATM {
+public class ModelBranchesAndATM extends Response{
     private String type;
     private int number;
     private String city;

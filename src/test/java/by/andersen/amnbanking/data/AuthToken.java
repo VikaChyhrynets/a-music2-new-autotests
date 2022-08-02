@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.given;
 public class AuthToken {
 
     @Step("Authorize user and saving token in Bearer")
-    public static String getAuthToken(String login, String password) {
+    public static String loginAndGetBearerToken(String login, String password) {
         return given()
                 .spec(REQ_SPEC)
                 .body("{\n" +
@@ -28,7 +28,7 @@ public class AuthToken {
     }
 
     @Step("Authorize user and saving token in Cookie")
-    public static Cookie getAuthLogin(String passport) {
+    public static Cookie checkPassportAndGetCookie(String passport) {
         return given()
                 .spec(REQ_SPEC)
                 .body(setPassportForRegistration(passport))

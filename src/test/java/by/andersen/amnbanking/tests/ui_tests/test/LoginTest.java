@@ -16,8 +16,8 @@ import static by.andersen.amnbanking.data.Alert.EMPTY_FIELDS;
 import static by.andersen.amnbanking.data.Alert.FIELD_CONTAIN_LETTERS_NUMBER;
 import static by.andersen.amnbanking.data.Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS;
+import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.Alert.LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS;
-import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
 import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
@@ -196,7 +196,7 @@ public class LoginTest extends BaseUITest {
     @Test(description = "Login with valid data, positive test")
     public void testLoginProcedureWithValidData() throws SQLException {
         createUser();
-        String authTokenChangePassword = getAuthToken(USER_0NE.getUser().getLogin(),
+        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
                 USER_0NE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getSms()), API_HOST + API_SESSIONCODE,
                 authTokenChangePassword, SC_PERMANENT_REDIRECT);

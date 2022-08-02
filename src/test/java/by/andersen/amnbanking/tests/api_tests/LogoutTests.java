@@ -2,7 +2,7 @@ package by.andersen.amnbanking.tests.api_tests;
 
 import by.andersen.amnbanking.adapters.GetAdapters;
 import by.andersen.amnbanking.adapters.PostAdapters;
-import by.andersen.amnbanking.jsonBody.Response;
+import by.andersen.amnbanking.model.Response;
 import by.andersen.amnbanking.data.SmsVerificationData;
 import by.andersen.amnbanking.data.UsersData;
 import io.qameta.allure.Epic;
@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import static by.andersen.amnbanking.data.AlertAPI.LOGOUT_SUCCESSFULLY;
 import static by.andersen.amnbanking.data.AlertAPI.NO_ACTIVE_SESSION;
-import static by.andersen.amnbanking.data.AuthToken.getAuthToken;
+import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_LOGOUT;
 import static by.andersen.amnbanking.data.DataUrls.API_SESSIONCODE;
@@ -29,7 +29,7 @@ public class LogoutTests extends BaseAPITest {
     @Story("UC-1.4 Registration (first login)")
     @Test(description = "positive test, logout from active session")
     public void logoutActiveSessionTest() {
-        String authToken = getAuthToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
+        String authToken = loginAndGetBearerToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
                 UsersData.USER_MALEFICENT.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_VALID.getSms()), API_HOST + API_SESSIONCODE,
                 authToken, SC_OK);
@@ -41,7 +41,7 @@ public class LogoutTests extends BaseAPITest {
     @Story("UC-1.4 Registration (first login)")
     @Test(description = "negative test, logout from active session with wrong sms code")
     public void logoutWithNoActiveTokenTest() {
-        String authToken = getAuthToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
+        String authToken = loginAndGetBearerToken(UsersData.USER_MALEFICENT.getUser().getLogin(),
                 UsersData.USER_MALEFICENT.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SmsVerificationData.SMS_INVALID.getSms()),
                 API_HOST + API_SESSIONCODE,
