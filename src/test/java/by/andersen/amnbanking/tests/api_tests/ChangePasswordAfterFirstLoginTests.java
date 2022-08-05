@@ -26,7 +26,7 @@ import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
 import static by.andersen.amnbanking.data.SuccessfulMessages.LOGIN_SUCCESS;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SUCCESSFUL_PASSWORD_CHANGED;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
@@ -43,15 +43,15 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     @Test(description = "positive test. Change password after first login")
     public void changePasswordAfterFirstLoginValidDateTest() throws SQLException {
         createUser();
-        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
-                USER_0NE.getUser().getPassword());
+        String authTokenChangePassword = loginAndGetBearerToken(USER_ONE.getUser().getLogin(),
+                USER_ONE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
-        String response = new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
+        String response = new PostAdapters().post(setNewPassword(USER_ONE.getUser().getPassword()),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK).asString();
         String response1 = new PostAdapters().post(JsonObjectHelper.setJsonObjectForRegistrationAndLogin
-                        (USER_0NE.getUser().getLogin(),
-                                USER_0NE.getUser().getPassword()),
+                        (USER_ONE.getUser().getLogin(),
+                                USER_ONE.getUser().getPassword()),
                 API_HOST + API_LOGIN, SC_OK).asString();
         Assert.assertEquals(ParserJson.parser(response, "message"), SUCCESSFUL_PASSWORD_CHANGED);
         Assert.assertEquals(ParserJson.parser(response1, "message"), LOGIN_SUCCESS);
@@ -65,8 +65,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
             description = "Change password after first login with invalid password, negative test.")
     public void changePasswordAfterFirstLoginLessThan7CharsTest(String newPass) throws SQLException {
         createUser();
-        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
-                USER_0NE.getUser().getPassword());
+        String authTokenChangePassword = loginAndGetBearerToken(USER_ONE.getUser().getLogin(),
+                USER_ONE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getSms()), API_HOST + API_SESSIONCODE,
                 authTokenChangePassword, SC_PERMANENT_REDIRECT);
         String response = new PostAdapters().post(setNewPassword(newPass),
@@ -80,8 +80,8 @@ public class ChangePasswordAfterFirstLoginTests extends BaseAPITest {
     @Test(description = "negative test. Re-login when you cancel the password change at the first login")
     public void changePasswordAfterFirstLoginReLoginTest() throws SQLException {
         createUser();
-        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
-                USER_0NE.getUser().getPassword());
+        String authTokenChangePassword = loginAndGetBearerToken(USER_ONE.getUser().getLogin(),
+                USER_ONE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
         String response = new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),

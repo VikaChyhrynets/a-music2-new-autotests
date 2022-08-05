@@ -18,7 +18,7 @@ import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
 import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
 import static by.andersen.amnbanking.data.DataUrls.WRONG_SMS_CODE;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SESSION_CODE_CORRECT;
@@ -159,7 +159,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     @TmsLink("5937934")
     void sendSMSCodeAgainWhenTheBanHasNotExpired() throws SQLException {
         createUser();
-        String authToken = loginAndGetBearerToken(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword());
+        String authToken = loginAndGetBearerToken(USER_ONE.getUser().getLogin(), USER_ONE.getUser().getPassword());
         for (int i = 0; i < 3; i++) {
             authentication.sendSessionCode(authToken, WRONG_SMS_CODE, SC_BAD_REQUEST);
         }

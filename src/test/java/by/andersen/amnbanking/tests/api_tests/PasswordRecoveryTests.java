@@ -53,7 +53,7 @@ import static by.andersen.amnbanking.data.SuccessfulMessages.PASSPORT_IS_VALID;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SMS_FOR_CHANGE_PASSWORD;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SMS_SENT_SUCCESSFULLY;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SUCCESSFUL_PASSWORD_CHANGED;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setIDForPassRecovery;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setJsonObjectForRegistrationAndLogin;
@@ -408,18 +408,18 @@ public class PasswordRecoveryTests extends BaseAPITest {
     @Test(description = "Sending password recovery code again when ban hasn't expired, negative test")
     public void sendPasswordRecoveryCodeAgainWhenBanHasNotExpired() throws SQLException {
         createUser();
-        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword());
+        String authTokenChangePassword = loginAndGetBearerToken(USER_ONE.getUser().getLogin(), USER_ONE.getUser().getPassword());
         new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword,
                 SC_PERMANENT_REDIRECT);
-        USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
-        new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
+        USER_ONE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
+        new PostAdapters().post(setNewPassword(USER_ONE.getUser().getPassword()),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
-        new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(),
-                        USER_0NE.getUser().getPassword()),
+        new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_ONE.getUser().getLogin(),
+                        USER_ONE.getUser().getPassword()),
                 API_HOST + API_LOGIN, SC_OK);
         new PostAdapters().post(setSmsCode("1234"), API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_OK);
         new GetAdapters().get(API_HOST + API_LOGOUT, authTokenChangePassword, SC_OK);
-        Cookie login = checkPassportAndGetCookie(USER_0NE.getUser().getPassport());
+        Cookie login = checkPassportAndGetCookie(USER_ONE.getUser().getPassport());
         for (int i = 0; i < 3; i++) {
             new PostAdapters().post(setSmsCode(WRONG_SMS_CODE), API_HOST + CHANGE_PASSWORD + CHECK_SMS, login,
                     SC_BAD_REQUEST);

@@ -42,7 +42,7 @@ import static by.andersen.amnbanking.data.UsersData.EMPTY_USER_FIELDS;
 import static by.andersen.amnbanking.data.UsersData.LESS_THAN_MIN_CHARS;
 import static by.andersen.amnbanking.data.UsersData.MORE_20_CHARS;
 import static by.andersen.amnbanking.data.UsersData.MORE_THAN_MAX_CHARS;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
@@ -354,7 +354,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                 .clickContinueButton();
         passwordRecovery.enterSmsCodeConfirmation(SMS_VALID.getSms())
                 .clickContinueButtonAfterEnteringSms()
-                .enterPasswordInConfirmPasswordField(USER_0NE.getUser().getPassword())
+                .enterPasswordInConfirmPasswordField(USER_ONE.getUser().getPassword())
                 .clickEyeButtonConfirmPassword();
         assertEquals(passwordRecovery.getAttributeStatusAfterEnterPasswordInConfirmPassword("type"), "text");
     }
@@ -365,7 +365,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
     public void checkTextWithUserPhoneOnCodeConfirmationPage() throws SQLException {
         createUser();
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber(USER_0NE.getUser().getPassport())
+                .enterIdNumber(USER_ONE.getUser().getPassport())
                 .clickContinueButton();
         assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
                 ID_WITHOUT_CHANGING_PASSWORD);
@@ -377,21 +377,21 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @Test(description = "Trying to send confirmation code when ban is not expired", enabled = false)
     public void sendConfirmCodeWhenBanNotExpired() throws SQLException {
         createUser();
-        String authToken = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
-                USER_0NE.getUser().getPassword());
+        String authToken = loginAndGetBearerToken(USER_ONE.getUser().getLogin(),
+                USER_ONE.getUser().getPassword());
         new Authentication().sendSessionCode(authToken, SMS_VALID.getSms(),  SC_PERMANENT_REDIRECT);
-        new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
+        new PostAdapters().post(setNewPassword(USER_ONE.getUser().getPassword()),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authToken, SC_OK);
 
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         for(int i = 0; i < 3; i++) {
             confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                     .clickConfirmButton();
         }
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber(USER_0NE.getUser().getPassport())
+                .enterIdNumber(USER_ONE.getUser().getPassport())
                 .clickContinueButton();
 
         deleteUser();

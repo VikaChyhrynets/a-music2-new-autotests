@@ -28,7 +28,7 @@ import static by.andersen.amnbanking.data.SmsVerificationData.SMS_INVALID;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_SLASH_END;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_SPACE_END;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_WITH_LETTER;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.data.UsersData.USER_MALEFICENT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -53,8 +53,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @Test(description = "Enter invalid smsCode with 1 letter at the end, negative test")
     public void authWithInValidDataLetterForSmsCodeConfirmationTest() throws SQLException {
         createUser();
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton()
                 .confirmationCodeWindowIsOpen();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_WITH_LETTER.getSms())
@@ -69,8 +69,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @Test(description = "Enter invalid smsCode with forbidden symbol slash at the end, negative test")
     public void authWithForbiddenSymbolForSmsCodeConfirmationTest() throws SQLException {
         createUser();
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton()
                 .confirmationCodeWindowIsOpen();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_SLASH_END.getSms())
@@ -85,8 +85,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @Test(description = "Enter wrong sms code and then authorization again, positive test")
     public void authAfterEnteringWrongConfirmationCodeOneTimeTest() throws SQLException {
         createUser();
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                 .clickConfirmButton()
@@ -95,8 +95,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 INCORRECT_SMS_CODE);
         confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode()
                 .refreshPage();
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
         deleteUser();
@@ -108,16 +108,16 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     public void authAfterEnteringWrongSmsCodeThreeTimesTest() throws SQLException {
         createUser();
         for (int i = 0; i < 2; i++) {
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                 .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                 .inputPasswordField(USER_ONE.getUser().getPassword())
                  .clickLoginButton();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                  .clickConfirmButton();
         confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
         confirmationCodeModalPage.refreshPage();
     }
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                 .clickConfirmButton();
@@ -132,16 +132,16 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     public void sendSmsCodeWhenBanNotExpiredTest() throws SQLException {
         createUser();
         for (int i = 0; i < 3; i++) {
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                 .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                 .inputPasswordField(USER_ONE.getUser().getPassword())
                  .clickLoginButton();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                  .clickConfirmButton();
         confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
         confirmationCodeModalPage.refreshPage();
     }
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                 .clickConfirmButton();

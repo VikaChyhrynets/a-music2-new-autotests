@@ -71,7 +71,7 @@ public class LoginTest extends BaseUITest {
     @Test(description = "Enter valid login and invalid password with forbidden symbols, negative test",
             dataProvider = "invalid password valid login validation", dataProviderClass = DataProviderTests.class)
     public void authAsteriskSymbolPasswordAndValidLoginTest(String password) {
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
                 .inputPasswordField(password)
                 .clickLoginButton();
         assertEquals(loginPage.getAlertMessagePassword(), FIELD_CONTAIN_LETTERS_NUMBER);
@@ -99,7 +99,7 @@ public class LoginTest extends BaseUITest {
     @Test(description = "Enter valid password with blank login field, negative test")
     public void authEmptyLoginAndValidPasswordTest() {
         loginPage.inputLoginField(EMPTY_USER_FIELDS.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         assertEquals(loginPage.getAlertMessageLogin(), EMPTY_FIELDS);
     }
@@ -108,7 +108,7 @@ public class LoginTest extends BaseUITest {
     @TmsLink("5869673")
     @Test(description = "Enter valid login with blank password field, negative test")
     public void authEmptyPasswordAndValidLoginTest() {
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
                 .inputPasswordField(EMPTY_USER_FIELDS.getUser().getPassword())
                 .clickLoginButton();
         assertEquals(loginPage.getAlertMessagePassword(), EMPTY_FIELDS);
@@ -117,13 +117,13 @@ public class LoginTest extends BaseUITest {
     @Story("UC-1.2 Web application login")
     @Test(description = "Show password button check, positive test")
     public void showPasswordIconTest() {
-        assertEquals(loginPage.clickShowPasswordCheckbox(USER_0NE.getUser().getPassword(), "type"), "text");
+        assertEquals(loginPage.clickShowPasswordCheckbox(USER_ONE.getUser().getPassword(), "type"), "text");
     }
 
     @Story("UC-1.2 Web application login")
     @Test(description = "Hide password button check, positive test")
     public void hidePasswordIconTest() {
-        assertEquals(loginPage.clickHidePasswordCheckbox(USER_0NE.getUser().getPassword(), "type"), "password");
+        assertEquals(loginPage.clickHidePasswordCheckbox(USER_ONE.getUser().getPassword(), "type"), "password");
     }
 
     @Story("UC-1.2 Web application login")
@@ -196,15 +196,15 @@ public class LoginTest extends BaseUITest {
     @Test(description = "Login with valid data, positive test")
     public void testLoginProcedureWithValidData() throws SQLException {
         createUser();
-        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
-                USER_0NE.getUser().getPassword());
+        String authTokenChangePassword = loginAndGetBearerToken(USER_ONE.getUser().getLogin(),
+                USER_ONE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getSms()), API_HOST + API_SESSIONCODE,
                 authTokenChangePassword, SC_PERMANENT_REDIRECT);
-        USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
-        new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
+        USER_ONE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
+        new PostAdapters().post(setNewPassword(USER_ONE.getUser().getPassword()),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
         confirmationCodeModalPage
@@ -219,8 +219,8 @@ public class LoginTest extends BaseUITest {
     @Test(description = "First authorization with valid data, positive test")
     public void testFirstAuthorizationWithValidData() throws SQLException {
         createUser();
-        loginPage.inputLoginField(USER_0NE.getUser().getLogin())
-                .inputPasswordField(USER_0NE.getUser().getPassword())
+        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
         confirmationCodeModalPage
