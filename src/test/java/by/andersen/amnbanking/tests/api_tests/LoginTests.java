@@ -28,7 +28,7 @@ import static by.andersen.amnbanking.data.DataUrls.USER_BAN_PASS;
 import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
 import static by.andersen.amnbanking.data.SuccessfulMessages.LOGIN_SUCCESS;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_0R_PASSWORD_MORE_THAN_20_CHARACTERS;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_ONLY_NUMBERS_WITHOUT_111_AT_THE_BEGINNING;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_FIELD_IS_EMPTY;
@@ -57,16 +57,16 @@ public class LoginTests extends BaseAPITest {
     @Test(description = "User Log In with valid data, positive test")
     public void loginPositive() throws SQLException {
         createUser();
-        String authTokenChangePassword = loginAndGetBearerToken(USER_0NE.getUser().getLogin(),
-                USER_0NE.getUser().getPassword());
+        String authTokenChangePassword = loginAndGetBearerToken(USER_ONE.getUser().getLogin(),
+                USER_ONE.getUser().getPassword());
         new PostAdapters().post(setSmsCode(SMS_VALID.getSms()),
                 API_HOST + API_SESSIONCODE, authTokenChangePassword, SC_PERMANENT_REDIRECT);
-        USER_0NE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
-        new PostAdapters().post(setNewPassword(USER_0NE.getUser().getPassword()),
+        USER_ONE.getUser().setPassword(CHANGE_PASSWORD_FIRST_ENTRY);
+        new PostAdapters().post(setNewPassword(USER_ONE.getUser().getPassword()),
                 API_HOST + CHANGE_PASSWORD + API_FIRST_ENTRY, authTokenChangePassword, SC_OK);
         String response = new PostAdapters()
-                .post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(),
-                        USER_0NE.getUser().getPassword()),
+                .post(setJsonObjectForRegistrationAndLogin(USER_ONE.getUser().getLogin(),
+                        USER_ONE.getUser().getPassword()),
                         API_HOST + API_LOGIN, SC_OK).asString();
         assertEquals(parser(response, "message"), LOGIN_SUCCESS);
         assertNotEquals(parser(response, "phone"), null);
@@ -88,11 +88,11 @@ public class LoginTests extends BaseAPITest {
     public void loginWithBanUser() throws SQLException {
         createUser();
         for (int i = 0; i < 3; i++) {
-            new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(),
+            new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_ONE.getUser().getLogin(),
                     USER_WRONG_PASS),
                     API_HOST + API_LOGIN, SC_BAD_REQUEST);
         }
-        assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_0NE.getUser().getLogin(),
+        assertEquals(parser(new PostAdapters().post(setJsonObjectForRegistrationAndLogin(USER_ONE.getUser().getLogin(),
                 USER_BAN_PASS), API_HOST + API_LOGIN, SC_LOCKED).asString(), "message"), BAN_USER);
         deleteUser();
     }

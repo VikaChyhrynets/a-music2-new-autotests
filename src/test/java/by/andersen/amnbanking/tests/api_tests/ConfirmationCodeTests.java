@@ -18,7 +18,7 @@ import static by.andersen.amnbanking.data.AlertAPI.BAN_USER;
 import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.SMS_CODE;
 import static by.andersen.amnbanking.data.DataUrls.WRONG_SMS_CODE;
-import static by.andersen.amnbanking.data.UsersData.USER_0NE;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setFilterType;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.SuccessfulMessages.SESSION_CODE_CORRECT;
@@ -35,7 +35,7 @@ import static org.testng.Assert.assertEquals;
 public class ConfirmationCodeTests extends BaseAPITest {
 
     @Test(description = "Valid session code")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5888309")
     void sendValidSessionCode() {
         assertEquals(authentication.sendSessionCode(
@@ -45,7 +45,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Three digit session code")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5895560")
     void sendSessionCodeWithThreeDigits() {
         assertEquals(authentication.sendSessionCode(
@@ -55,7 +55,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Five digits session code")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5895561")
     void sendSessionCodeWithFiveDigits() {
         assertEquals(authentication.sendSessionCode(
@@ -65,7 +65,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Blank session code")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5895562")
     void sendBlankSessionCode() {
         assertEquals(authentication.sendSessionCode(
@@ -75,7 +75,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Code with only letters")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5895563")
     void sendSessionCodeWithLetters() {
         assertEquals(authentication.sendSessionCode(
@@ -85,7 +85,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Code with one letter")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5895563")
     void sendSessionCodeWithLetter() {
         assertEquals(authentication.sendSessionCode(
@@ -95,7 +95,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Code with only symbols")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5895564")
     void sendSessionCodeWithSymbols() {
         assertEquals(authentication.sendSessionCode(
@@ -105,7 +105,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Code with one symbol")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5895564")
     void sendSessionCodeWithSymbol() {
         assertEquals(authentication.sendSessionCode(
@@ -115,7 +115,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Code with one space")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5900178")
     void sendSessionCodeWithSpace() {
         assertEquals(authentication.sendSessionCode(
@@ -125,7 +125,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Code with spaces")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5900284")
     void sendSessionCodeWithSpaces() {
         assertEquals(authentication.sendSessionCode(
@@ -135,7 +135,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Valid code with space")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5900296")
     void sendValidSessionCodeWithSpace() {
         assertEquals(authentication.sendSessionCode(
@@ -145,7 +145,7 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Valid code with space in the end")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5900325")
     void sendValidSessionCodeEndingWithSpace() {
         assertEquals(authentication.sendSessionCode(
@@ -155,11 +155,11 @@ public class ConfirmationCodeTests extends BaseAPITest {
     }
 
     @Test(description = "Sending a code again to confirm the login when the ban has not expired, negative test")
-    @Story("UC 1.10 - Confirmation code")
+    @Story("UC-1.10 Confirmation code")
     @TmsLink("5937934")
     void sendSMSCodeAgainWhenTheBanHasNotExpired() throws SQLException {
         createUser();
-        String authToken = loginAndGetBearerToken(USER_0NE.getUser().getLogin(), USER_0NE.getUser().getPassword());
+        String authToken = loginAndGetBearerToken(USER_ONE.getUser().getLogin(), USER_ONE.getUser().getPassword());
         for (int i = 0; i < 3; i++) {
             authentication.sendSessionCode(authToken, WRONG_SMS_CODE, SC_BAD_REQUEST);
         }

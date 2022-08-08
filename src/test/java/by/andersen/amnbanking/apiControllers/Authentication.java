@@ -12,13 +12,13 @@ import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
 
 public class Authentication {
 
-    @Step("Send status code for authorization")
+    @Step("Send session code for authorization")
     public Response sendSessionCode(String bearerToken, String smsCode, int statusCode) {
         return new PostAdapters()
                 .post(setSmsCode(smsCode), API_HOST + API_SESSIONCODE, bearerToken, statusCode).as(Response.class);
     }
 
-    @Step("Send status code for authorization")
+    @Step("Send session code for authorization")
     public Response sendSessionCode(UsersData user, String smsCode, int statusCode) {
         return new PostAdapters()
                 .post(setSmsCode(smsCode), API_HOST + API_SESSIONCODE,

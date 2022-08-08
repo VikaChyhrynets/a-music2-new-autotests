@@ -10,12 +10,16 @@ public class User {
     private String password;
     private String passport;
     private String phone;
+    private String firstName;
+    private String lastName;
 
     public User(UserBuilder builder) {
         this.login = builder.login;
         this.password = builder.password;
         this.passport = builder.passport;
         this.phone = builder.phone;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
     }
 
     public static class UserBuilder {
@@ -23,6 +27,8 @@ public class User {
         private String passport;
         private String password;
         private String login;
+        private String firstName;
+        private String lastName;
 
         public UserBuilder() {
         }
@@ -44,6 +50,16 @@ public class User {
 
         public UserBuilder withPhone(String phone) {
             this.phone = phone;
+            return this;
+        }
+
+        public UserBuilder withFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserBuilder withLastName(String lastName) {
+            this.lastName = lastName;
             return this;
         }
 
