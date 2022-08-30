@@ -14,7 +14,12 @@ public class PasswordRecoveryModalPage {
     private static final By inputConfirmPassword = By.id(":rd:");
     private static final By continueButtonAfterEnterNewPass = By.xpath("//*[contains(@class,'hAnNq')]");
     private static final By greyTextAboveSmsCodeField = By.xpath("//p[contains(@class,'Fmyzh')]");
-    private static final By errorMessageInputIdNumber = By.xpath("//*[contains(@class,'RvDTg')]");
+    private static final By errorMessageInputIdNumber = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
+    private static final By errorMessageNotFilledField = By.xpath("/html/body/div[2]/div[3]/div[4]/div/form/div[2]");
+    private static final By errorMessageFieldShouldContainAtLeast2Symbols = By.xpath("/html/body/div[2]/div[3]/div[4]/div/form/div[2]");
+    private static final By errorMessageFieldMustBeLessThan30Symbols = By.xpath("//div[text()= 'Must be 30 characters or less']");
+    private static final By errorMessageFieldMustContainOnlyCapitalLettersAndNumbers = By.xpath("//div[text()= 'The field must contain only capital letters and numbers']");
+    private static final By errorMessageFieldChangeIDWithouthChangingPassword = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
     private static final By titleTextWithPhoneNumber2Step = By.xpath("//p[contains(@class,'rg9OK')]");
     private static final By modalWindowPasswordRecovery = By.xpath("//*[contains(@class,'LvKN9')]");
     private static final By backButton = By.xpath("//*[text()= 'Back']");
@@ -24,6 +29,7 @@ public class PasswordRecoveryModalPage {
     private static final By errorMessageConfirmPasswordNotMuch = By.xpath("//div[contains(@class,'0JwCH')]");
     private static final By eyeButtonNewPassword = By.xpath("//form[contains(@class,'07NPd')]//*[contains(@class,'g-r7n')]");
     private static final By eyeButtonConfirmPassword = By.xpath("//form/div[3]/div[2]");
+    private static final By sendingCodeConfirmation = By.xpath("/html/body/div[2]/div[3]/div[4]/div/form/p[1]");
 
 
     @Step("In the modal Password Recovery first step is enter user's ID number")
@@ -35,6 +41,31 @@ public class PasswordRecoveryModalPage {
     @Step("The user enter wrong ID Number and get message")
     public String getErrorMessageAfterEnterWrongIdNum() {
         return $(errorMessageInputIdNumber).getText();
+    }
+
+    @Step("The user enters empty ID Number and gets message")
+    public String getErrorMessageAfterEnterEmptyIdNum() {
+        return $(errorMessageNotFilledField).getText();
+    }
+
+    @Step("The user enters only 1 ID-symbol and gets message")
+    public String getErrorMessageAfterEnter1Symbol() {
+        return $(errorMessageFieldShouldContainAtLeast2Symbols).getText();
+    }
+
+    @Step("The user enters more than 30 symbols and gets message")
+    public String getErrorMessageAfterEnterMoreThan30Symbols() {
+        return $(errorMessageFieldMustBeLessThan30Symbols).getText();
+    }
+
+    @Step("The user enters forbidden symbols and gets message")
+    public String getErrorMessageAfterEnterForbiddenSymbols() {
+        return $(errorMessageFieldMustContainOnlyCapitalLettersAndNumbers).getText();
+    }
+
+    @Step("The user changes ID without changing password on first login and gets message")
+    public String getErrorMessageAfterIDChangeWithNoChangingPassword() {
+        return $(errorMessageFieldChangeIDWithouthChangingPassword).getText();
     }
 
     @Step("Click continue button on first step with ID number")
@@ -51,6 +82,10 @@ public class PasswordRecoveryModalPage {
     @Step("Get text with user's phone number")
     public boolean getPhoneNumberFrom2StepAfterSendSms(String phoneNumber) {
         return $(titleTextWithPhoneNumber2Step).getText().contains(phoneNumber);
+    }
+    @Step("Get text with sending code confirmation")
+    public String getMessageAboutSendingCode() {
+        return $(sendingCodeConfirmation).getText();
     }
 
     @Step("Get text with user's phone number")

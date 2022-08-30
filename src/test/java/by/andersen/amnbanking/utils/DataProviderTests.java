@@ -13,11 +13,11 @@ public class DataProviderTests {
         return new Object[][]{
                 {"11236489235FR456871232."},
                 {"мн88954232156"},
-                {"КВ88954232156"},
+                {"КФ88954232156"},
                 {"MN88954232156 "},
                 {"mn88954232156"},
                 {"P"},
-                {"PL45873698710254D78519F12547862"}
+                {"PL45873698710254D78519F12547862"},
         };
     }
 
@@ -30,7 +30,10 @@ public class DataProviderTests {
                 {"111CDV"},
                 {"111111111111111111111Pv"},
                 {" 111*?/)! ;"},
-                {""}
+                {""},
+                {"FFFFFFgggFFF"},
+                {"CVO2506777CVO"},
+                {"cvo2506777cvo"},
         };
     }
 
@@ -53,9 +56,6 @@ public class DataProviderTests {
                 {"375235555555 "},
                 {" +375235555555"},
                 {"+375235555555."},
-                {"+375235555555*"},
-                {"+375235555555+"},
-                {"+375235555555,"},
                 {"+            "},
                 {"             "},
                 {"+2056487951"},
@@ -86,7 +86,6 @@ public class DataProviderTests {
                 {"ж785F4"},
                 {"ЧF78545"},
                 {" PG452"},
-                {"LM89 "}
         };
     }
 
@@ -118,41 +117,15 @@ public class DataProviderTests {
         return new Object[][]{
                 {"Fklid7*@"},
                 {"5Dvkfefnb~mk8ftt"},
-                {"@5Dvkfefnbmk8ftt"},
-                {"5Dvkf-efnbmk8ftt"},
+                {"5Dvkfef@nbmk8ftt"},
                 {"5Dvkfefnbmk8ftt/"},
-                {"5Dvkfefnbmk8+ftt"},
-                {"5Dv^kfefnbmk8ftt"},
-                {"5Dvkfefnb«mkftt"},
-                {"5*Dvkfefnbmk8ftt"},
                 {"5Dvkfefnbm.k8ftt"},
-                {"5Dvkfefnbm>k8ftt"},
                 {"SELECT*FROM users"},
-                {"5Dvkfefnbm?k8ftt"},
-                {"5Dvkfefnbm&k8ftt"},
-                {"5Dvkfefnbm#k8ftt"},
-                {"5Dvkfefnbm]k8ftt"},
                 {"5Dvkfefnbm k8ftt"},
-                {"5Dvkfefnbm❞k8ftt"},
-                {"5Dvkfefnbm$k8ftt"},
                 {"_5Dvkfefnbmk8ftt"},
-                {"5Dvkfefnbm'k8ftt"},
-                {"5Dvkfefnbm=k8ftt"},
-                {"5Dvkfefn:k8ftt"},
-                {"5Dvkfefn;k8ftt"},
-                {"5Dvkfefnbm!k8ftt"},
-                {"5Dvkfefnbm←k8ftt"},
                 {"А5Dvkfefbmk8ftt"},
-                {"RTNZKCVF"}
-        };
-    }
-
-    @DataProvider(name = "invalid password validation")
-    public static Object[][] invalidPasswordUIValidationTest() {
-        return new Object[][]{
-                {"584841Cd2154ddvnvddvb"},
-                {"584841Cd»nvddvb"},
-                {"584841Cd❝nvddvb"}
+                {"RTNZKCVF"},
+                {"dvkfef7"}
         };
     }
 
@@ -160,34 +133,11 @@ public class DataProviderTests {
     public static Object[][] invalidPasswordValidLoginUIValidationTest() {
         return new Object[][]{
                 {"*12Ty354785"},
-                {"!1235Xc4785"},
-                {"-1Vc2354785"},
-                {"@2354Lk785"},
-                {"+23547Mn85"},
-                {"З23Rb54785"},
-                {"-235Xn4785"},
                 {" 23Dv54785"},
-                {"/23Dv54785"},
-                {"2354,78Dc5"},
-                {"<2354785Fv"},
-                {"X∑235n4785"},
                 {"SELECT*FROM users1"},
-                {"235478Sa5?"},
-                {"23Q4&7z85"},
-                {"23Q4.c785"},
-                {"23Q4:c785"},
-                {"23Q4;c785"},
-                {"23Q4c785%"},
-                {"23Q4c785$"},
-                {"#23Q4c785"},
-                {"№23Q4c785"},
-                {"23Q~4c785d"},
-                {"23Q➝4c785d"},
-                {"23Q¼4c785d"},
-                {"23Q^4c785d"},
-                {"I'l4584c785d"},
-                {"584841Cd»nvddvb"},
-                {"584841Cd❝nvddvb"}
+                {"NNNNNNN"},
+                {"nnnnnnn"},
+                {"7777777"}
         };
     }
 
