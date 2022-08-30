@@ -9,4 +9,5 @@ public class SuccessfulMessages {
     public static final String SUCCESSFUL_PASSWORD_CHANGED = "Password changed successfully! Please login again";
     public static final String SESSION_CODE_CORRECT = "Session code is correct";
     public static final String SMS_FOR_CHANGE_PASSWORD = "SMS_FOR_CHANGE_PASSWORD";
+    public static final String RESET_PASSWORD_WINDOW = "Reset password";
 }

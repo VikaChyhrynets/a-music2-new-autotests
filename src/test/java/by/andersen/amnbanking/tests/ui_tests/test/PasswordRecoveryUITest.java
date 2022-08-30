@@ -12,7 +12,6 @@ import io.qameta.allure.TmsLinks;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.sql.SQLException;
-
 import static by.andersen.amnbanking.data.Alert.CONFIRMATION_CODE_MUST_BE_FILLED;
 import static by.andersen.amnbanking.data.Alert.EMPTY_FIELDS;
 import static by.andersen.amnbanking.data.Alert.EMPTY_PASSWORD_FIELD;
@@ -27,6 +26,7 @@ import static by.andersen.amnbanking.data.Alert.PASSWORD_LESS_7_SYMBOLS;
 import static by.andersen.amnbanking.data.Alert.PASSWORD_MORE_20_SYMBOLS;
 import static by.andersen.amnbanking.data.Alert.SEND_SMS_POSITIVE;
 import static by.andersen.amnbanking.data.Alert.UNREGISTERED_ID;
+import static by.andersen.amnbanking.data.Alert.SEND_CODE_CONFIRMATION;
 import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
@@ -43,6 +43,7 @@ import static by.andersen.amnbanking.data.UsersData.LESS_THAN_MIN_CHARS;
 import static by.andersen.amnbanking.data.UsersData.MORE_20_CHARS;
 import static by.andersen.amnbanking.data.UsersData.MORE_THAN_MAX_CHARS;
 import static by.andersen.amnbanking.data.UsersData.USER_ONE;
+import static by.andersen.amnbanking.data.UsersData.USER_EMINEM79;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
@@ -107,7 +108,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport())
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+        assertEquals(passwordRecovery.getErrorMessageAfterEnterEmptyIdNum(),
                 EMPTY_FIELDS);
     }
 
@@ -119,7 +120,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(LESS_THAN_MIN_CHARS.getUser().getPassport())
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+        assertEquals(passwordRecovery.getErrorMessageAfterEnter1Symbol(),
                 ID_LESS_THAN_2_SYMBOLS);
     }
 
@@ -131,7 +132,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(MORE_THAN_MAX_CHARS.getUser().getPassport())
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+        assertEquals(passwordRecovery.getErrorMessageAfterEnterMoreThan30Symbols(),
                 ID_MORE_30_SYMBOLS);
     }
 
@@ -144,7 +145,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(idNumber)
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+        assertEquals(passwordRecovery.getErrorMessageAfterEnterForbiddenSymbols(),
                 ID_WRONG_SYMBOLS);
     }
 
@@ -156,7 +157,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(EM79_VAL_PASS_2NUMBERS.getUser().getPassport())
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
+        assertEquals(passwordRecovery.getErrorMessageAfterIDChangeWithNoChangingPassword(),
                 ID_WITHOUT_CHANGING_PASSWORD);
     }
 
@@ -362,14 +363,12 @@ public class PasswordRecoveryUITest extends BaseUITest {
     @TmsLink("5945657")
     @Story("UC-1.3 Password recovery")
     @Test(description = "Check presence of information text with user phone on the code confirmation page")
-    public void checkTextWithUserPhoneOnCodeConfirmationPage() throws SQLException {
-        createUser();
+    public void checkTextWithUserPhoneOnCodeConfirmationPage() {
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber(USER_ONE.getUser().getPassport())
+                .enterIdNumber(USER_EMINEM79.getUser().getPassport())
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterWrongIdNum(),
-                ID_WITHOUT_CHANGING_PASSWORD);
-        deleteUser();
+        assertEquals(passwordRecovery.getMessageAboutSendingCode(),
+                SEND_CODE_CONFIRMATION);
     }
 
     @TmsLink("5945672")

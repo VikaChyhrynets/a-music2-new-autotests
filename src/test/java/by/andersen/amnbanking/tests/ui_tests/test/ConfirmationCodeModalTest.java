@@ -16,7 +16,6 @@ import static by.andersen.amnbanking.data.Alert.CONFIRMATION_CODE_MUST_BE_FILLED
 import static by.andersen.amnbanking.data.Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS;
 import static by.andersen.amnbanking.data.Alert.INCORRECT_SMS_CODE;
 import static by.andersen.amnbanking.data.Alert.MESSAGE_INCORRECT_SMS_3_TIMES;
-import static by.andersen.amnbanking.data.Alert.SEND_CODE_AGAIN;
 import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.SmsVerificationData.EMPTY_SMS;
@@ -31,7 +30,9 @@ import static by.andersen.amnbanking.data.SmsVerificationData.SMS_WITH_LETTER;
 import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.data.UsersData.USER_MALEFICENT;
 import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
 
 @Listeners(UserDeleteListener.class)
 @Epic("E-1. Registration and authorization")
@@ -93,8 +94,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .getErrorMessageFromModalWrongSmsCode();
         softAssert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
                 INCORRECT_SMS_CODE);
-        confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode()
-                .refreshPage();
+        confirmationCodeModalPage.refreshPage();
         loginPage.inputLoginField(USER_ONE.getUser().getLogin())
                 .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
@@ -108,14 +108,13 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     public void authAfterEnteringWrongSmsCodeThreeTimesTest() throws SQLException {
         createUser();
         for (int i = 0; i < 2; i++) {
-        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
-                 .inputPasswordField(USER_ONE.getUser().getPassword())
-                 .clickLoginButton();
-        confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
-                 .clickConfirmButton();
-        confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
-        confirmationCodeModalPage.refreshPage();
-    }
+            loginPage.inputLoginField(USER_ONE.getUser().getLogin())
+                    .inputPasswordField(USER_ONE.getUser().getPassword())
+                    .clickLoginButton();
+            confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
+                    .clickConfirmButton();
+            confirmationCodeModalPage.refreshPage();
+        }
         loginPage.inputLoginField(USER_ONE.getUser().getLogin())
                 .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
@@ -123,7 +122,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .clickConfirmButton();
         assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
                 MESSAGE_INCORRECT_SMS_3_TIMES);
-        deleteUser();
+            deleteUser();
     }
 
     @Story("UC-1.10 Confirmation code")
@@ -131,29 +130,24 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @Test(description = "Sending a confirmation code when the ban has not expired, positive test, positive test ")
     public void sendSmsCodeWhenBanNotExpiredTest() throws SQLException {
         createUser();
-        for (int i = 0; i < 3; i++) {
         loginPage.inputLoginField(USER_ONE.getUser().getLogin())
                  .inputPasswordField(USER_ONE.getUser().getPassword())
                  .clickLoginButton();
-        confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
+        for (int i = 0; i < 3; i++) {
+        confirmationCodeModalPage.clearSmsCodeInFieldForCode()
+                 .enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                  .clickConfirmButton();
-        confirmationCodeModalPage.clickProceedModalWrongMessageSmsCode();
-        confirmationCodeModalPage.refreshPage();
-    }
-        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
-                .inputPasswordField(USER_ONE.getUser().getPassword())
-                .clickLoginButton();
-        confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
-                .clickConfirmButton();
+        }
+        confirmationCodeModalPage.clickSendAgainModalWrongMessageSmsCode();
         Assert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
-                SEND_CODE_AGAIN);
+                MESSAGE_INCORRECT_SMS_3_TIMES);
         deleteUser();
     }
 
     @Story("UC-1.10 Confirmation code")
     @Test(description = "Close sms confirmation window and try to login again, negative test")
     public void closeSmsWindowAndLoginAgain() {
-        assertTrue(loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
+        assertFalse(loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                 .clickLoginButton()
                 .closeSmsWindowByEmptyClick()

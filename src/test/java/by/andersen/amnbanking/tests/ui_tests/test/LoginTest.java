@@ -28,6 +28,7 @@ import static by.andersen.amnbanking.data.DataUrls.NOT_REGISTERED_USER_LOGIN;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
+import static by.andersen.amnbanking.data.SuccessfulMessages.RESET_PASSWORD_WINDOW;
 import static by.andersen.amnbanking.data.UsersData.*;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
@@ -128,19 +129,19 @@ public class LoginTest extends BaseUITest {
 
     @Story("UC-1.2 Web application login")
     @TmsLink("5893442")
-    @Test(description = "Authorization after entering the wrong password three times, negative test", enabled = false)
-    public void testLoginProcedureWithWrongPasswordThreeTimes() {
-        for (int i = 0; i < 3; i++) {
+    @Test(description = "Authorization after entering the wrong password first time")
+    public void testLoginProcedureWithWrongPasswordFirstTime() {
+         for (int i = 0; i < 2; i++) {
             loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
                     .inputPasswordField(USER_WRONG_PASS)
                     .clickLoginButton();
-//        assertEquals(loginPage.someMethod(), "Login or password are entered incorrectly.”);
-            refresh();
+            //assertEquals(loginPage.someMethod(), "Login or password are entered incorrectly.”);
+            //refresh();
         }
         loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
                 .inputPasswordField(USER_WRONG_PASS)
                 .clickLoginButton();
-//        assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
+        //assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
     }
 
     @Story("UC-1.2 Web application login")
@@ -188,8 +189,9 @@ public class LoginTest extends BaseUITest {
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                 .clickLoginButton();
 //        assertEquals(в loginPage должен быть метод, который найдет надпись, “Login or password are entered incorrectly.”,
-//        но пока нету xpath, по которому эту надпись искать, соответственно нету и метода);
+//        но пока нету xpath, по которому эту надпись искать, соответственно нету и метода); temporary (?) deleted test-case
     }
+
 
     @Story("UC-1.2 Web application login")
     @TmsLink("5869618")
@@ -223,11 +225,11 @@ public class LoginTest extends BaseUITest {
                 .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
+        assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
         confirmationCodeModalPage
                 .inputConfirmSMSField(SMS_VALID.getSms())
                 .clickOnConfirmButton();
-//        assertEquals(после ввода правильного смс-кода должны быть перенапрвлены на страницу, где будет предложено
-//        изменить логин/пароль при первом входе);
+        assertEquals(confirmationCodeModalPage.resetPasswordWindowCheck(), RESET_PASSWORD_WINDOW);
         deleteUser();
     }
 
@@ -256,6 +258,6 @@ public class LoginTest extends BaseUITest {
     @TmsLink("5880189")
     @Test(description = "First authorization after entering the wrong login or password three times , negative test")
     public void testFirstAuthorizationAfterEnteringTheWrongLoginOrPasswordThreeTimes() {
-
     }
+
 }
