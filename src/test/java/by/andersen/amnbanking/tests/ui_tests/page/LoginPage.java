@@ -1,11 +1,14 @@
 package by.andersen.amnbanking.tests.ui_tests.page;
 
 import by.andersen.amnbanking.data.User;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-
+import java.util.HashMap;
+import java.util.Map;
 import static com.codeborne.selenide.Selenide.$;
+import static java.time.Duration.ofSeconds;
 
 public class LoginPage extends BasePage {
     private static final By LOG_IN_INPUT = By.id(":r1:");
@@ -23,7 +26,6 @@ public class LoginPage extends BasePage {
         $(TEL_INPUT).setValue(user.getPhone());
         $(PASSWORD_INPUT).setValue(user.getPassword());
         $(LOG_IN_INPUT).click();
-
         return new MainPage();
     }
 
@@ -35,28 +37,32 @@ public class LoginPage extends BasePage {
     @Step("Entering a user login into Login input field")
     public LoginPage inputLoginField(String login) {
         $(LOG_IN_INPUT).sendKeys(login);
-
         return this;
+    }
+
+    @Step("User login and password fields should be empty")
+    public boolean emptyInputLoginAndPasswordFields(String key) {
+        Map<String, By> emptyFields = new HashMap<>();
+        emptyFields.put("login", LOG_IN_INPUT);
+        emptyFields.put("password", PASSWORD_INPUT);
+        return $(emptyFields.get(key)).shouldBe(Condition.empty, ofSeconds(7)).getValue().isEmpty();
     }
 
     @Step("Clicking on Login input field")
     public LoginPage clickLoginField() {
         $(LOG_IN_INPUT).click();
-
         return this;
     }
 
     @Step("Entering a user password into Password input field")
     public LoginPage inputPasswordField(String password) {
         $(PASSWORD_INPUT).sendKeys(password);
-
         return this;
     }
 
     @Step("Clicking on \"Password\" input field")
     public LoginPage clickPasswordField() {
         $(PASSWORD_INPUT).click();
-
         return this;
     }
 
@@ -73,7 +79,6 @@ public class LoginPage extends BasePage {
     @Step("Clicking on button \"Login\"")
     public ConfirmationCodeModalPage clickLoginButton() {
         $(LOGIN_BUTTON).click();
-
         return new ConfirmationCodeModalPage();
     }
 
@@ -101,7 +106,6 @@ public class LoginPage extends BasePage {
         $(LOG_IN_INPUT).sendKeys(login);
         $(PASSWORD_INPUT).sendKeys(password);
         $(LOGIN_BUTTON).click();
-
         return new ConfirmationCodeModalPage();
     }
 
