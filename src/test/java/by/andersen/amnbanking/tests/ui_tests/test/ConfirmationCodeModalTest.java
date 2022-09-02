@@ -9,9 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.sql.SQLException;
-
 import static by.andersen.amnbanking.data.Alert.CONFIRMATION_CODE_MUST_BE_FILLED;
 import static by.andersen.amnbanking.data.Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS;
 import static by.andersen.amnbanking.data.Alert.INCORRECT_SMS_CODE;
@@ -30,7 +28,6 @@ import static by.andersen.amnbanking.data.SmsVerificationData.SMS_WITH_LETTER;
 import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static by.andersen.amnbanking.data.UsersData.USER_MALEFICENT;
 import static org.testng.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 
@@ -104,7 +101,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
 
     @Story("UC-1.10 Confirmation code")
     @TmsLink("5869688")
-    @Test(description = "Enter the wrong sms code three times and get the ban, positive test, positive test ")
+    @Test(description = "Enter the wrong sms code three times and get the ban, positive test ")
     public void authAfterEnteringWrongSmsCodeThreeTimesTest() throws SQLException {
         createUser();
         for (int i = 0; i < 2; i++) {
@@ -144,14 +141,34 @@ public class ConfirmationCodeModalTest extends BaseUITest {
         deleteUser();
     }
 
+    /*
+     Check whether login and password fields stay empty after sms confirmation window closure
+     */
     @Story("UC-1.10 Confirmation code")
-    @Test(description = "Close sms confirmation window and try to login again, negative test")
+    @Test(description = "Close sms confirmation window, try to log in with empty login and password fields, negative test")
+    public void closeSmsWindowEmptyLoginPasswordFields() {
+        loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
+                .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
+                .clickLoginButton()
+                .closeSmsWindowByEmptyClick();
+        assertTrue(loginPage.emptyInputLoginAndPasswordFields("login"));
+        assertTrue(loginPage.emptyInputLoginAndPasswordFields("password"));
+    }
+
+    /*
+    Check whether sms confirmation window opens after re-login
+     */
+    @Story("UC-1.10 Confirmation code")
+    @Test(description = "Close sms confirmation window and re-login, positive test")
     public void closeSmsWindowAndLoginAgain() {
-        assertFalse(loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
+        loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                 .clickLoginButton()
                 .closeSmsWindowByEmptyClick()
-                .clickLoginButton().confirmationCodeWindowIsOpen());
+                .inputLoginField(LOGIN_WITH_PASSPORT_REG)
+                .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
+                .clickLoginButton();
+        assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
     }
 
     @Story("UC-1.10 Confirmation code")
