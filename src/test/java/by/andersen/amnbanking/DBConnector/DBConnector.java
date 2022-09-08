@@ -1,11 +1,11 @@
 package by.andersen.amnbanking.DBConnector;
 
 import by.andersen.amnbanking.utils.BDHelper;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DBConnector {
     DBWorker worker = new DBWorker();
@@ -13,6 +13,13 @@ public class DBConnector {
     Connection connection;
     String query;
     public static String LOGIN_USER;
+
+    public static ArrayList<String> WORKING_HOURS;
+    public static String LOCAL_PHONE_NUMBER_FOR_INDIVIDUALS;
+    public static String INTERNATIONAL_PHONE_NUMBER_FOR_INDIVIDUALS;
+    public static ArrayList<String> OPENING_HOURS_FOR_CARD_SUPPORT;
+    public static String LOCAL_PHONE_NUMBER_FOR_CARD_SUPPORT;
+    public static String INTERNATIONAL_PHONE_NUMBER_FOR_CARD_SUPPORT;
 
     public void deleteUser(String login) throws SQLException {
         query = new BDHelper().setRequestForDeleteUser(login);
@@ -31,4 +38,47 @@ public class DBConnector {
             LOGIN_USER = resultSet.getString("login");
         }
     }
+
+    public void getIndividualWorkingHoursFromDB() throws SQLException {
+        query = new BDHelper().getIndividualWorkingHours();
+        statement = worker.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        WORKING_HOURS = new ArrayList<String>();
+        while (resultSet.next()) {
+            WORKING_HOURS.add(resultSet.getString("workingHours"));
+        }
+    }
+
+    public void getPhoneNumberForIndividualsFromDB() throws SQLException {
+        query = new BDHelper().getPhoneNumberForIndividuals();
+        statement = worker.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            LOCAL_PHONE_NUMBER_FOR_INDIVIDUALS = resultSet.getString("local_phone");
+            INTERNATIONAL_PHONE_NUMBER_FOR_INDIVIDUALS = resultSet.getString("international_phone");
+        }
+    }
+
+    public void getOpeningHoursForCardSupportFromDB() throws SQLException {
+        query = new BDHelper().getOpeningHoursForCardSupport();
+        statement = worker.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        OPENING_HOURS_FOR_CARD_SUPPORT = new ArrayList<String>();
+        while (resultSet.next()) {
+            OPENING_HOURS_FOR_CARD_SUPPORT.add(resultSet.getString("openingHours"));
+        }
+    }
+    public void getPhoneNumberForCardSupportFromDB() throws SQLException {
+        query = new BDHelper().getPhoneNumberForCardSupport();
+        statement = worker.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            LOCAL_PHONE_NUMBER_FOR_CARD_SUPPORT = resultSet.getString("local_phone");
+            INTERNATIONAL_PHONE_NUMBER_FOR_CARD_SUPPORT = resultSet.getString("international_phone");
+        }
+    }
+
+
+
+
 }

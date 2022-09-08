@@ -2,6 +2,7 @@ package by.andersen.amnbanking.tests.ui_tests.test;
 
 import by.andersen.amnbanking.tests.base_test.BaseTest;
 import by.andersen.amnbanking.tests.ui_tests.page.ConfirmationCodeModalPage;
+import by.andersen.amnbanking.tests.ui_tests.page.ContactsPage;
 import by.andersen.amnbanking.tests.ui_tests.page.LoginPage;
 import by.andersen.amnbanking.tests.ui_tests.page.PasswordRecoveryModalPage;
 import com.codeborne.selenide.Configuration;
@@ -15,6 +16,7 @@ public abstract class BaseUITest extends BaseTest {
     protected LoginPage loginPage = new LoginPage();
     protected ConfirmationCodeModalPage confirmationCodeModalPage = new ConfirmationCodeModalPage();
     protected PasswordRecoveryModalPage passwordRecovery = new PasswordRecoveryModalPage();
+    protected ContactsPage contactsPage = new ContactsPage();
 
     @BeforeMethod
     public void setUp() {

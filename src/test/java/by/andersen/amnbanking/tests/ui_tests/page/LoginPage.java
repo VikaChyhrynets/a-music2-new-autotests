@@ -20,6 +20,8 @@ public class LoginPage extends BasePage {
     private static final By CHECK_BOX_SHOW_PASSWORD = By.xpath("//div[contains(@class, 'showPassword')]/*");
     private static final By LOGIN_ERROR_MESSAGE = By.xpath("//div[contains(@class,'Login_formError')]");
     private static final By linkForgotPassword = By.xpath("//button[contains(@class,'X2kY6')]");
+    private static final By contactsButton = By.xpath("//span[text()= 'Contacts']");
+    private static final By LOGIN_WINDOW = By.xpath("//*[contains(@class, 'Login_form__nVOQc MuiBox-root css-0')]");
 
     public MainPage doLogin(User user) {
         $(LOG_IN_INPUT).click();
@@ -114,5 +116,18 @@ public class LoginPage extends BasePage {
         $(linkForgotPassword).click();
         return new PasswordRecoveryModalPage();
     }
+
+    @Step("Click the Contacts button")
+    public LoginPage clickContactsButton() {
+        $(contactsButton).click();
+        return this;
+    }
+
+    @Step("Does user go back to Login page after clicking Back button")
+    public boolean returnToLoginPage() {
+        $(LOGIN_WINDOW).shouldBe(Condition.visible, ofSeconds(10)).isDisplayed();
+        return true;
+    }
+
 }
 

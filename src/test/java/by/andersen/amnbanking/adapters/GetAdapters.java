@@ -17,4 +17,15 @@ public class GetAdapters {
                 .log().all()
                 .extract().response();
     }
+
+    public Response get(String url, int statusCode) {
+        return given()
+                .spec(REQ_SPEC)
+                .when()
+                .get(url)
+                .then()
+                .statusCode(statusCode)
+                .log().all()
+                .extract().response();
+    }
 }
