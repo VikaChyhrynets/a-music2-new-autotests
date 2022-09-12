@@ -37,48 +37,59 @@ public class DBConnector {
         while (resultSet.next()) {
             LOGIN_USER = resultSet.getString("login");
         }
+        statement.close();
     }
 
     public void getIndividualWorkingHoursFromDB() throws SQLException {
         query = new BDHelper().getIndividualWorkingHours();
-        statement = worker.getConnection().createStatement();
+        connection = worker.getConnection();
+        statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         WORKING_HOURS = new ArrayList<String>();
         while (resultSet.next()) {
             WORKING_HOURS.add(resultSet.getString("workingHours"));
         }
+        statement.close();
+        connection.close();
     }
 
     public void getPhoneNumberForIndividualsFromDB() throws SQLException {
         query = new BDHelper().getPhoneNumberForIndividuals();
-        statement = worker.getConnection().createStatement();
+        connection = worker.getConnection();
+        statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
             LOCAL_PHONE_NUMBER_FOR_INDIVIDUALS = resultSet.getString("local_phone");
             INTERNATIONAL_PHONE_NUMBER_FOR_INDIVIDUALS = resultSet.getString("international_phone");
         }
+        statement.close();
+        connection.close();
     }
 
     public void getOpeningHoursForCardSupportFromDB() throws SQLException {
         query = new BDHelper().getOpeningHoursForCardSupport();
-        statement = worker.getConnection().createStatement();
+        connection = worker.getConnection();
+        statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         OPENING_HOURS_FOR_CARD_SUPPORT = new ArrayList<String>();
         while (resultSet.next()) {
             OPENING_HOURS_FOR_CARD_SUPPORT.add(resultSet.getString("openingHours"));
         }
+        statement.close();
+        connection.close();
     }
+
     public void getPhoneNumberForCardSupportFromDB() throws SQLException {
         query = new BDHelper().getPhoneNumberForCardSupport();
-        statement = worker.getConnection().createStatement();
+        connection = worker.getConnection();
+        statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
             LOCAL_PHONE_NUMBER_FOR_CARD_SUPPORT = resultSet.getString("local_phone");
             INTERNATIONAL_PHONE_NUMBER_FOR_CARD_SUPPORT = resultSet.getString("international_phone");
         }
+        statement.close();
+        connection.close();
     }
-
-
-
 
 }

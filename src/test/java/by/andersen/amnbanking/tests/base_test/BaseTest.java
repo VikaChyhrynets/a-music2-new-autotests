@@ -17,24 +17,4 @@ public abstract class BaseTest {
         new DBConnector().deleteUser(USER_ONE.getUser().getLogin());
     }
 
-    @Step("Get opening hours for individuals from DB")
-    public static void getWorkingHoursForIndividuals() throws SQLException {
-        new DBConnector().getIndividualWorkingHoursFromDB();
-    }
-
-    @Step("Get phone number for individuals from DB")
-    public static void getPhoneNumberForIndividuals() throws SQLException {
-        new DBConnector().getPhoneNumberForIndividualsFromDB();
-    }
-
-    @Step("Get opening hours for 'Card support' from DB")
-    public static void getOpeningHoursForCardSupport() throws SQLException {
-        new DBConnector().getOpeningHoursForCardSupportFromDB();
-    }
-
-    @Step("Get phone number for cards support from DB")
-    public static void getPhoneNumberForCardSupport() throws SQLException {
-        new DBConnector().getPhoneNumberForCardSupportFromDB();
-    }
-
 }

@@ -20,7 +20,7 @@ import static by.andersen.amnbanking.data.DataUrls.API_CONTACTS;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static by.andersen.amnbanking.DBConnector.DBConnector.WORKING_HOURS;
 import static org.junit.Assert.assertEquals;
-
+import static by.andersen.amnbanking.model.ModelContacts.arrayOfInternationalPhoneNumbers;
 
 @Listeners(UserDeleteListener.class)
 @Epic("E-1. Registration and authorization")
@@ -30,11 +30,9 @@ public class ContactsTests extends BaseAPITest {
     @Story("UC-1.9 Contacts")
     @TmsLink("C5951590")
     void getContacts() {
-        ArrayList<String> expectedInternetContacts = new ArrayList<String>();
-        expectedInternetContacts.add("+16846540102");
-        expectedInternetContacts.add("+16846540103");
+        ArrayList<String> expectedInternationalContacts = arrayOfInternationalPhoneNumbers();
         ArrayList<String> availableInternationalContacts = new GetAdapters().get(API_HOST + API_CONTACTS, SC_OK).path("internationalPhone");
-        assertEquals(expectedInternetContacts, availableInternationalContacts);
+        assertEquals(expectedInternationalContacts, availableInternationalContacts);
     }
 
     @Test(description = "Displaying opening hours for individuals")
