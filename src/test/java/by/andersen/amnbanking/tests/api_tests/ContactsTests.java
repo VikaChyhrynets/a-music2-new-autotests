@@ -15,12 +15,12 @@ import static by.andersen.amnbanking.DBConnector.DBConnector.INTERNATIONAL_PHONE
 import static by.andersen.amnbanking.DBConnector.DBConnector.LOCAL_PHONE_NUMBER_FOR_CARD_SUPPORT;
 import static by.andersen.amnbanking.DBConnector.DBConnector.LOCAL_PHONE_NUMBER_FOR_INDIVIDUALS;
 import static by.andersen.amnbanking.DBConnector.DBConnector.OPENING_HOURS_FOR_CARD_SUPPORT;
+import static by.andersen.amnbanking.data.Contacts.arrayOfInternationalPhoneNumbers;
 import static by.andersen.amnbanking.data.DataUrls.API_HOST;
 import static by.andersen.amnbanking.data.DataUrls.API_CONTACTS;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static by.andersen.amnbanking.DBConnector.DBConnector.WORKING_HOURS;
 import static org.junit.Assert.assertEquals;
-import static by.andersen.amnbanking.model.ModelContacts.arrayOfInternationalPhoneNumbers;
 
 @Listeners(UserDeleteListener.class)
 @Epic("E-1. Registration and authorization")

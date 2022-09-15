@@ -8,12 +8,13 @@ import io.qameta.allure.TmsLinks;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.util.ArrayList;
-import static by.andersen.amnbanking.tests.ui_tests.page.ContactsPage.EXPECTED_CARDS_TITLE;
-import static by.andersen.amnbanking.tests.ui_tests.page.ContactsPage.EXPECTED_INDIVIDUALS_TITLE;
-import static by.andersen.amnbanking.tests.ui_tests.page.ContactsPage.INTERNATIONAL_CARDS_SUPPORT_PHONE;
-import static by.andersen.amnbanking.tests.ui_tests.page.ContactsPage.INTERNATIONAL_PHONE_FOR_INDIVIDUALS;
-import static by.andersen.amnbanking.tests.ui_tests.page.ContactsPage.LOCAL_CARDS_SUPPORT_PHONE;
-import static by.andersen.amnbanking.tests.ui_tests.page.ContactsPage.LOCAL_PHONE_FOR_INDIVIDUALS;
+
+import static by.andersen.amnbanking.data.Contacts.EXPECTED_CARDS_TITLE;
+import static by.andersen.amnbanking.data.Contacts.EXPECTED_INDIVIDUALS_TITLE;
+import static by.andersen.amnbanking.data.Contacts.INTERNATIONAL_CARDS_SUPPORT_PHONE;
+import static by.andersen.amnbanking.data.Contacts.INTERNATIONAL_PHONE_FOR_INDIVIDUALS;
+import static by.andersen.amnbanking.data.Contacts.LOCAL_CARDS_SUPPORT_PHONE;
+import static by.andersen.amnbanking.data.Contacts.LOCAL_PHONE_FOR_INDIVIDUALS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -40,18 +41,25 @@ public class ContactsTest extends BaseUITest {
 
     @Story("UC-1.9 Contacts")
     @TmsLinks(value = {@TmsLink("C5957227"), @TmsLink("C5957234")})
-    @Test(description = "Presence of text 'For individuals', 'Cards support' on the Сontacts page")
+    @Test(description = "Presence of text and count of elements 'For individuals', 'Cards support' on the Contacts page")
     public void checkTitlesAvailability(){
         loginPage.clickContactsButton();
         ArrayList<String> allTitles = contactsPage.getTitles();
+        assertEquals(4, allTitles.size());
+        int forInd = 0;
+        int cardSup = 0;
         for(int i = 0; i < allTitles.size(); i++) {
             if(!allTitles.get(i).equals(EXPECTED_CARDS_TITLE)) {
                 assertEquals(EXPECTED_INDIVIDUALS_TITLE,allTitles.get(i));
+                forInd++;
             }
-            if(!allTitles.get(i).equals(EXPECTED_INDIVIDUALS_TITLE)) {
+            else {
                 assertEquals(EXPECTED_CARDS_TITLE,allTitles.get(i));
+                cardSup++;
             }
         }
+        assertEquals(2, forInd);
+        assertEquals(2, cardSup);
     }
 
     @Story("UC-1.9 Contacts")

@@ -16,17 +16,9 @@ public class ContactsPage extends BasePage {
     private static final By cardsSupportText = (By.xpath("//div[contains(@class, 'Contacts_main')]" +
             "//child::span[contains(@class, 'ContactsInformation_tittle') and (text()= 'Cards support')]"));
     private static final By commonTitleFourElements = (By.xpath("//span[contains(@class, 'ContactsInformation_tittle')]"));
-    public static final String EXPECTED_INDIVIDUALS_TITLE = "For individuals";
-    public static final String EXPECTED_CARDS_TITLE = "Cards support";
+
     public static final By localPhoneNumber = (By.xpath("//span[contains(@class, 'ContactsInformation_localText__NyKvb')]"));
     public static final By internationalPhoneNumber = (By.xpath("//span[contains(@class, 'ContactsInformation_internationalText__mcnWs')]"));
-    public static final String LOCAL_CARDS_SUPPORT_PHONE = "3800";
-    public static final String LOCAL_PHONE_FOR_INDIVIDUALS = "3700";
-    public static final String INTERNATIONAL_CARDS_SUPPORT_PHONE = "+16846540103";
-    public static final String INTERNATIONAL_PHONE_FOR_INDIVIDUALS = "+16846540102";
-
-
-
 
     @Step("Does Contact center phones line exist")
     public boolean getContactCenterPhones() {
@@ -34,10 +26,10 @@ public class ContactsPage extends BasePage {
         return true;
     }
 
-    @Step("Click Back button to return to the Login page")
-    public ContactsPage backToLoginPage() {
+   @Step("Click Back button to return to the Login page")
+    public LoginPage backToLoginPage() {
         $(backButton).click();
-        return new ContactsPage();
+        return new LoginPage();
     }
 
     @Step("Is 'For individuals' text present on the Contacts page")
