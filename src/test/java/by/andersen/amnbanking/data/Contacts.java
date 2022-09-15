@@ -21,8 +21,8 @@ public class Contacts {
 
     public static ArrayList<String> arrayOfInternationalPhoneNumbers() {
         ArrayList<String> expectedInternetContacts = new ArrayList<String>();
-        expectedInternetContacts.add("+16846540102");
-        expectedInternetContacts.add("+16846540103");
+        expectedInternetContacts.add(INTERNATIONAL_PHONE_FOR_INDIVIDUALS);
+        expectedInternetContacts.add(INTERNATIONAL_CARDS_SUPPORT_PHONE);
         return expectedInternetContacts;
     }
 
