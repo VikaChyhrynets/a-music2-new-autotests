@@ -25,5 +25,4 @@ public class Contacts {
         expectedInternetContacts.add(INTERNATIONAL_CARDS_SUPPORT_PHONE);
         return expectedInternetContacts;
     }
-
 }
