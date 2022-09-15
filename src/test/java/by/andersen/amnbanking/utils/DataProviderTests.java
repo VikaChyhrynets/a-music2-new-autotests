@@ -1,7 +1,6 @@
 package by.andersen.amnbanking.utils;
 
 import org.testng.annotations.DataProvider;
-
 import static by.andersen.amnbanking.data.DataUrls.PASSPORT_REG;
 import static by.andersen.amnbanking.data.SmsVerificationData.*;
 import static by.andersen.amnbanking.data.UsersData.EM79_MIN_CHARS;
@@ -160,5 +159,7 @@ public class DataProviderTests {
                 {"п123456l"}
         };
     }
+
+
 }
 

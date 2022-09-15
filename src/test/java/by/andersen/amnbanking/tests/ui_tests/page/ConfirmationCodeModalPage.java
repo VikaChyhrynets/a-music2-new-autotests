@@ -13,7 +13,7 @@ public class ConfirmationCodeModalPage extends BasePage {
     private static final By confirmationCodeModal = (By.id(":r5:"));
     private static final By smsCodeField = (By.id(":r7:"));
     private static final By confirmButton = (By.xpath("//*[text()= 'Confirm']"));
-    private static final By errorMessageWrongSmsCode = (By.xpath("/html/body/div[2]/div[3]/div/form/div[1]/div[2]/div[1]"));
+    private static final By errorMessageWrongSmsCode = (By.xpath("//div[contains(@class,\"ModalForm_formInputSMS\") and not (.//*[contains(@class,\"MuiFormControl-root\")])]/div"));
     private static final By errorModalSmsCode = (By.xpath("/html/body/div[2]/div[3]/div/form/div[1]/div[2]/div"));
     private static final By clickSendAgainButtonModalError = (By.xpath("//*[text()= 'Send again']"));
     private static final By loginSuccess = By.id("ModalSuccessfully");

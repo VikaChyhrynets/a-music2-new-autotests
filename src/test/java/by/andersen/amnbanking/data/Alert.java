@@ -26,4 +26,5 @@ public class Alert {
     public static final String EMPTY_PASSWORD_FIELD = "Field \"Password\" must be filled";
     public static final String PASSWORDS_MUST_MATCH = "Passwords must match";
     public static final String SEND_CODE_CONFIRMATION = "We sent an SMS with a 4-digit verification code to +40796842639";
+
 }
