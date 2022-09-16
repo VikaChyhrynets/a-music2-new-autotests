@@ -88,8 +88,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .clickLoginButton();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                 .clickConfirmButton()
-                .getErrorMessageFromModalWrongSmsCode();
-        softAssert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
+                .getErrorMessageWhenEnteringWrongSmsCode1Time();
+        softAssert.assertEquals(confirmationCodeModalPage.getErrorMessageWhenEnteringWrongSmsCode1Time(),
                 INCORRECT_SMS_CODE);
         confirmationCodeModalPage.refreshPage();
         loginPage.inputLoginField(USER_ONE.getUser().getLogin())
@@ -117,7 +117,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .clickLoginButton();
         confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
                 .clickConfirmButton();
-        assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
+        assertEquals(confirmationCodeModalPage.getErrorMessageWhenEnteringWrongSmsCode3Times(),
                 MESSAGE_INCORRECT_SMS_3_TIMES);
             deleteUser();
     }
@@ -136,7 +136,7 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                  .clickConfirmButton();
         }
         confirmationCodeModalPage.clickSendAgainModalWrongMessageSmsCode();
-        Assert.assertEquals(confirmationCodeModalPage.getErrorMessageFromModalWrongSmsCode(),
+        Assert.assertEquals(confirmationCodeModalPage.getErrorMessageWhenEnteringWrongSmsCode3Times(),
                 MESSAGE_INCORRECT_SMS_3_TIMES);
         deleteUser();
     }

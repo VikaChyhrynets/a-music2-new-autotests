@@ -15,11 +15,11 @@ public class PasswordRecoveryModalPage {
     private static final By continueButtonAfterEnterNewPass = By.xpath("//*[contains(@class,'hAnNq')]");
     private static final By greyTextAboveSmsCodeField = By.xpath("//p[contains(@class,'Fmyzh')]");
     private static final By errorMessageInputIdNumber = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
-    private static final By errorMessageNotFilledField = By.xpath("/html/body/div[2]/div[3]/div[4]/div/form/div[2]");
-    private static final By errorMessageFieldShouldContainAtLeast2Symbols = By.xpath("/html/body/div[2]/div[3]/div[4]/div/form/div[2]");
-    private static final By errorMessageFieldMustBeLessThan30Symbols = By.xpath("//div[text()= 'Must be 30 characters or less']");
-    private static final By errorMessageFieldMustContainOnlyCapitalLettersAndNumbers = By.xpath("//div[text()= 'The field must contain only capital letters and numbers']");
-    private static final By errorMessageFieldChangeIDWithouthChangingPassword = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
+    private static final By errorMessageNotFilledField = By.xpath("//div[@class= 'FirstStepForm_formError__RvDTg']");
+    private static final By errorMessageFieldShouldContainAtLeast2Symbols = By.xpath("//div[@class= 'FirstStepForm_formError__RvDTg']");
+    private static final By errorMessageFieldMustBeLessThan30Symbols = By.xpath("//div[contains(@class, 'RvDTg')]");
+    private static final By errorMessageFieldMustContainOnlyCapitalLettersAndNumbers = By.xpath("//div[@class= 'FirstStepForm_formError__RvDTg']");
+    private static final By errorMessageFieldChangeIDWithoutChangingPassword = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
     private static final By titleTextWithPhoneNumber2Step = By.xpath("//p[contains(@class,'rg9OK')]");
     private static final By modalWindowPasswordRecovery = By.xpath("//*[contains(@class,'LvKN9')]");
     private static final By backButton = By.xpath("//*[text()= 'Back']");
@@ -29,7 +29,7 @@ public class PasswordRecoveryModalPage {
     private static final By errorMessageConfirmPasswordNotMuch = By.xpath("//div[contains(@class,'0JwCH')]");
     private static final By eyeButtonNewPassword = By.xpath("//form[contains(@class,'07NPd')]//*[contains(@class,'g-r7n')]");
     private static final By eyeButtonConfirmPassword = By.xpath("//form/div[3]/div[2]");
-    private static final By sendingCodeConfirmation = By.xpath("/html/body/div[2]/div[3]/div[4]/div/form/p[1]");
+    private static final By sendingCodeConfirmation = By.xpath("//p[contains(@class, 'rg9OK')]");
 
 
     @Step("In the modal Password Recovery first step is enter user's ID number")
@@ -65,7 +65,7 @@ public class PasswordRecoveryModalPage {
 
     @Step("The user changes ID without changing password on first login and gets message")
     public String getErrorMessageAfterIDChangeWithNoChangingPassword() {
-        return $(errorMessageFieldChangeIDWithouthChangingPassword).getText();
+        return $(errorMessageFieldChangeIDWithoutChangingPassword).getText();
     }
 
     @Step("Click continue button on first step with ID number")

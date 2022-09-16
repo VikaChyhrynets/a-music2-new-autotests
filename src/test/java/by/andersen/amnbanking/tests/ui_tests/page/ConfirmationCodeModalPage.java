@@ -14,10 +14,11 @@ public class ConfirmationCodeModalPage extends BasePage {
     private static final By smsCodeField = (By.id(":r7:"));
     private static final By confirmButton = (By.xpath("//*[text()= 'Confirm']"));
     private static final By errorMessageWrongSmsCode = (By.xpath("//div[contains(@class,\"ModalForm_formInputSMS\") and not (.//*[contains(@class,\"MuiFormControl-root\")])]/div"));
-    private static final By errorModalSmsCode = (By.xpath("/html/body/div[2]/div[3]/div/form/div[1]/div[2]/div"));
+    private static final By wrongEnteredMessage1Time = (By.xpath("//div[text()= 'Wrong code, 2 attempts left']"));
+    private static final By wrongEnteredMessage3Times = (By.xpath("//div[text()= 'You have entered an incorrect SMS code three times, you can try to log in again in 30 minutes']"));
     private static final By clickSendAgainButtonModalError = (By.xpath("//*[text()= 'Send again']"));
     private static final By loginSuccess = By.id("ModalSuccessfully");
-    private static final By FirstAuthorizationWithValidData = (By.xpath("//*[@id=\"root\"]/div/div/div[2]/div[3]/span"));
+    private static final By FirstAuthorizationWithValidData = (By.xpath("//span[@class= 'Login_text__INpYu']"));
 
     @Step("Field for entering an sms code confirmation")
     public ConfirmationCodeModalPage enterSmsCodeInFieldForCode(String smsCode) {
@@ -64,10 +65,14 @@ public class ConfirmationCodeModalPage extends BasePage {
         return $(errorMessageWrongSmsCode).getText();
     }
 
-    @Step("Get the error messages from modal window after entering wrong sms code confirmation ")
-    public String getErrorMessageFromModalWrongSmsCode() {
+    @Step("Get error message when entering wrong sms code 1 time")
+    public String getErrorMessageWhenEnteringWrongSmsCode1Time() {
+        return $(wrongEnteredMessage1Time).shouldBe(Condition.visible, ofSeconds(10)).getText();
+    }
 
-        return $(errorModalSmsCode).shouldBe(Condition.visible, ofSeconds(15)).getText();
+    @Step("Get error message when entering wrong sms code 3 times")
+    public String getErrorMessageWhenEnteringWrongSmsCode3Times() {
+        return $(wrongEnteredMessage3Times).shouldBe(Condition.visible, ofSeconds(10)).getText();
     }
 
     // TODO remove this method as it`s not used
