@@ -14,6 +14,7 @@ public class Alert {
     public static final String ID_WITHOUT_CHANGING_PASSWORD = "This ID number is not registered. " +
             "Please check the entered data or contact the bank";
     public static final String INCORRECT_SMS_CODE = "You have entered an incorrect SMS code";
+    public static final String INCORRECT_SMS_CODE_SECOND_TIME = "Wrong code, 1 attempts left";
     public static final String MESSAGE_INCORRECT_SMS_3_TIMES = "You have entered an incorrect SMS code three times, " +
             "you can try to log in again in 30 minutes";
     public static final String SEND_CODE_AGAIN = "Send code again in";

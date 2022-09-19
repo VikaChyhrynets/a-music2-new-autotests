@@ -15,6 +15,7 @@ public class ConfirmationCodeModalPage extends BasePage {
     private static final By confirmButton = (By.xpath("//*[text()= 'Confirm']"));
     private static final By errorMessageWrongSmsCode = (By.xpath("//div[contains(@class,\"ModalForm_formInputSMS\") and not (.//*[contains(@class,\"MuiFormControl-root\")])]/div"));
     private static final By wrongEnteredMessage1Time = (By.xpath("//div[text()= 'Wrong code, 2 attempts left']"));
+    private static final By wrongEnteredMessage2Times = (By.xpath("//div[text()= 'Wrong code, 1 attempts left']"));
     private static final By wrongEnteredMessage3Times = (By.xpath("//div[text()= 'You have entered an incorrect SMS code three times, you can try to log in again in 30 minutes']"));
     private static final By clickSendAgainButtonModalError = (By.xpath("//*[text()= 'Send again']"));
     private static final By loginSuccess = By.id("ModalSuccessfully");
@@ -70,12 +71,16 @@ public class ConfirmationCodeModalPage extends BasePage {
         return $(wrongEnteredMessage1Time).shouldBe(Condition.visible, ofSeconds(10)).getText();
     }
 
+    @Step("Get error message when entering wrong sms code 2 times") //
+    public String getErrorMessageWhenEnteringWrongSmsCode2Times() {
+        return $(wrongEnteredMessage2Times).shouldBe(Condition.visible, ofSeconds(10)).getText();
+    }
+
     @Step("Get error message when entering wrong sms code 3 times")
     public String getErrorMessageWhenEnteringWrongSmsCode3Times() {
         return $(wrongEnteredMessage3Times).shouldBe(Condition.visible, ofSeconds(10)).getText();
     }
 
-    // TODO remove this method as it`s not used
     @Step("Click send again button on the modal after entering wrong for sms code confirmation ")
     public ConfirmationCodeModalPage clickSendAgainModalWrongMessageSmsCode() {
         $(clickSendAgainButtonModalError).shouldBe(Condition.visible, ofSeconds(7)).click();

@@ -5,6 +5,7 @@ import by.andersen.amnbanking.utils.TestRails;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import static by.andersen.amnbanking.data.Alert.CONFIRMATION_CODE_MUST_BE_FILLED;
 import static by.andersen.amnbanking.data.Alert.FIELD_SHOULD_CONTAIN_FOUR_NUMBERS;
 import static by.andersen.amnbanking.data.Alert.INCORRECT_SMS_CODE;
+import static by.andersen.amnbanking.data.Alert.INCORRECT_SMS_CODE_SECOND_TIME;
 import static by.andersen.amnbanking.data.Alert.MESSAGE_INCORRECT_SMS_3_TIMES;
 import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
@@ -79,8 +81,8 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     }
 
     @Story("UC-1.10 Confirmation code")
-    @TestRails(id = "C5931952")
-    @Test(description = "Enter wrong sms code and then authorization again, positive test")
+    @TmsLinks({@TmsLink("C5931952"), @TmsLink("C5941422")})
+    @Test(description = "Enter wrong sms code by two attempts, positive test")
     public void authAfterEnteringWrongConfirmationCodeOneTimeTest() throws SQLException {
         createUser();
         loginPage.inputLoginField(USER_ONE.getUser().getLogin())
@@ -96,6 +98,10 @@ public class ConfirmationCodeModalTest extends BaseUITest {
                 .inputPasswordField(USER_ONE.getUser().getPassword())
                 .clickLoginButton();
         assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
+        confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
+                .clickConfirmButton()
+                .getErrorMessageWhenEnteringWrongSmsCode2Times();
+        assertEquals(confirmationCodeModalPage.getErrorMessageWhenEnteringWrongSmsCode2Times(), INCORRECT_SMS_CODE_SECOND_TIME);
         deleteUser();
     }
 

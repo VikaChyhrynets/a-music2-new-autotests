@@ -15,10 +15,11 @@ public class PasswordRecoveryModalPage {
     private static final By continueButtonAfterEnterNewPass = By.xpath("//*[contains(@class,'hAnNq')]");
     private static final By greyTextAboveSmsCodeField = By.xpath("//p[contains(@class,'Fmyzh')]");
     private static final By errorMessageInputIdNumber = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
-    private static final By errorMessageNotFilledField = By.xpath("//div[@class= 'FirstStepForm_formError__RvDTg']");
-    private static final By errorMessageFieldShouldContainAtLeast2Symbols = By.xpath("//div[@class= 'FirstStepForm_formError__RvDTg']");
-    private static final By errorMessageFieldMustBeLessThan30Symbols = By.xpath("//div[contains(@class, 'RvDTg')]");
-    private static final By errorMessageFieldMustContainOnlyCapitalLettersAndNumbers = By.xpath("//div[@class= 'FirstStepForm_formError__RvDTg']");
+    //TODO decrease the number of selectors from 5 to 2, lines 19-22
+    private static final By errorMessageNotFilledField = By.xpath("//div[text()= 'Field must be filled']");
+    private static final By errorMessageFieldShouldContainAtLeast2Symbols = By.xpath("//div[text()= 'Field should contain at least 2 symbols']");
+    private static final By errorMessageFieldMustBeLessThan30Symbols = By.xpath("//div[text()= 'Must be 30 characters or less']");
+    private static final By errorMessageFieldMustContainOnlyCapitalLettersAndNumbers = By.xpath("//div[text()= 'The field should contain only capital letters and numbers']");
     private static final By errorMessageFieldChangeIDWithoutChangingPassword = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
     private static final By titleTextWithPhoneNumber2Step = By.xpath("//p[contains(@class,'rg9OK')]");
     private static final By modalWindowPasswordRecovery = By.xpath("//*[contains(@class,'LvKN9')]");
