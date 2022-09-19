@@ -14,12 +14,13 @@ public class Alert {
     public static final String ID_WITHOUT_CHANGING_PASSWORD = "This ID number is not registered. " +
             "Please check the entered data or contact the bank";
     public static final String INCORRECT_SMS_CODE = "You have entered an incorrect SMS code";
+    public static final String INCORRECT_SMS_CODE_SECOND_TIME = "Wrong code, 1 attempts left";
     public static final String MESSAGE_INCORRECT_SMS_3_TIMES = "You have entered an incorrect SMS code three times, " +
             "you can try to log in again in 30 minutes";
     public static final String SEND_CODE_AGAIN = "Send code again in";
     public static final String UNREGISTERED_ID = "This ID number is not registered. Please check the entered data or " +
             "contact the bank";
-    public static final String ID_WRONG_SYMBOLS = "The field must contain only capital letters and numbers";
+    public static final String ID_WRONG_SYMBOLS = "The field should contain only capital letters and numbers";
     public static final String SEND_SMS_POSITIVE = "We sent an SMS with a 4-digit verification code to +90237467824742";
     public static final String PASSWORD_LESS_7_SYMBOLS = "Password should contain at least 7 symbols";
     public static final String PASSWORD_MORE_20_SYMBOLS = "Must be 20 characters or less";
