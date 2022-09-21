@@ -102,52 +102,47 @@ public class PasswordRecoveryUITest extends BaseUITest {
 
     @Story("UC-1.3 Password recovery")
     @Issue("A2N-492")
-    @TmsLink("C5944799")
-    @Test(description = "Try to send empty ID number")
-    public void enterEmptyIdNumberTest() {
+    @TmsLinks({@TmsLink("C5944799"), @TmsLink("5871553"), @TmsLink("5871564"),
+            @TmsLink("5871565"), @TmsLink("5944823"), @TmsLink("5944832")})
+    @Test(description = "Try to send a password which doesn't meet the criteria",
+            dataProvider = "Forbidden symbols in Id number field", dataProviderClass = DataProviderTests.class)
+    public void enterWrongPasswordsTest(String idNumber) {
         loginPage.clickLinkForgotPassword()
                 .enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport())
                 .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterEmptyIdNum(),
-                EMPTY_FIELDS);
+        for (int attempt = 1; attempt < 5; attempt++) {
+            switch (attempt) {
+                case (1):
+                    passwordRecovery.enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport())
+                            .clickContinueButton();
+                    assertEquals(passwordRecovery.getErrorMessageAfterEnterEmptyIdNum(),
+                            EMPTY_FIELDS);
+                    passwordRecovery.clearField();
+                    break;
+                case (2):
+                    passwordRecovery.enterIdNumber(LESS_THAN_MIN_CHARS.getUser().getPassport())
+                            .clickContinueButton();
+                    assertEquals(passwordRecovery.getErrorMessageAfterEnter1Symbol(),
+                            ID_LESS_THAN_2_SYMBOLS);
+                    passwordRecovery.clearField();
+                    break;
+                case (3):
+                    passwordRecovery.enterIdNumber(MORE_THAN_MAX_CHARS.getUser().getPassport())
+                            .clickContinueButton();
+                    assertEquals(passwordRecovery.getErrorMessageAfterEnterMoreThan30Symbols(),
+                            ID_MORE_30_SYMBOLS);
+                    passwordRecovery.clearField();
+                    break;
+                case (4):
+                    passwordRecovery.enterIdNumber(idNumber)
+                            .clickContinueButton();
+                    assertEquals(passwordRecovery.getErrorMessageAfterEnterForbiddenSymbols(),
+                            ID_WRONG_SYMBOLS);
+                    break;
+            }
+        }
     }
 
-    @Story("UC-1.3 Password recovery")
-    @Issue("A2N-492")
-    @TmsLink("5871553")
-    @Test(description = "Try to send ID Number with less than 2 symbols")
-    public void enterLessThan2CharsInIdNumberTest() {
-        loginPage.clickLinkForgotPassword()
-                .enterIdNumber(LESS_THAN_MIN_CHARS.getUser().getPassport())
-                .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnter1Symbol(),
-                ID_LESS_THAN_2_SYMBOLS);
-    }
-
-    @Story("UC-1.3 Password recovery")
-    @Issue("A2N-492")
-    @TmsLink("5871564")
-    @Test(description = "Try to send ID number with more than 30 symbols")
-    public void enter31SymbolsInIdNumberTest() {
-        loginPage.clickLinkForgotPassword()
-                .enterIdNumber(MORE_THAN_MAX_CHARS.getUser().getPassport())
-                .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterMoreThan30Symbols(),
-                ID_MORE_30_SYMBOLS);
-    }
-
-    @Story("UC-1.3 Password recovery")
-    @Issue("A2N-492")
-    @TmsLinks({@TmsLink("5871565"), @TmsLink("5944823"), @TmsLink("5944832")})
-    @Test(description = "Forbidden symbols in password field (small letter, russian letter, chars...)",
-            dataProvider = "Forbidden symbols in Id number field", dataProviderClass = DataProviderTests.class)
-    public void enterForbiddenSymbolsInIdFieldTest(String idNumber) {
-        loginPage.clickLinkForgotPassword()
-                .enterIdNumber(idNumber)
-                .clickContinueButton();
-        assertEquals(passwordRecovery.getErrorMessageAfterEnterForbiddenSymbols(),
-                ID_WRONG_SYMBOLS);
-    }
 
     @TmsLink("5945073")
     @Issue("A2N-492")
