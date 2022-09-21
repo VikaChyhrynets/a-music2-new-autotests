@@ -143,7 +143,6 @@ public class PasswordRecoveryUITest extends BaseUITest {
         }
     }
 
-
     @TmsLink("5945073")
     @Issue("A2N-492")
     @Story("UC-1.3 Password recovery")
