@@ -4,10 +4,7 @@ import by.andersen.amnbanking.tests.ui_tests.test.PasswordRecoveryUITest;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.refresh;
-import static org.slf4j.MDC.clear;
 
 public class PasswordRecoveryModalPage {
     private static final By inputIdNumber = By.id(":r7:");
