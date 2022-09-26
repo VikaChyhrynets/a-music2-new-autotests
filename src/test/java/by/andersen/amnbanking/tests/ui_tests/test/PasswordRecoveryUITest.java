@@ -108,20 +108,17 @@ public class PasswordRecoveryUITest extends BaseUITest {
             dataProvider = "Forbidden symbols in Id number field", dataProviderClass = DataProviderTests.class)
     public void enterWrongPasswordsTest(String idNumber) {
         loginPage.clickLinkForgotPassword()
-                .enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport())
-                .clickContinueButton();
+                .forgotPassword();
         for (int attempt = 1; attempt < 5; attempt++) {
             switch (attempt) {
                 case (1):
-                    passwordRecovery.enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport())
-                            .clickContinueButton();
+                    passwordRecovery.enterEmptyID();
                     assertEquals(passwordRecovery.getErrorMessageAfterEnterEmptyIdNum(),
                             EMPTY_FIELDS);
                     passwordRecovery.clearField();
                     break;
                 case (2):
-                    passwordRecovery.enterIdNumber(LESS_THAN_MIN_CHARS.getUser().getPassport())
-                            .clickContinueButton();
+                    passwordRecovery.enterLessIDSymbols();
                     assertEquals(passwordRecovery.getErrorMessageAfterEnter1Symbol(),
                             ID_LESS_THAN_2_SYMBOLS);
                     passwordRecovery.clearField();
@@ -134,8 +131,7 @@ public class PasswordRecoveryUITest extends BaseUITest {
                     passwordRecovery.clearField();
                     break;
                 case (4):
-                    passwordRecovery.enterIdNumber(idNumber)
-                            .clickContinueButton();
+                    passwordRecovery.enterForbiddenSymbols(idNumber);
                     assertEquals(passwordRecovery.getErrorMessageAfterEnterForbiddenSymbols(),
                             ID_WRONG_SYMBOLS);
                     break;

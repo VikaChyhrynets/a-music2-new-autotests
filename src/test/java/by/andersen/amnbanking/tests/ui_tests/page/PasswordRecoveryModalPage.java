@@ -1,9 +1,12 @@
 package by.andersen.amnbanking.tests.ui_tests.page;
 
-import by.andersen.amnbanking.tests.ui_tests.test.PasswordRecoveryUITest;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+
+import static by.andersen.amnbanking.data.UsersData.EMPTY_USER_FIELDS;
+import static by.andersen.amnbanking.data.UsersData.LESS_THAN_MIN_CHARS;
+import static by.andersen.amnbanking.data.UsersData.MORE_THAN_MAX_CHARS;
 import static com.codeborne.selenide.Selenide.$;
 
 public class PasswordRecoveryModalPage {
@@ -177,12 +180,47 @@ public class PasswordRecoveryModalPage {
         return $(inputConfirmPassword).getAttribute(attribute);
     }
 
-   @Step("Refresh page")
-    public PasswordRecoveryUITest clearField() {
-        for (int i=0; i < $(inputIdNumber).getValue().length(); i++) {
-            $(inputIdNumber).sendKeys(Keys.BACK_SPACE);
+    @Step("Clear field")
+    public PasswordRecoveryModalPage clearField() {
+        for (int i = 0; i < $(inputIdNumber).getValue().length(); i++) {
+            $(inputIdNumber).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
         }
-        return new PasswordRecoveryUITest();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter empty ID")
+    public PasswordRecoveryModalPage enterEmptyID() {
+        enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter less than minimal quantity of symbols")
+    public PasswordRecoveryModalPage enterLessIDSymbols() {
+        enterIdNumber(LESS_THAN_MIN_CHARS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter more than maximal quantity of symbols")
+    public PasswordRecoveryModalPage enterMoreIDSymbols() {
+        enterIdNumber(MORE_THAN_MAX_CHARS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter forbidden symbols")
+    public PasswordRecoveryModalPage enterForbiddenSymbols(String idNumber) {
+        enterIdNumber(idNumber);
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("User clicks the link 'Forgot password?'")
+    public PasswordRecoveryModalPage forgotPassword() {
+        enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
     }
 
 }
