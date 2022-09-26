@@ -7,6 +7,8 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import java.util.HashMap;
 import java.util.Map;
+
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static com.codeborne.selenide.Selenide.$;
 import static java.time.Duration.ofSeconds;
 
@@ -127,6 +129,14 @@ public class LoginPage extends BasePage {
     public boolean returnToLoginPage() {
         $(LOGIN_WINDOW).shouldBe(Condition.visible, ofSeconds(10)).isDisplayed();
         return true;
+    }
+
+    @Step("Does user go back to Login page after clicking Back button")
+    public LoginPage enterLoginAndPasswordToGetSMSConfirmationCode() {
+        inputLoginField(USER_ONE.getUser().getLogin())
+                .inputPasswordField(USER_ONE.getUser().getPassword())
+                .clickLoginButton();
+        return new LoginPage();
     }
 
 }

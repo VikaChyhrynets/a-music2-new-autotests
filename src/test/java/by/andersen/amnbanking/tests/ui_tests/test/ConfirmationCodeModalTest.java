@@ -85,36 +85,20 @@ public class ConfirmationCodeModalTest extends BaseUITest {
     @Test(description = "Enter wrong sms code three times, positive test")
     public void authAfterEnteringWrongConfirmationCodeThreeTimesTest() throws SQLException {
         createUser();
-        loginPage.inputLoginField(USER_ONE.getUser().getLogin())
-                .inputPasswordField(USER_ONE.getUser().getPassword())
-                .clickLoginButton();
+        loginPage.enterLoginAndPasswordToGetSMSConfirmationCode();
         for (int attempt = 1; attempt < 4; attempt++) {
+            confirmationCodeModalPage.enterInvalidConfirmationCode();
             switch (attempt) {
                 case (1):
-                    confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
-                            .clickConfirmButton()
-                            .getErrorMessageWhenEnteringWrongSmsCode();
                     softAssert.assertEquals(confirmationCodeModalPage.getErrorMessageWhenEnteringWrongSmsCode(),
                             INCORRECT_SMS_CODE);
-                    confirmationCodeModalPage.refreshPage();
+                    confirmationCodeModalPage.clearSMSConfirmationField();
                     break;
                 case (2):
-                    loginPage.inputLoginField(USER_ONE.getUser().getLogin())
-                            .inputPasswordField(USER_ONE.getUser().getPassword())
-                            .clickLoginButton();
-                    assertTrue(confirmationCodeModalPage.confirmationCodeWindowIsOpen());
-                    confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
-                            .clickConfirmButton()
-                            .getErrorMessageWhenEnteringWrongSmsCode();
                     assertEquals(confirmationCodeModalPage.getErrorMessageWhenEnteringWrongSmsCode(), INCORRECT_SMS_CODE_SECOND_TIME);
-                    confirmationCodeModalPage.refreshPage();
+                    confirmationCodeModalPage.clearSMSConfirmationField();
                     break;
                 case (3):
-                    loginPage.inputLoginField(USER_ONE.getUser().getLogin())
-                            .inputPasswordField(USER_ONE.getUser().getPassword())
-                            .clickLoginButton();
-                    confirmationCodeModalPage.enterSmsCodeInFieldForCode(SMS_INVALID.getSms())
-                            .clickConfirmButton();
                     assertEquals(confirmationCodeModalPage.getErrorMessageWhenEnteringWrongSmsCode(),
                             MESSAGE_INCORRECT_SMS_3_TIMES);
                     break;

@@ -6,6 +6,8 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+
+import static by.andersen.amnbanking.data.SmsVerificationData.SMS_INVALID;
 import static com.codeborne.selenide.Selenide.*;
 import static java.time.Duration.ofSeconds;
 
@@ -113,5 +115,21 @@ public class ConfirmationCodeModalPage extends BasePage {
     public String resetPasswordWindowCheck() {
         return $(FirstAuthorizationWithValidData).getText();
     }
+
+    @Step("Enter invalid confirmation code 3 times")
+    public ConfirmationCodeModalPage enterInvalidConfirmationCode() {
+        enterSmsCodeInFieldForCode(SMS_INVALID.getSms());
+        clickConfirmButton();
+        return new ConfirmationCodeModalPage();
+    }
+
+    @Step("Clear sms confirmation field")
+    public ConfirmationCodeModalPage clearSMSConfirmationField() {
+        for (int i=0; i < $(smsCodeField).getValue().length(); i++) {
+            $(smsCodeField).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+        }
+        return new ConfirmationCodeModalPage();
+    }
+
 
 }
