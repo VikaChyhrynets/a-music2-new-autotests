@@ -44,6 +44,9 @@ public class PasswordRecoveryModalPage {
         return $(errorMessageInputIdNumber).getText();
     }
 
+    /*
+    Uny following 4 methods as they have the same selector
+     */
     @Step("The user enters empty ID Number and gets message")
     public String getErrorMessageAfterEnterEmptyIdNum() {
         return $(errorMessageNotFilledField).getText();

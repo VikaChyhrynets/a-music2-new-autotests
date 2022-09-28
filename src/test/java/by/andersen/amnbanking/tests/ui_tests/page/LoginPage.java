@@ -5,15 +5,24 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
+import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
+import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.refresh;
 import static java.time.Duration.ofSeconds;
 
 public class LoginPage extends BasePage {
     private static final By LOG_IN_INPUT = By.id(":r1:");
     private static final By TEL_INPUT = By.id("#phone");
     private static final By PASSWORD_INPUT = By.id(":r3:");
+    private static final By INVALID_PASSWORD = By.xpath("//div[contains(@class, 'ggtXb')]");
     private static final By LOGIN_ALERT = By.xpath("//div[contains(@class, 'formInputLogin')]//*[contains(@class, 'formError')]");
     private static final By PASSWORD_ALERT = By.xpath("//*[contains(@class, 'formInputPassword')]//div[contains(@class, 'formError')]");
     private static final By LOGIN_BUTTON = By.xpath("//*[contains(@class, 'formButtonLogin')]//button[contains(@type, 'submit')]");
@@ -40,6 +49,11 @@ public class LoginPage extends BasePage {
     public LoginPage inputLoginField(String login) {
         $(LOG_IN_INPUT).sendKeys(login);
         return this;
+    }
+
+    @Step("Entering wrong password 3 times")
+    public String alertMessage() {
+       return $(INVALID_PASSWORD).getText();
     }
 
     @Step("User login and password fields should be empty")
@@ -127,6 +141,49 @@ public class LoginPage extends BasePage {
     public boolean returnToLoginPage() {
         $(LOGIN_WINDOW).shouldBe(Condition.visible, ofSeconds(10)).isDisplayed();
         return true;
+    }
+
+    @Step("Clear Login field")
+    public LoginPage clearLoginField() {
+        for (int i=0; i < $(LOG_IN_INPUT).getValue().length(); i++) {
+            $(LOG_IN_INPUT).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+        }
+        return new LoginPage();
+    }
+
+    @Step("Clear Login field")
+    public LoginPage clearPasswordField() {
+        for (int i=0; i < $(PASSWORD_INPUT).getValue().length(); i++) {
+            $(PASSWORD_INPUT).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+        }
+        return new LoginPage();
+    }
+
+    @Step("Persistent login")
+    public LoginPage logInSystem() {
+        refresh();
+        inputLoginField(LOGIN_WITH_PASSPORT_REG)
+                .inputPasswordField(USER_WRONG_PASS)
+                .clickLoginButton();
+        return new LoginPage();
+    }
+
+    @Step("Registration with wrong login")
+    public LoginPage wrongLoginReg() {
+        inputLoginField(LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData());
+        inputPasswordField(PASSWORD_WITH_PASSPORT_REG);
+        clickLoginButton();
+        return new LoginPage();
+    }
+
+    @Step("Registration with wrong password")
+    public LoginPage wrongPasswordReg() {
+        clearLoginField();
+        clearPasswordField();
+        inputLoginField(LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS.getWrongData() + "AbC5");
+        inputPasswordField("AbC5");
+        clickLoginButton();
+        return new LoginPage();
     }
 
 }

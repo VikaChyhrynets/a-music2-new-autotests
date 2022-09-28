@@ -2,6 +2,11 @@ package by.andersen.amnbanking.data;
 
 public class Alert {
     public static final String EMPTY_FIELDS = "Field must be filled";
+    public static final String ENTERED_INVALID_PASSWORD_FIRST_TIME = "Invalid password. You have 2 attempts left";
+    public static final String ENTERED_INVALID_PASSWORD_SECOND_TIME = "Invalid password. You have 1 attempt left";
+    public static final String ENTERED_INVALID_PASSWORD_THIRD_TIME = "You have entered an incorrect password three times, you can try to log in again in 30 minutes";
+    public static final String LOG_IN_WHILE_BANNED = "Ban time is not over yet...";
+    public static final String LOGIN_UNREGISTERED = "This user is not registered yet";
     public static final String LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS = "Field should contain at least 7 symbols";
     public static final String LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS = "Must be 20 characters or less";
     public static final String FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS = "Field should contain letters (at least" +
