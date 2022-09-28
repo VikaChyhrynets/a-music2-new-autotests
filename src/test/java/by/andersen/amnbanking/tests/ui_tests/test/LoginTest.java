@@ -9,13 +9,17 @@ import io.qameta.allure.TmsLink;
 import io.qameta.allure.TmsLinks;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.sql.SQLException;
 
 import static by.andersen.amnbanking.data.Alert.EMPTY_FIELDS;
+import static by.andersen.amnbanking.data.Alert.ENTERED_INVALID_PASSWORD_FIRST_TIME;
+import static by.andersen.amnbanking.data.Alert.ENTERED_INVALID_PASSWORD_SECOND_TIME;
+import static by.andersen.amnbanking.data.Alert.ENTERED_INVALID_PASSWORD_THIRD_TIME;
 import static by.andersen.amnbanking.data.Alert.FIELD_CONTAIN_LETTERS_NUMBER;
 import static by.andersen.amnbanking.data.Alert.FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS;
 import static by.andersen.amnbanking.data.Alert.LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS;
+import static by.andersen.amnbanking.data.Alert.LOGIN_UNREGISTERED;
+import static by.andersen.amnbanking.data.Alert.LOG_IN_WHILE_BANNED;
 import static by.andersen.amnbanking.data.AuthToken.loginAndGetBearerToken;
 import static by.andersen.amnbanking.data.Alert.LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS;
 import static by.andersen.amnbanking.data.DataUrls.API_FIRST_ENTRY;
@@ -26,14 +30,12 @@ import static by.andersen.amnbanking.data.DataUrls.CHANGE_PASSWORD_FIRST_ENTRY;
 import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
 import static by.andersen.amnbanking.data.DataUrls.NOT_REGISTERED_USER_LOGIN;
 import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
 import static by.andersen.amnbanking.data.SmsVerificationData.SMS_VALID;
 import static by.andersen.amnbanking.data.SuccessfulMessages.RESET_PASSWORD_WINDOW;
 import static by.andersen.amnbanking.data.UsersData.*;
 import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setNewPassword;
 import static by.andersen.amnbanking.utils.JsonObjectHelper.setSmsCode;
-import static com.codeborne.selenide.Selenide.refresh;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 import static org.apache.hc.core5.http.HttpStatus.SC_PERMANENT_REDIRECT;
 import static org.testng.Assert.assertEquals;
@@ -127,38 +129,28 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.clickHidePasswordCheckbox(USER_ONE.getUser().getPassword(), "type"), "password");
     }
 
-    @Story("UC-1.2 Web application login")
-    @TmsLink("5893442")
-    @Test(description = "Authorization after entering the wrong password first time")
-    public void testLoginProcedureWithWrongPasswordFirstTime() {
-         for (int i = 0; i < 2; i++) {
-            loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
-                    .inputPasswordField(USER_WRONG_PASS)
-                    .clickLoginButton();
-            //assertEquals(loginPage.someMethod(), "Login or password are entered incorrectly.”);
-            //refresh();
+    @Story("UC-1.2 Web application login, UC-1.4 Registration")
+    @TmsLinks({@TmsLink("C5893442"), @TmsLink("C5974571"), @TmsLink("C5974572"), @TmsLink("C5974577"), @TmsLink("5880176")})
+    @Test(description = "Authorization after entering the wrong password three times or unregistered passwird." +
+            "Try to log in before ban expiration")
+    public void testLoginProcedureWithWrongPasswordThreeTimes() {
+        for (int attempt = 1; attempt < 5; attempt++) {
+            loginPage.logInSystem();
+            switch (attempt) {
+                case (1):
+                    assertEquals(loginPage.alertMessage(), ENTERED_INVALID_PASSWORD_FIRST_TIME);
+                    break;
+                case (2):
+                    assertEquals(loginPage.alertMessage(), ENTERED_INVALID_PASSWORD_SECOND_TIME);
+                    break;
+                case (3):
+                    assertEquals(loginPage.alertMessage(), ENTERED_INVALID_PASSWORD_THIRD_TIME);
+                    break;
+                case (4):
+                    assertEquals(loginPage.alertMessage(), LOG_IN_WHILE_BANNED);
+                    break;
+            }
         }
-        loginPage.inputLoginField(LOGIN_WITH_PASSPORT_REG)
-                .inputPasswordField(USER_WRONG_PASS)
-                .clickLoginButton();
-        //assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
-    }
-
-    @Story("UC-1.2 Web application login")
-    @TmsLink("5869765")
-    @Test(description = "Authorization after entering the wrong login three times, negative test", enabled = false)
-    public void testLoginProcedureWithWrongLoginThreeTimes() {
-        for (int i = 0; i < 3; i++) {
-            loginPage.inputLoginField(NOT_REGISTERED_USER_LOGIN)
-                    .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
-                    .clickLoginButton();
-//        assertEquals(loginPage.someMethod(), "Login or password are entered incorrectly.”);
-            refresh();
-        }
-        loginPage.inputLoginField(NOT_REGISTERED_USER_LOGIN)
-                .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
-                .clickLoginButton();
-//        assertEquals(loginPage.someMethod(),  "You have entered an incorrect password or login three times, you can try to log in again in 30 minutes");
     }
 
     @Story("UC-1.2 Web application login")
@@ -181,17 +173,18 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getTextFromLoginErrorMessage(), FORBIDDEN_CHARACTERS_LOGIN_OR_PASSWORD_FIELDS);
     }
 
-    @Story("UC-1.2 Web application login")
-    @TmsLink("5869677")
-    @Test(description = "Login from bank (user changed login) and valid password, negative test")
+    /*
+    Check login change
+     */
+    @Story("UC-1.4 Registration (first login)")
+    @TmsLink("5880167")
+    @Test(description = "First authorization with an unregistered login or password, negative test")
     public void testLoginProcedureWithIncorrectLoginAndValidPassword() {
         loginPage.inputLoginField(NOT_REGISTERED_USER_LOGIN)
                 .inputPasswordField(PASSWORD_WITH_PASSPORT_REG)
                 .clickLoginButton();
-//        assertEquals(в loginPage должен быть метод, который найдет надпись, “Login or password are entered incorrectly.”,
-//        но пока нету xpath, по которому эту надпись искать, соответственно нету и метода); temporary (?) deleted test-case
+        assertEquals(loginPage.alertMessage(), LOGIN_UNREGISTERED);
     }
-
 
     @Story("UC-1.2 Web application login")
     @TmsLink("5869618")
@@ -233,20 +226,10 @@ public class LoginTest extends BaseUITest {
         deleteUser();
     }
 
-    @Story("UC-1.4 Registration (first login)")
-    @TmsLink("5880167")
-    @Test(description = "First authorization with an unregistered login, negative test")
-    public void testFirstAuthorizationWithAnUnregisteredLogin() {
-
-    }
-
-    @Story("UC-1.4 Registration (first login)")
-    @TmsLink("5880176")
-    @Test(description = "First authorization with an unregistered password, negative test")
-    public void testFirstAuthorizationWithAnUnregisteredPassword() {
-
-    }
-
+    /*
+    Should be removed to UC-1.5 "Change password on first login"
+    Case: logged user haven't changed the password and tries to
+     */
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880179")
     @Test(description = "Password recovery on first authorization, negative test")
@@ -254,10 +237,25 @@ public class LoginTest extends BaseUITest {
 
     }
 
+    /*
+    Check the error title when entering login or password shorter than 7 symbols
+     */
     @Story("UC-1.4 Registration (first login)")
     @TmsLink("5880189")
-    @Test(description = "First authorization after entering the wrong login or password three times , negative test")
-    public void testFirstAuthorizationAfterEnteringTheWrongLoginOrPasswordThreeTimes() {
+    @Test(description = "Click Login button after entering login or password with less than 7 symbols")
+    public void testAuthorizationAfterEnteringTheWrongLoginOrPassword() {
+        for (int event = 1; event < 3; event++)
+            switch (event) {
+                case (1):
+                    loginPage.wrongLoginReg();
+                    assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
+                    break;
+                case (2):
+                    loginPage.wrongPasswordReg();
+                    assertEquals(loginPage.getAlertMessagePassword(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
+                    break;
+            }
     }
+
 
 }
