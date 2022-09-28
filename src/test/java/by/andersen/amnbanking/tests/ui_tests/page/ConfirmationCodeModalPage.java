@@ -6,6 +6,8 @@ import com.codeborne.selenide.ex.ElementNotFound;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+
+import static by.andersen.amnbanking.data.SmsVerificationData.SMS_INVALID;
 import static com.codeborne.selenide.Selenide.*;
 import static java.time.Duration.ofSeconds;
 
@@ -14,10 +16,7 @@ public class ConfirmationCodeModalPage extends BasePage {
     private static final By smsCodeField = (By.id(":r7:"));
     private static final By confirmButton = (By.xpath("//*[text()= 'Confirm']"));
     private static final By errorMessageWrongSmsCode = (By.xpath("//div[contains(@class,\"ModalForm_formInputSMS\") and not (.//*[contains(@class,\"MuiFormControl-root\")])]/div"));
-    // TODO 18-20 lines, rewriting. New task.
-    private static final By wrongEnteredMessage1Time = (By.xpath("//div[text()= 'Wrong code, 2 attempts left']"));
-    private static final By wrongEnteredMessage2Times = (By.xpath("//div[text()= 'Wrong code, 1 attempts left']"));
-    private static final By wrongEnteredMessage3Times = (By.xpath("//div[text()= 'You have entered an incorrect SMS code three times, you can try to log in again in 30 minutes']"));
+    private static final By wrongEnteredMessage = (By.xpath("//div[@class= 'ModalForm_formInputSMS__3vSof MuiBox-root css-0'][last()]"));
     private static final By clickSendAgainButtonModalError = (By.xpath("//*[text()= 'Send again']"));
     private static final By loginSuccess = By.id("ModalSuccessfully");
     private static final By FirstAuthorizationWithValidData = (By.xpath("//span[@class= 'Login_text__INpYu']"));
@@ -67,19 +66,9 @@ public class ConfirmationCodeModalPage extends BasePage {
         return $(errorMessageWrongSmsCode).getText();
     }
 
-    @Step("Get error message when entering wrong sms code 1 time")
-    public String getErrorMessageWhenEnteringWrongSmsCode1Time() {
-        return $(wrongEnteredMessage1Time).shouldBe(Condition.visible, ofSeconds(10)).getText();
-    }
-
-    @Step("Get error message when entering wrong sms code 2 times") //
-    public String getErrorMessageWhenEnteringWrongSmsCode2Times() {
-        return $(wrongEnteredMessage2Times).shouldBe(Condition.visible, ofSeconds(10)).getText();
-    }
-
     @Step("Get error message when entering wrong sms code 3 times")
-    public String getErrorMessageWhenEnteringWrongSmsCode3Times() {
-        return $(wrongEnteredMessage3Times).shouldBe(Condition.visible, ofSeconds(10)).getText();
+    public String getErrorMessageWhenEnteringWrongSmsCode() {
+        return $(wrongEnteredMessage).shouldBe(Condition.visible, ofSeconds(10)).getText();
     }
 
     @Step("Click send again button on the modal after entering wrong for sms code confirmation ")
@@ -126,5 +115,21 @@ public class ConfirmationCodeModalPage extends BasePage {
     public String resetPasswordWindowCheck() {
         return $(FirstAuthorizationWithValidData).getText();
     }
+
+    @Step("Enter invalid confirmation code 3 times")
+    public ConfirmationCodeModalPage enterInvalidConfirmationCode() {
+        enterSmsCodeInFieldForCode(SMS_INVALID.getSms());
+        clickConfirmButton();
+        return new ConfirmationCodeModalPage();
+    }
+
+    @Step("Clear sms confirmation field")
+    public ConfirmationCodeModalPage clearSMSConfirmationField() {
+        for (int i=0; i < $(smsCodeField).getValue().length(); i++) {
+            $(smsCodeField).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+        }
+        return new ConfirmationCodeModalPage();
+    }
+
 
 }

@@ -10,10 +10,7 @@ import org.openqa.selenium.Keys;
 import java.util.HashMap;
 import java.util.Map;
 
-import static by.andersen.amnbanking.data.DataUrls.LOGIN_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.PASSWORD_WITH_PASSPORT_REG;
-import static by.andersen.amnbanking.data.DataUrls.USER_WRONG_PASS;
-import static by.andersen.amnbanking.data.WrongUserData.LOGIN_OR_PASSWORD_LESS_THAN_7_CHARACTERS;
+import static by.andersen.amnbanking.data.UsersData.USER_ONE;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.refresh;
 import static java.time.Duration.ofSeconds;
