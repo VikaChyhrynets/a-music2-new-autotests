@@ -2,7 +2,11 @@ package by.andersen.amnbanking.tests.ui_tests.page;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
+import static by.andersen.amnbanking.data.UsersData.EMPTY_USER_FIELDS;
+import static by.andersen.amnbanking.data.UsersData.LESS_THAN_MIN_CHARS;
+import static by.andersen.amnbanking.data.UsersData.MORE_THAN_MAX_CHARS;
 import static com.codeborne.selenide.Selenide.$;
 
 public class PasswordRecoveryModalPage {
@@ -15,11 +19,7 @@ public class PasswordRecoveryModalPage {
     private static final By continueButtonAfterEnterNewPass = By.xpath("//*[contains(@class,'hAnNq')]");
     private static final By greyTextAboveSmsCodeField = By.xpath("//p[contains(@class,'Fmyzh')]");
     private static final By errorMessageInputIdNumber = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
-    //TODO decrease the number of selectors from 5 to 2, lines 19-22
-    private static final By errorMessageNotFilledField = By.xpath("//div[text()= 'Field must be filled']");
-    private static final By errorMessageFieldShouldContainAtLeast2Symbols = By.xpath("//div[text()= 'Field should contain at least 2 symbols']");
-    private static final By errorMessageFieldMustBeLessThan30Symbols = By.xpath("//div[text()= 'Must be 30 characters or less']");
-    private static final By errorMessageFieldMustContainOnlyCapitalLettersAndNumbers = By.xpath("//div[text()= 'The field should contain only capital letters and numbers']");
+    private static final By errorMessageWrongPassword = By.xpath("//div[contains(@class, 'RvDTg')]");
     private static final By errorMessageFieldChangeIDWithoutChangingPassword = By.xpath("//div[text()= 'This ID number is not registered. Please check the entered data or contact the bank']");
     private static final By titleTextWithPhoneNumber2Step = By.xpath("//p[contains(@class,'rg9OK')]");
     private static final By modalWindowPasswordRecovery = By.xpath("//*[contains(@class,'LvKN9')]");
@@ -49,22 +49,22 @@ public class PasswordRecoveryModalPage {
      */
     @Step("The user enters empty ID Number and gets message")
     public String getErrorMessageAfterEnterEmptyIdNum() {
-        return $(errorMessageNotFilledField).getText();
+        return $(errorMessageWrongPassword).getText();
     }
 
     @Step("The user enters only 1 ID-symbol and gets message")
     public String getErrorMessageAfterEnter1Symbol() {
-        return $(errorMessageFieldShouldContainAtLeast2Symbols).getText();
+        return $(errorMessageWrongPassword).getText();
     }
 
     @Step("The user enters more than 30 symbols and gets message")
     public String getErrorMessageAfterEnterMoreThan30Symbols() {
-        return $(errorMessageFieldMustBeLessThan30Symbols).getText();
+        return $(errorMessageWrongPassword).getText();
     }
 
     @Step("The user enters forbidden symbols and gets message")
     public String getErrorMessageAfterEnterForbiddenSymbols() {
-        return $(errorMessageFieldMustContainOnlyCapitalLettersAndNumbers).getText();
+        return $(errorMessageWrongPassword).getText();
     }
 
     @Step("The user changes ID without changing password on first login and gets message")
@@ -182,5 +182,49 @@ public class PasswordRecoveryModalPage {
     public String getAttributeStatusAfterEnterPasswordInConfirmPassword(String attribute) {
         return $(inputConfirmPassword).getAttribute(attribute);
     }
+
+    @Step("Clear field")
+    public PasswordRecoveryModalPage clearField() {
+        for (int i = 0; i < $(inputIdNumber).getValue().length(); i++) {
+            $(inputIdNumber).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+        }
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter empty ID")
+    public PasswordRecoveryModalPage enterEmptyID() {
+        enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter less than minimal quantity of symbols")
+    public PasswordRecoveryModalPage enterLessIDSymbols() {
+        enterIdNumber(LESS_THAN_MIN_CHARS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter more than maximal quantity of symbols")
+    public PasswordRecoveryModalPage enterMoreIDSymbols() {
+        enterIdNumber(MORE_THAN_MAX_CHARS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("Enter forbidden symbols")
+    public PasswordRecoveryModalPage enterForbiddenSymbols(String idNumber) {
+        enterIdNumber(idNumber);
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
+    @Step("User clicks the link 'Forgot password?'")
+    public PasswordRecoveryModalPage forgotPassword() {
+        enterIdNumber(EMPTY_USER_FIELDS.getUser().getPassport());
+        clickContinueButton();
+        return new PasswordRecoveryModalPage();
+    }
+
 }
 
