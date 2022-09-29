@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import static java.time.Duration.ofSeconds;
 
-public class LoginPageMethods extends BaseSteps {
+public class LoginPageSteps extends BaseSteps {
 
     public MainPage doLogin(User user) {
         loginPage.getLoginField().click();
@@ -30,9 +30,9 @@ public class LoginPageMethods extends BaseSteps {
     }
 
     @Step("Entering a user login into Login input field")
-    public LoginPageMethods inputLoginField(String login) {
+    public LoginPageSteps inputLoginField(String login) {
         loginPage.getLoginField().sendKeys(login);
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
     @Step("Entering wrong password 3 times")
@@ -49,21 +49,21 @@ public class LoginPageMethods extends BaseSteps {
     }
 
     @Step("Clicking on Login input field")
-    public LoginPageMethods clickLoginField() {
+    public LoginPageSteps clickLoginField() {
         loginPage.getLoginField().click();
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
     @Step("Entering a user password into Password input field")
-    public LoginPageMethods inputPasswordField(String password) {
+    public LoginPageSteps inputPasswordField(String password) {
         loginPage.getPasswordField().sendKeys(password);
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
     @Step("Clicking on 'Password' input field")
-    public LoginPageMethods clickPasswordField() {
+    public LoginPageSteps clickPasswordField() {
         loginPage.getPasswordField().click();
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
     @Step("Checking alert message for 'Login' input field")
@@ -116,9 +116,9 @@ public class LoginPageMethods extends BaseSteps {
     }
 
     @Step("Click the Contacts button")
-    public LoginPageMethods clickContactsButton() {
+    public LoginPageSteps clickContactsButton() {
         loginPage.getContactsButton().click();
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
     @Step("Does user go back to Login page after clicking Back button")
@@ -127,6 +127,7 @@ public class LoginPageMethods extends BaseSteps {
         return true;
     }
 
+    // TODO test on MacBook
     @Step("Clear Login field")
     public LoginPage clearLoginAndPasswordFields() {
         for (int i=0; i < loginPage.getLoginField().getValue().length(); i++) {
@@ -139,37 +140,39 @@ public class LoginPageMethods extends BaseSteps {
     }
 
     @Step("Persistent login")
-    public LoginPageMethods logInSystem() {
+    public LoginPageSteps logInSystem() {
         clearLoginAndPasswordFields();
         inputLoginField(UsersData.USER_EMINEM79.getUser().getLogin())
                 .inputPasswordField(UsersData.USER_EMINEM79.getUser().getPassword())
                 .clickLoginButton();
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
+    // TODO rewrite user's data (password)
     @Step("Registration with wrong login")
-    public LoginPageMethods wrongLoginReg() {
+    public LoginPageSteps wrongLoginReg() {
         inputLoginField(UsersData.LESS_THAN_MIN_CHARS.getUser().getLogin());
         inputPasswordField(UsersData.LESS_THAN_MIN_CHARS.getUser().getPassword() + "aDf5");
         clickLoginButton();
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
+    // TODO rewrite user's data (login)
     @Step("Registration with wrong password")
-    public LoginPageMethods wrongPasswordReg() {
+    public LoginPageSteps wrongPasswordReg() {
         clearLoginAndPasswordFields();
         inputLoginField(UsersData.LESS_THAN_MIN_CHARS.getUser().getLogin() + "AbC5");
         inputPasswordField(UsersData.LESS_THAN_MIN_CHARS.getUser().getPassword());
         clickLoginButton();
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
     @Step("Does user go back to Login page after clicking Back button")
-    public LoginPageMethods enterLoginAndPasswordToGetSMSConfirmationCode() {
+    public LoginPageSteps enterLoginAndPasswordToGetSMSConfirmationCode() {
         inputLoginField(UsersData.USER_ONE.getUser().getLogin())
                 .inputPasswordField(UsersData.USER_ONE.getUser().getPassword())
                 .clickLoginButton();
-        return new LoginPageMethods();
+        return new LoginPageSteps();
     }
 
 }

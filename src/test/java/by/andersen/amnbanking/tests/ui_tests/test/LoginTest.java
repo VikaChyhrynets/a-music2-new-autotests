@@ -97,6 +97,7 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.getAlertMessagePassword(), LOGIN_OR_PASSWORD_FIELDS_MORE_TWENTY_SYMBOLS);
     }
 
+    // TODO we don't need to fill login field, change logic
     @Story("UC-1.2 Web application login")
     @TmsLink("5869669")
     @Test(description = "Enter valid password with blank login field, negative test")
