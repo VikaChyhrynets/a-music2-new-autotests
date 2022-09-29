@@ -102,8 +102,8 @@ public class LoginTest extends BaseUITest {
     @Test(description = "Enter valid password with blank login field, negative test")
     public void authEmptyLoginAndValidPasswordTest() {
         loginPage.inputLoginField(EMPTY_USER_FIELDS.getUser().getLogin())
-                .inputPasswordField(USER_ONE.getUser().getPassword())
-                .clickLoginButton();
+                .inputPasswordField(USER_ONE.getUser().getPassword());
+        loginPage.clickLoginButton();
         assertEquals(loginPage.getAlertMessageLogin(), EMPTY_FIELDS);
     }
 
@@ -129,9 +129,13 @@ public class LoginTest extends BaseUITest {
         assertEquals(loginPage.clickHidePasswordCheckbox(USER_ONE.getUser().getPassword(), "type"), "password");
     }
 
+    /*
+    The test bans user for 30 minutes after entering wrong password 3 times. Each attempt (successful or not) changes
+    alert message so that the next run will not appropriate to the "expected" result
+     */
     @Story("UC-1.2 Web application login, UC-1.4 Registration")
     @TmsLinks({@TmsLink("C5893442"), @TmsLink("C5974571"), @TmsLink("C5974572"), @TmsLink("C5974577"), @TmsLink("5880176")})
-    @Test(description = "Authorization after entering the wrong password three times or unregistered passwird." +
+    @Test(description = "Authorization after entering the wrong password three times or unregistered password." +
             "Try to log in before ban expiration")
     public void testLoginProcedureWithWrongPasswordThreeTimes() {
         for (int attempt = 1; attempt < 5; attempt++) {
@@ -244,18 +248,11 @@ public class LoginTest extends BaseUITest {
     @TmsLink("5880189")
     @Test(description = "Click Login button after entering login or password with less than 7 symbols")
     public void testAuthorizationAfterEnteringTheWrongLoginOrPassword() {
-        for (int event = 1; event < 3; event++)
-            switch (event) {
-                case (1):
-                    loginPage.wrongLoginReg();
-                    assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
-                    break;
-                case (2):
-                    loginPage.wrongPasswordReg();
-                    assertEquals(loginPage.getAlertMessagePassword(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
-                    break;
-            }
-    }
+        loginPage.wrongLoginReg();
+        assertEquals(loginPage.getTextFromLoginErrorMessage(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
+        loginPage.wrongPasswordReg();
+        assertEquals(loginPage.getAlertMessagePassword(), LESS_7_SYMBOL_LOGIN_OR_PASSWORD_FIELDS);
 
+    }
 
 }

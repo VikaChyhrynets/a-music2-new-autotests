@@ -18,8 +18,6 @@ public class DataUrls {
     public static final String NOT_REGISTERED_USER_LOGIN = PropertyHelper.getProperty("api.testNotRegisteredLogin");
     public static final String USER_SESSION_CODE_LOGIN = PropertyHelper.getProperty("api.testSessionCodeLogin");
     public static final String LOGIN_WITH_PASSPORT_REG = PropertyHelper.getProperty("api.loginPass");
-    public static final String LOGIN_WITH_PASSPORT_REG_ANOTHER = PropertyHelper.getProperty("api.loginPass2");
-    public static final String LOGIN_WITH_WRONG_PASSWORD = PropertyHelper.getProperty("api.loginPass3");
     public static final String PASSWORD_WITH_PASSPORT_REG = PropertyHelper.getProperty("api.passwPass");
     public static final String PASSPORT_REG = PropertyHelper.getProperty("api.passport");
     public static final String SMS_CODE = PropertyHelper.getProperty("api.getSmsCode");

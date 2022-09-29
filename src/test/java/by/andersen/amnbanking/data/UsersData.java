@@ -39,4 +39,5 @@ public enum UsersData {
             "George", "Washington"));
 
     private final User user;
+
 }
