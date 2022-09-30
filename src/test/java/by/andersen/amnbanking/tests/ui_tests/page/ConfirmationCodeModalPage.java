@@ -1,5 +1,6 @@
 package by.andersen.amnbanking.tests.ui_tests.page;
 
+import by.andersen.amnbanking.tests.ui_tests.steps.LoginPageSteps;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.ex.ElementNotFound;
@@ -37,10 +38,10 @@ public class ConfirmationCodeModalPage extends BasePage {
     }
 
     @Step("Closing SMS confirmation window by clicking to empty area")
-    public LoginPage closeSmsWindowByEmptyClick() {
+    public LoginPageSteps closeSmsWindowByEmptyClick() {
         $(confirmationCodeModal).click(ClickOptions.usingDefaultMethod().offset(200, 200));
 
-        return new LoginPage();
+        return new LoginPageSteps();
     }
 
     @Step("Entering SMS code")
